@@ -42,10 +42,6 @@ Ext.define("Admin.view.employee.EmployeeForm", {
         {
           xtype: "hiddenfield",
           name: "id",
-
-          //   bind: {
-          //     value: "{currentUser.name.first}",
-          //   },
         },
         {
           fieldLabel: "Họ và tên",
