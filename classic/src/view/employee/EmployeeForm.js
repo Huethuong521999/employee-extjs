@@ -6,8 +6,9 @@ Ext.define("Admin.view.employee.EmployeeForm", {
   },
   controller: "employee",
   layout: "fit",
-  width: 400,
-  height: 350,
+  width: '90%',
+  height: '90%',
+  resizable: false,
   modal: true,
   closable: true,
   id: "form-employee",
@@ -22,6 +23,7 @@ Ext.define("Admin.view.employee.EmployeeForm", {
         anchor: "100%",
         labelWidth: 80,
       },
+      
       buttons: [
         {
           text: "Lưu",
@@ -38,77 +40,21 @@ Ext.define("Admin.view.employee.EmployeeForm", {
           },
         },
       ],
+
       items: [
         {
-          xtype: "hiddenfield",
-          name: "id",
-        },
-        {
-          fieldLabel: "Họ và tên",
-          allowBlank: false,
-          name: "hoTen",
-
-          //   bind: {
-          //     value: "{currentUser.name.first}",
-          //   },
-        },
-        {
-          fieldLabel: "Giới tính",
-          allowBlank: false,
-          name: "gioiTinh",
-
-          //   bind: {
-          //     value: "{currentUser.name.last}",
-          //   },
-        },
-        {
-          //   xtype: "datefield",
-          fieldLabel: "Ngày sinh",
-          allowBlank: false,
-          name: "ngaySinh",
-
-          //   bind: {
-          //     value: "{currentUser.age}",
-          //   },
-        },
-        {
-          fieldLabel: "Số CCCD",
-          allowBlank: false,
-          name: "soCccd",
-
-          //   bind: {
-          //     value: "{currentUser.name.first}",
-          //   },
-        },
-        {
-          fieldLabel: "Email",
-          allowBlank: false,
-          //   vtype: "email",
-          name: "email",
-
-          //   bind: {
-          //     value: "{currentUser.email}",
-          //   },
-        },
-        {
-          fieldLabel: "Số điện thoại",
-          allowBlank: false,
-          name: "soDienThoai",
-
-          //   bind: {
-          //     value: "{currentUser.name.first}",
-          //   },
-        },
-        {
-          fieldLabel: "Địa chỉ",
-          allowBlank: false,
-          name: "diaChi",
-
-          //   bind: {
-          //     value: "{currentUser.name.first}",
-          //   },
-        },
+          xtype: 'employeeTabPanel', // Sử dụng TabPanel từ file riêng
+        }
       ],
+
+      listeners: {
+        afterrender: function () {
+          this.center();
+        },
+        resize: function () {
+          this.center();
+        }
+      }
     },
   ],
 });

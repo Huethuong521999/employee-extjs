@@ -4,7 +4,7 @@ Ext.define("Admin.view.employee.EmployeeController", {
   alias: "controller.employee",
 
   onOpenEmloyeeForm: function () {
-    var windowForm = Ext.create("Admin.view.employee.EmployeeForm", {
+    let windowForm = Ext.create("Admin.view.employee.EmployeeForm", {
       record: null,
     });
     this.loadRecord(windowForm, null);
@@ -14,16 +14,22 @@ Ext.define("Admin.view.employee.EmployeeController", {
   handleSave: function (window) {
     let form = window.down("form");
     let values = form.getValues();
-    let store = Ext.getCmp("list-employee").getStore();
-    if (form.action === "edit") {
-      let record = store.getById(values.id);
-      record.set(values);
+
+    if (form.isValid()) {
+      let store = Ext.getCmp("list-employee").getStore();
+      if (form.action === "edit") {
+        let record = store.getById(values.id);
+        record.set(values);
+      } else {
+        values.id = store.getCount() + 1;
+        store.add(values);
+      }
+      form.reset();
+      window.close();
+
     } else {
-      values.id = store.getCount() + 1;
-      store.add(values);
+      Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
     }
-    form.reset();
-    window.close();
   },
 
   handleDelete: function (sender, record) {
