@@ -16,23 +16,17 @@ Ext.define("Admin.view.employee.EmployeeController", {
     let values = form.getValues();
 
     if (form.isValid()) {
-      form.submit({
-        success: function () {
-          let store = Ext.getCmp("list-employee").getStore();
-          if (form.action === "edit") {
-            let record = store.getById(values.id);
-            record.set(values);
-          } else {
-            values.id = store.getCount() + 1;
-            store.add(values);
-          }
-          form.reset();
-          window.close();
-        },
-        failure: function () {
-          Ext.Msg.alert('Lỗi', 'Lưu không thành công.');
-        }
-      });
+      let store = Ext.getCmp("list-employee").getStore();
+      if (form.action === "edit") {
+        let record = store.getById(values.id);
+        record.set(values);
+      } else {
+        values.id = store.getCount() + 1;
+        store.add(values);
+      }
+      form.reset();
+      window.close();
+
     } else {
       Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
     }
