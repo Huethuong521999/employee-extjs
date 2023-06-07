@@ -10,7 +10,7 @@ Ext.define("Admin.model.Employee", {
       name: "gioiTinh",
     },
     {
-      type: "string",
+      type: "date",
       name: "ngaySinh",
     },
     {
@@ -28,6 +28,22 @@ Ext.define("Admin.model.Employee", {
     {
       type: "string",
       name: "diaChi",
+    },
+    {
+      type: "string",
+      name: "agencyName",
+    },
+    {
+      type: "string",
+      name: "workAddress",
+    },
+    {
+      type: "string",
+      name: "workingPosition",
+    },
+    {
+      type: "string",
+      name: "wage",
     },
   ],
 });
