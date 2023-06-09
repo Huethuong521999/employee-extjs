@@ -3,9 +3,11 @@ Ext.define('Admin.store.NavigationTree', {
 
     storeId: 'NavigationTree',
 
-    fields: [{
-        name: 'text'
-    }],
+    fields: [
+        {
+            name: 'text'
+        }
+    ],
 
     root: {
         expanded: true,
@@ -16,6 +18,18 @@ Ext.define('Admin.store.NavigationTree', {
                 rowCls: 'nav-tree-badge nav-tree-badge-new',
                 viewType: 'admindashboard',
                 routeId: 'dashboard', // routeId defaults to viewType
+                leaf: true
+            },
+            {
+                text: 'User',
+                iconCls: 'x-fa fa-user',
+                viewType: 'user',
+                leaf: true
+            },
+            {
+                text: 'User 2',
+                iconCls: 'x-fa fa-user',
+                viewType: 'user2',
                 leaf: true
             },
             {
