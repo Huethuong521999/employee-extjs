@@ -1,23 +1,26 @@
-Ext.define('Admin.view.employee.ListEmployee', {
-    extend: 'Ext.tree.Panel',
-    xtype: 'list-employee',
-    requires: ['Ext.data.*', 'Ext.grid.*', 'Ext.tree.*'],
+Ext.define('Admin.view.user.ListUser', {
+    extend: 'Ext.grid.Panel',
+
+    xtype: 'list-user',
+
+    requires: ['Admin.view.user.UserModel'],
+
     viewModel: {
-        type: 'employee'
+        type: 'user'
     },
-    reserveScrollbar: true,
-    useArrows: true,
-    rootVisible: false,
-    multiSelect: true,
-    singleExpand: true,
-    controller: 'employee',
+
+    controller: 'user',
+
     bind: {
-        store: '{employee}'
+        store: '{user}'
     },
-    id: 'list-employee',
+
+    id: 'list-user',
+
     viewConfig: {
         preserveScrollOnRefresh: true,
-        preserveScrollOnReload: true
+        preserveScrollOnReload: true,
+        forceFit: true
     },
     selModel: {
         selType: 'checkboxmodel',
@@ -25,19 +28,14 @@ Ext.define('Admin.view.employee.ListEmployee', {
         showHeaderCheckbox: true
     },
 
-    // listeners: {
-    //     cellclick: 'onGridCellItemClick'
-    // },
-
     headerBorders: true,
     rowLines: true,
-    scrollable: false,
 
     columns: [
         {
             xtype: 'actioncolumn',
             text: 'Thao tác',
-            width: 80,
+            width: 100,
             align: 'center',
             items: [
                 {
@@ -47,9 +45,7 @@ Ext.define('Admin.view.employee.ListEmployee', {
                         // Get the selected record
                         let rec = grid.getStore().getAt(rowIndex);
                         // Show the edit form
-                        let editForm = Ext.create(
-                            'Admin.view.employee.EmployeeForm'
-                        );
+                        let editForm = Ext.create('Admin.view.user.UserForm');
                         let controller = editForm.getController();
                         controller.loadRecord(editForm, rec);
                         editForm.show();
@@ -60,57 +56,41 @@ Ext.define('Admin.view.employee.ListEmployee', {
                     tooltip: 'Xóa',
                     handler: function (grid, rowIndex, colIndex) {
                         let rec = grid.getStore().getAt(rowIndex);
-                        let controller = grid
-                            .up('list-employee')
-                            .getController();
+                        let controller = grid.up('list-user').getController();
                         controller.handleDelete(this, rec);
                     }
                 }
             ]
         },
         {
-            xtype: 'rownumberer',
-            dataIndex: 'stt',
-            text: 'STT',
-            width: 50,
-            align: 'center'
-        },
-        {
-            dataIndex: 'hoTen',
+            dataIndex: 'name',
             text: 'Họ và Tên',
-            flex: 2.5,
-            xtype: 'treecolumn'
-        },
-        {
-            dataIndex: 'gioiTinh',
-            text: 'Giới tính',
+            minWidth: 200,
             flex: 1
         },
         {
-            type: 'date',
-            dataIndex: 'ngaySinh',
-            text: 'Ngày sinh',
-            flex: 1
-        },
-        {
-            dataIndex: 'soCccd',
-            text: 'Số CCCD',
+            dataIndex: 'username',
+            text: 'Tên tài khoản',
+            minWidth: 150,
             flex: 1
         },
         {
             dataIndex: 'email',
             text: 'Email',
-            flex: 2
-        },
-        {
-            dataIndex: 'soDienThoai',
-            text: 'Số điện thoại',
+            minWidth: 200,
             flex: 1
         },
         {
-            dataIndex: 'diaChi',
-            text: 'Địa chỉ',
-            flex: 2
+            dataIndex: 'phone',
+            text: 'Số điện thoại',
+            minWidth: 150,
+            flex: 1
+        },
+        {
+            dataIndex: 'website',
+            text: 'Trang web',
+            minWidth: 200,
+            flex: 1
         }
     ]
 });

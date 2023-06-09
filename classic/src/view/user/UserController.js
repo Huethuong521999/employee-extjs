@@ -1,10 +1,10 @@
-Ext.define('Admin.view.employee.EmployeeController', {
+Ext.define('Admin.view.user.UserController', {
     extend: 'Ext.app.ViewController',
 
-    alias: 'controller.employee',
+    alias: 'controller.user',
 
-    onOpenEmloyeeForm: function () {
-        let windowForm = Ext.create('Admin.view.employee.EmployeeForm', {
+    onOpenUserForm: function () {
+        let windowForm = Ext.create('Admin.view.user.UserForm', {
             record: null
         });
         this.loadRecord(windowForm, null);
@@ -14,9 +14,9 @@ Ext.define('Admin.view.employee.EmployeeController', {
     handleSave: function (window) {
         let form = window.down('form');
         let values = form.getValues();
-
+        console.log(Ext.getCmp('list-user').getStore());
         if (form.isValid()) {
-            let store = Ext.getCmp('list-employee').getStore();
+            let store = Ext.getCmp('list-user').getStore();
             if (form.action === 'edit') {
                 let record = store.getById(values.id);
                 record.set(values);
@@ -39,13 +39,13 @@ Ext.define('Admin.view.employee.EmployeeController', {
             closable: true,
             buttons: Ext.Msg.YESNO,
             buttonsText: {
-                yes: 'Đống ý',
+                yes: 'Đồng ý',
                 no: 'Hủy'
             },
             multiline: false,
             fn: function (buttonValue, inputText, showConfig) {
                 if (buttonValue === 'yes') {
-                    let store = Ext.getCmp('list-employee').getStore();
+                    let store = Ext.getCmp('list-user').getStore();
                     store.remove(record);
                 }
             },
@@ -55,13 +55,12 @@ Ext.define('Admin.view.employee.EmployeeController', {
 
     loadRecord: function (windowForm, record) {
         let form = windowForm.down('form');
-        console.log('form', form);
         if (record) {
-            windowForm.setTitle('Sửa thông tin nhân viên');
+            windowForm.setTitle('Sửa thông tin người dùng');
             form.action = 'edit';
             form.getForm().setValues(record.getData());
         } else {
-            windowForm.setTitle('Thêm mới thông tin nhân viên');
+            windowForm.setTitle('Thêm mới thông tin người dùng');
             form.action = 'add';
             form.reset();
         }
