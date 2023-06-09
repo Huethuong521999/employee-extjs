@@ -39,6 +39,13 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
+                text: 'Category',
+                iconCls: 'x-fa fa-list',
+                viewType: 'categoryEx',
+                routeId: 'category',
+                leaf: true
+            },
+            {
                 text: 'Email',
                 iconCls: 'x-fa fa-paper-plane',
                 rowCls: 'nav-tree-badge nav-tree-badge-hot',

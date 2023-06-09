@@ -34,6 +34,18 @@ Ext.define("Admin.view.employee.EmployeeForm", {
           },
         },
         {
+          text: "Trình lãnh đạo",
+          handler: function (sender) {
+            let form = this.up("window").down("form");
+            let value = form.getValues();
+            if (form.isValid()) {
+              
+            } else {
+              Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
+            }
+          },
+        },
+        {
           text: "Đóng",
           handler: function () {
             this.up("window").close();
