@@ -5,7 +5,14 @@ Ext.define("Admin.view.employee.Employee", {
   
   controller: 'employee',
 
-  requires: ["Admin.view.employee.ListEmployee", "Admin.view.employee.EmployeeController"],
+  requires: [
+    "Admin.view.employee.ListEmployee", 
+    "Admin.view.employee.EmployeeController"
+  ],
+
+  // layout: {
+  //   type: "hbox",
+  // },
 
   items: [
     {
@@ -17,6 +24,7 @@ Ext.define("Admin.view.employee.Employee", {
     },
     {
       xtype: "list-employee",
+      flex: 1
     },
   ],
 });
