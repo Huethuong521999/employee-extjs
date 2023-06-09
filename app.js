@@ -12,7 +12,5 @@ Ext.application({
     // have specific requirements on each other, you may need to still require them
     // explicitly.
     //
-    requires: [
-        'Admin.*'
-    ]
+    requires: ['Admin.*', 'Ext.Responsive']
 });
