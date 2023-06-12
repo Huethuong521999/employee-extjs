@@ -8,9 +8,7 @@ Ext.define("Admin.view.category.CategoryViewController", {
       .getSelection();
     let arr = selectedRecords.map((record) => record.getData());
 
-    if (arr.length === 0) {
-      Ext.Msg.alert("Cảnh báo", "Vui lòng chọn bản ghi muốn kiếm tra");
-    } else {
+    if (arr.length > 0) {
       let windowDialog = Ext.create("Admin.view.category.CategoryCheckDialog", {
         record: null,
       });
@@ -21,6 +19,8 @@ Ext.define("Admin.view.category.CategoryViewController", {
       grid.getView().refresh();
 
       windowDialog.show();
+    } else {
+      Ext.Msg.alert("Cảnh báo", "Vui lòng chọn bản ghi muốn kiếm tra");
     }
   },
 });
