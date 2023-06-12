@@ -11,7 +11,7 @@ Ext.define("Admin.view.customer.Customer", {
   items: [
     {
       xtype: "button",
-      text: "Thêm mới khách hàng",
+      text: "Thêm mới nhân viên",
       padding: "10px",
       handler: 'onOpenCustomerForm'
     },
