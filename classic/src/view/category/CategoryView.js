@@ -17,7 +17,7 @@ Ext.define("Admin.view.category.CategoryView", {
   items: [
     {
       xtype: "button",
-      text: "Kiểm tra",
+      text: "Tải file",
       padding: "10px",
       margin: "0px 0px 10px 10px",
       handler: "onOpenDialog",
