@@ -5,7 +5,7 @@ Ext.define("Admin.view.customer.ListCustomer", {
 
   requires: [
     "Admin.view.customer.CustomerModel",
-    "Admin.view.customer.CustomerController"
+    "Admin.view.customer.CustomerController",
   ],
 
   viewModel: {
@@ -31,10 +31,19 @@ Ext.define("Admin.view.customer.ListCustomer", {
     showHeaderCheckbox: true,
   },
 
+  plugins: {
+    gridfilters: true,
+  },
+
+  onClearFilters: function () {
+    this.getStore().clearFilter();
+  },
+
   headerBorders: true,
   rowLines: true,
   scrollable: false,
   margin: "10px 0 0 0",
+  grouped: true,
 
   columns: [
     {
@@ -70,37 +79,44 @@ Ext.define("Admin.view.customer.ListCustomer", {
       dataIndex: "name",
       text: "Họ và Tên",
       flex: 2.5,
+      filter: 'string',
     },
     {
       dataIndex: "code",
       text: "Mã khách hàng",
       flex: 2.5,
+      filter: 'string',
     },
     {
       dataIndex: "gender",
       text: "Giới tính",
       flex: 1,
+      filter: 'string',
     },
     {
       dataIndex: "dateOfBirth",
       text: "Ngày sinh",
       flex: 1,
+      filter: 'date',
       renderer: Ext.util.Format.dateRenderer("d/m/Y")
     },
     {
       dataIndex: "citizenId",
       text: "Số CCCD",
       flex: 1,
+      filter: 'string',
     },
     {
       dataIndex: "email",
       text: "Email",
       flex: 2,
+      filter: 'string',
     },
     {
       dataIndex: "phone",
       text: "Số điện thoại",
       flex: 1,
+      filter: 'string',
     },
   ],
 });

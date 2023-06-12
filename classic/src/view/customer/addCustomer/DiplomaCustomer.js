@@ -8,7 +8,7 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
     items: [
         {
             layout: 'form',
-            id:"formDiploma",
+            id: "formDiploma",
             items: [
                 {
                     xtype: 'fieldcontainer',
@@ -27,12 +27,16 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "name",
                             cls: "inputField w-40",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Lĩnh vực",
                             allowBlank: false,
                             name: "field",
                             cls: "inputField w-40",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             xtype: 'datefield',
@@ -40,12 +44,16 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "issuanceDate",
                             cls: "inputField w-20",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Nội dung",
                             allowBlank: false,
                             name: "content",
                             cls: "inputField w-80",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             xtype: 'container',
@@ -54,14 +62,14 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    ui: 'soft-red',
+                                    ui: 'gray',
                                     margin: "0 10px 0 0",
                                     text: 'Hủy',
                                     handler: 'handleClear'
                                 },
                                 {
                                     xtype: 'button',
-                                    ui: 'gray',
+                                    ui: 'soft-red',
                                     text: 'Lưu',
                                     handler: 'handleSubmitDiploma'
                                 }

@@ -1,5 +1,6 @@
 Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
   extend: "Ext.window.Window",
+
   layout: {
     type: "vbox",
     align: "stretch",
@@ -24,23 +25,6 @@ Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
         labelWidth: 80,
       },
 
-      buttons: [
-        {
-          text: "Lưu",
-          handler: function (sender) {
-            let form = this.up("window");
-            let controller = form.getController();
-            controller.handleSave(form);
-          },
-        },
-        {
-          text: "Đóng",
-          handler: function () {
-            this.up("window").close();
-          },
-        },
-      ],
-
       items: [
         {
           xtype: 'tabpanel',
@@ -57,6 +41,30 @@ Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
           ]
         }
       ],
+
+      dockedItems: [{
+        xtype: 'toolbar',
+        buttonAlign: 'right',
+        dock: 'bottom',
+        items: [{
+          xtype: "button",
+          ui: 'gray',
+          text: "Đóng",
+          handler: function () {
+            this.up("window").close();
+          },
+        },
+        {
+          xtype: "button",
+          text: "Lưu",
+          ui: 'soft-red',
+          handler: function (sender) {
+            let form = this.up("window");
+            let controller = form.getController();
+            controller.handleSave(form);
+          }
+        }]
+      }],
 
       listeners: {
         afterrender: function () {
