@@ -58,7 +58,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
           },
           items: [
             {
-              text: "Kiểm tra",
+              text: "Tải file",
               handler: function (sender) {
                 let selectedRecords = Ext.getCmp("list-category")
                   .getStore()
@@ -73,7 +73,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
                 arr.map((record) => {
                   if (grid.some((item) => item.id === record.id)) {
                     record.trangThai = "Đã kiểm tra";
-                    record.fileName = file.name;
+                    record.fileName = `${file.name +  " - " + file.size + "kB"}`;
                   }
                 });
 

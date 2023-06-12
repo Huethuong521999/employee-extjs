@@ -43,18 +43,18 @@ Ext.define("Admin.view.category.CategoryGrid", {
     {
       dataIndex: "ngayGiao",
       text: "Ngày giao",
-      flex: 1.5,
+      flex: 1,
       renderer: Ext.util.Format.dateRenderer("d/m/Y"),
     },
     {
       dataIndex: "trangThai",
       text: "Trạng thái",
-      flex: 1.2,
+      flex: 1,
     },
     {
       dataIndex: "fileName",
       text: "Tên file",
-      flex: 2,
+      flex: 2.5,
     },
   ],
 });
