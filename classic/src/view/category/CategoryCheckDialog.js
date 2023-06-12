@@ -71,9 +71,9 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
                   .el.down("input[type=file]").dom.files[0];
 
                 arr.map((record) => {
-                  if (grid.some((item) => item?.id === record?.id)) {
+                  if (grid.some((item) => item.id === record.id)) {
                     record.trangThai = "Đã kiểm tra";
-                    record.fileName = file?.name;
+                    record.fileName = file.name;
                   }
                 });
 

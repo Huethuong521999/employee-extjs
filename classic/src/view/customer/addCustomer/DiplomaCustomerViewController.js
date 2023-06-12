@@ -9,7 +9,7 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
         if (form.isValid()) {
             let store = Ext.getCmp("list-diploma-customer").getStore();
 
-            if (values?.id) {
+            if (values.id) {
                 let record = store.getById(values.id);
                 record.set(values);
             } else {

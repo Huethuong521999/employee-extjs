@@ -9,7 +9,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
         if (form.isValid()) {
             let store = Ext.getCmp("list-family-customer").getStore();
 
-            if (values?.id) {
+            if (values.id) {
                 let record = store.getById(values.id);
                 record.set(values);
             } else {
