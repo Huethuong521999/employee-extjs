@@ -20,7 +20,7 @@ Ext.define("Admin.view.category.CategoryViewController", {
 
       windowDialog.show();
     } else {
-      Ext.Msg.alert("Cảnh báo", "Vui lòng chọn bản ghi muốn kiếm tra");
+      Ext.Msg.alert("Cảnh báo", "Vui lòng chọn bản ghi muốn tải file");
     }
   },
 });
