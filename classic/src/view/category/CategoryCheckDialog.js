@@ -2,7 +2,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
   extend: "Ext.window.Window",
   xtype: "categorycheckdialog",
 
-  title: "Kiểm tra danh mục",
+  title: "Tải file đính kèm",
 
   requires: ["Admin.view.category.CategoryCheckGrid"],
 
@@ -71,7 +71,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
 
                 arr.map((record) => {
                   if (grid.some((item) => item.id === record.id)) {
-                    record.trangThai = "Đã kiểm tra";
+                    record.trangThai = "Đã tải file";
                     record.fileName = `${file.name + " - " + file.size + "kB"}`;
                   }
                 });
@@ -83,10 +83,10 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
 
                 // upload file lên api
                 formData = new FormData();
-                formData.append("filename", file);
+                formData.append("file", file);
                 
                 Ext.Ajax.request({
-                  url: "https://v2.convertapi.com/upload",
+                  url: "https://api.escuelajs.co/api/v1/files/upload",
                   rawData: formData,
                   method: "POST",
                   // headers: { "Content-Type": "multipart/form-data", "Content-Disposition": "form-data" },
