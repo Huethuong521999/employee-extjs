@@ -13,7 +13,7 @@ Ext.define('Admin.store.NavigationTree', {
         expanded: true,
         children: [
             {
-                text: 'Dashboard',
+                text: 'Dashboard Responsive',
                 iconCls: 'x-fa fa-desktop',
                 rowCls: 'nav-tree-badge nav-tree-badge-new',
                 viewType: 'admindashboard',
