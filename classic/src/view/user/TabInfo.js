@@ -16,6 +16,10 @@ Ext.define('Admin.view.user.TabInfo', {
             },
             items: [
                 {
+                    xtype: 'hiddenfield',
+                    name: 'id'
+                },
+                {
                     fieldLabel: 'Họ và tên',
                     allowBlank: false,
                     name: 'name',
@@ -88,13 +92,14 @@ Ext.define('Admin.view.user.TabInfo', {
                 {
                     xtype: 'checkbox',
                     fieldLabel: 'Thêm thông tin',
-                    name: 'moreInfo',
+                    id: 'moreInfoCheckbox',
                     cls: 'inputField',
-                    handler: function() {
-                        const tabMoreInfo = Ext.getCmp('user-tab-panel').child('#tabMoreInfo');
-                        if(this.checked){
+                    handler: function () {
+                        const tabMoreInfo =
+                            Ext.getCmp('user-tab-panel').child('#tabMoreInfo');
+                        if (this.checked) {
                             tabMoreInfo.tab.show();
-                        }else{
+                        } else {
                             tabMoreInfo.tab.hide();
                         }
                     }

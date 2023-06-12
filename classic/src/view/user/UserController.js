@@ -14,7 +14,7 @@ Ext.define('Admin.view.user.UserController', {
     handleSave: function (window) {
         let form = window.down('form');
         let values = form.getValues();
-        console.log(Ext.getCmp('list-user').getStore());
+        let checkbox = Ext.getCmp('moreInfoCheckbox');
         if (form.isValid()) {
             let store = Ext.getCmp('list-user').getStore();
             if (form.action === 'edit') {
@@ -27,7 +27,14 @@ Ext.define('Admin.view.user.UserController', {
             form.reset();
             window.close();
         } else {
-            Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
+            if (!checkbox.checked) {
+                Ext.Msg.alert(
+                    'Cảnh báo',
+                    'Vui lòng tích chọn thêm thông tin để hoàn tất quá trình nhập'
+                );
+            } else {
+                Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
+            }
         }
     },
 
