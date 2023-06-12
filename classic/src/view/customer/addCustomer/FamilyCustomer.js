@@ -28,6 +28,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             allowBlank: false,
                             name: "name",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             xtype: 'datefield',
@@ -35,36 +37,48 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             allowBlank: false,
                             name: "dateOfBirth",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Giới tính",
                             allowBlank: false,
                             name: "gender",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Số CCCD",
                             allowBlank: false,
                             name: "citizenId",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Mối quan hệ",
                             allowBlank: false,
                             name: "relation",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Số điện thoại",
                             allowBlank: false,
                             name: "phone",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             fieldLabel: "Địa chỉ",
                             allowBlank: false,
                             name: "address",
                             cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
                         },
                         {
                             xtype: 'container',
@@ -73,14 +87,14 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             items: [
                                 {
                                     xtype: 'button',
-                                    ui: 'soft-red',
+                                    ui: 'gray',
                                     margin: "0 10px 0 0",
                                     text: 'Hủy',
                                     handler: 'handleClear'
                                 },
                                 {
                                     xtype: 'button',
-                                    ui: 'gray',
+                                    ui: 'soft-red',
                                     text: 'Lưu',
                                     handler: 'handleSubmitFamily'
                                 }
