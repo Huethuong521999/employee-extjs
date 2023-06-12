@@ -83,7 +83,7 @@ Ext.define("Admin.view.customer.ListCustomer", {
     },
     {
       dataIndex: "code",
-      text: "Mã khách hàng",
+      text: "Mã nhân viên",
       flex: 2.5,
       filter: 'string',
     },

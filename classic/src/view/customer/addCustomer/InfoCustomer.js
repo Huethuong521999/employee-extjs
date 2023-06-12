@@ -27,7 +27,7 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     },
                 },
                 {
-                    fieldLabel: "Mã khách hàng",
+                    fieldLabel: "Mã nhân viên",
                     allowBlank: false,
                     name: "code",
                     cls: "inputField w-33",

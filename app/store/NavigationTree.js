@@ -46,7 +46,7 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
-                text: 'Khách hàng CRUD',
+                text: 'Nhân viên CRUD',
                 iconCls: 'x-fa fa-user',
                 viewType: 'customer',
                 leaf: true
