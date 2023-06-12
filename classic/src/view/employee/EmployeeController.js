@@ -55,7 +55,7 @@ Ext.define('Admin.view.employee.EmployeeController', {
 
     loadRecord: function (windowForm, record) {
         let form = windowForm.down('form');
-        console.log('form', form);
+        
         if (record) {
             windowForm.setTitle('Sửa thông tin nhân viên');
             form.action = 'edit';

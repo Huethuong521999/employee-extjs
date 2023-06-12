@@ -7,7 +7,14 @@ Ext.define("Admin.view.category.CategoryGrid", {
     selType: "checkboxmodel",
     checkOnly: true,
     showHeaderCheckbox: true,
+    pruneRemoved: true
   },
+  columnLines: true,
+  headerBorders: true,
+  rowLines: true,
+  scrollable: true,
+  
+  id: 'list-category',
 
   columns: [
     {
@@ -20,7 +27,7 @@ Ext.define("Admin.view.category.CategoryGrid", {
     {
       dataIndex: "tenDanhMuc",
       text: "Tên danh mục",
-      flex: 2.5,
+      flex: 2,
     },
     {
       dataIndex: "soLuong",
@@ -38,6 +45,16 @@ Ext.define("Admin.view.category.CategoryGrid", {
       text: "Ngày giao",
       flex: 1.5,
       renderer: Ext.util.Format.dateRenderer("d/m/Y"),
+    },
+    {
+      dataIndex: "trangThai",
+      text: "Trạng thái",
+      flex: 1.2,
+    },
+    {
+      dataIndex: "fileName",
+      text: "Tên file",
+      flex: 2,
     },
   ],
 });

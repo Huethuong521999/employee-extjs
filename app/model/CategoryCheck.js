@@ -1,4 +1,4 @@
-Ext.define("Admin.model.Category", {
+Ext.define("Admin.model.CategoryCheck", {
     extend: "Admin.model.Base",
     fields: [
       {
@@ -16,14 +16,6 @@ Ext.define("Admin.model.Category", {
       {
         type: "date",
         name: "ngayGiao",
-      },
-      {
-        type: "string",
-        name: "trangThai",
-      },
-      {
-        type: "string",
-        name: "fileName",
       },
     ],
   });

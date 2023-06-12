@@ -41,7 +41,7 @@ Ext.define("Admin.view.employee.ListEmployee", {
   useArrows: true,
   rootVisible: false,
   multiSelect: true,
-  singleExpand: true,
+  singleExpand: false,
 
   // tools: [
   //   {
