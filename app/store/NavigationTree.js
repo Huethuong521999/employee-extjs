@@ -46,6 +46,12 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
+                text: 'Khách hàng',
+                iconCls: 'x-fa fa-user',
+                viewType: 'customer',
+                leaf: true
+            },
+            {
                 text: 'Email',
                 iconCls: 'x-fa fa-paper-plane',
                 rowCls: 'nav-tree-badge nav-tree-badge-hot',
