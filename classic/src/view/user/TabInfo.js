@@ -84,6 +84,20 @@ Ext.define('Admin.view.user.TabInfo', {
                             width: '100%'
                         }
                     }
+                },
+                {
+                    xtype: 'checkbox',
+                    fieldLabel: 'Thêm thông tin',
+                    name: 'moreInfo',
+                    cls: 'inputField',
+                    handler: function() {
+                        const tabMoreInfo = Ext.getCmp('user-tab-panel').child('#tabMoreInfo');
+                        if(this.checked){
+                            tabMoreInfo.tab.show();
+                        }else{
+                            tabMoreInfo.tab.hide();
+                        }
+                    }
                 }
             ]
         }

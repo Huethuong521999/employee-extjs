@@ -6,13 +6,19 @@ Ext.define('Admin.view.user.UserTabPanel', {
 
     items: [
         {
+            id: 'user-tab-panel',
             xtype: 'tabpanel',
             items: [
                 {
-                    xtype: 'tabInfo'
+                    xtype: 'tabInfo',
+                    itemId: 'tabInfo'
                 },
                 {
-                    xtype: 'tabMoreInfo'
+                    xtype: 'tabMoreInfo',
+                    itemId: 'tabMoreInfo',
+                    tabConfig: {
+                        hidden: true
+                    }
                 }
             ]
         }

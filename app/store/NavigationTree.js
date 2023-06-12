@@ -21,13 +21,13 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
-                text: 'User',
+                text: 'User-Responsive-Form',
                 iconCls: 'x-fa fa-user',
                 viewType: 'user',
                 leaf: true
             },
             {
-                text: 'User 2',
+                text: 'User-Handle-50k-Records',
                 iconCls: 'x-fa fa-user',
                 viewType: 'user2',
                 leaf: true
@@ -46,7 +46,7 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
-                text: 'Khách hàng',
+                text: 'Khách hàng CRUD',
                 iconCls: 'x-fa fa-user',
                 viewType: 'customer',
                 leaf: true
