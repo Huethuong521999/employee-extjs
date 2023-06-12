@@ -33,13 +33,13 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
-                text: 'Employee',
+                text: 'Employee-Tree-CRUD',
                 iconCls: 'x-fa fa-user',
                 viewType: 'employee',
                 leaf: true
             },
             {
-                text: 'Category',
+                text: 'Category-Upload',
                 iconCls: 'x-fa fa-list',
                 viewType: 'categoryEx',
                 routeId: 'category',
