@@ -6,8 +6,7 @@ Ext.define('Admin.view.user.UserForm', {
             width: '50%'
         },
         'width < 768 ': {
-            width: '100%',
-            layout: 'fit'
+            width: '90%'
         }
     },
     resizable: false,
