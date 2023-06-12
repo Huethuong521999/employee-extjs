@@ -12,9 +12,6 @@ Ext.define("Admin.view.category.CategoryView", {
   viewModel: "categoryviewmodel",
   controller: "categoryviewcontroller",
 
-  headerBorders: true,
-  rowLines: true,
-  scrollable: true,
   padding: "10px",
 
   items: [
@@ -23,7 +20,7 @@ Ext.define("Admin.view.category.CategoryView", {
       text: "Kiểm tra",
       padding: "10px",
       margin: "0px 0px 10px 10px",
-      //   handler: "onOpenEmloyeeForm",
+      handler: "onOpenDialog",
     },
     {
       xtype: "categorygrid",
