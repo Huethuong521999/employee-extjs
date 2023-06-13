@@ -3,11 +3,31 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
     alias: 'controller.bigdatagridcontroller',
 
     openAddForm: function () {
-        let windowForm = Ext.create('Admin.view.user.UserForm', {
+        let windowForm = Ext.create('Admin.view.bigdatagrid.BigDataUserForm', {
             record: null
         });
         this.loadRecord(windowForm, null);
         windowForm.show();
+    },
+
+    handleSave: function (window) {
+        let form = window.down('form');
+        let values = form.getValues();
+        let store = Ext.getCmp('big-data-grid').getStore();
+        if (form.isValid()) {
+            if (form.action === 'edit') {
+                let record = store.getById(values.id);
+                console.log(values);
+                record.set(values);
+            } else {
+                values.id = store.getCount() + 1;
+                store.add(values);
+            }
+            form.reset();
+            window.close();
+        } else {
+            Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
+        }
     },
 
     nameSorter: function (rec1, rec2) {
