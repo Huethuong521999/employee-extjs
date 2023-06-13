@@ -6,6 +6,7 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridView', {
 
     viewModel: 'bigdatagridviewmodel',
     controller: 'bigdatagridcontroller',
+    id: 'big-data-grid-view',
 
     padding: '10px',
 
