@@ -13,17 +13,35 @@ Ext.define("Admin.view.customer.CustomerController", {
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
-    let certificatesData = record.get('certificates');
-    let familyRelationsData = record.get('familyRelations');
     let rec = grid.getStore().getAt(rowIndex);
     let editForm = Ext.create("Admin.view.customer.addCustomer.AddCustomerForm");
     let formFamily = Ext.getCmp("list-family-customer");
     let formDiploma = Ext.getCmp("list-diploma-customer");
+    
+    Ext.Ajax.request({
+      url: `http://localhost:3000/bills/${rec.id}`,
+      method: 'GET',
+      success: function (response) {
+        let data = Ext.decode(response.responseText);
+        formFamily.setStore(data.familyRelations || []);
+        formDiploma.setStore(data.certificates || []);
+        let form = editForm.down("form");
+        if (rec) {
+          editForm.setTitle("Sửa thông tin nhân viên");
+          form.action = "edit";
+          form.getForm().setValues(rec.getData());
+        } else {
+          editForm.setTitle("Thêm mới thông tin nhân viên");
+          form.action = "add";
+          form.reset();
+        }
+      },
+      failure: function (response) {
+        Ext.Msg.alert('Lỗi', 'Lấy dữ liệu thất bại.');
+      }
+    });
 
-    formFamily.setStore(familyRelationsData);
-    formDiploma.setStore(certificatesData);
 
-    this.loadRecord(editForm, rec);
     editForm.show();
   },
 
@@ -55,7 +73,16 @@ Ext.define("Admin.view.customer.CustomerController", {
       fn: function (buttonValue, inputText, showConfig) {
         if (buttonValue === "yes") {
           let store = Ext.getCmp("list-customer").getStore();
-          store.remove(record);
+          Ext.Ajax.request({
+            url: `http://localhost:3000/bills/${record.id}`,
+            method: 'DELETE',
+            success: function(response) {
+              store.load();
+            },
+            failure: function(response) {
+              Ext.Msg.alert('Lỗi', 'Xóa thất bại.');
+            }
+          });
         }
       },
       icon: Ext.Msg.QUESTION,
