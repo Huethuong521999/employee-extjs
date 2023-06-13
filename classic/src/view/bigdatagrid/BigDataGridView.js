@@ -1,25 +1,28 @@
-Ext.define("Admin.view.category.BigDataGridView", {
-  extend: "Ext.container.Container",
-  xtype: "bigdatagridview",
+Ext.define('Admin.view.bigdatagrid.BigDataGridView', {
+    extend: 'Ext.container.Container',
+    xtype: 'bigdatagridview',
 
-  requires: [
-    "Admin.view.bigdata.BigDataGrid",
-    //   "Admin.view.category.CategoryViewModel",
-    //   "Admin.view.category.CategoryViewController",
-  ],
+    requires: ['Admin.view.bigdata.BigDataGrid'],
 
-  // viewModel: "categoryviewmodel",
-  // controller: "categoryviewcontroller",
+    viewModel: 'bigdatagridviewmodel',
+    controller: 'bigdatagridcontroller',
 
-  padding: "10px",
+    padding: '10px',
 
-  items: [
-    {
-      xtype: "bigdatagrid",
-      flex: 1,
-      // bind: {
-      //   store: "{category}",
-      // },
-    },
-  ],
+    items: [
+        {
+            xtype: 'button',
+            text: 'Thêm mới',
+            padding: '10px',
+            margin: '0px 0px 10px 0px',
+            handler: 'openAddForm'
+        },
+        {
+            xtype: 'bigdatagrid',
+            flex: 1,
+            bind: {
+                store: '{bigdatagrid}'
+            }
+        }
+    ]
 });
