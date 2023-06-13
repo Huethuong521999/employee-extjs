@@ -9,7 +9,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
     items: [
         {
             layout: 'form',
-            id:"formFamaily",
+            id: "formFamaily",
             items: [
                 {
                     xtype: 'fieldcontainer',
@@ -30,6 +30,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             cls: "inputField w-25",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
+                            validator: function (value) {
+                                return value && (!(/[~`!@#$%^&*()+=\-[\]\\';,/{}|\\":<>?0-9]/.test(value)) ? true : "Chỉ được nhập chữ");
+                            },
                         },
                         {
                             xtype: 'datefield',
@@ -51,15 +54,18 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                         {
                             fieldLabel: "Số CCCD",
                             allowBlank: false,
-                            name: "citizenId",
+                            name: "citizenIdentificationNumber",
                             cls: "inputField w-25",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
+                            validator: function (value) {
+                                return value && (/^[0-9]{12}$/.test(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                            },
                         },
                         {
                             fieldLabel: "Mối quan hệ",
                             allowBlank: false,
-                            name: "relation",
+                            name: "relationShip",
                             cls: "inputField w-25",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
@@ -67,10 +73,13 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                         {
                             fieldLabel: "Số điện thoại",
                             allowBlank: false,
-                            name: "phone",
+                            name: "phoneNumber",
                             cls: "inputField w-25",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
+                            validator: function (value) {
+                                return value && ((/(84|0[3|5|7|8|9])+([0-9]{8})/.test(value)) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+                            }
                         },
                         {
                             fieldLabel: "Địa chỉ",
@@ -81,9 +90,20 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {
+                            fieldLabel: "Email",
+                            allowBlank: false,
+                            name: "email",
+                            cls: "inputField w-25",
+                            // msgTarget: 'under',
+                            blankText: 'Trường này là trường bắt buộc',
+                            validator: function (value) {
+                                return value && ((/^[a-zA-Z0-9_.+-]+@gmail\.com$/.test(value)) ? true : "Email phải có định dang 123@gmail.com");
+                            }
+                        },
+                        {
                             xtype: 'container',
                             layout: 'hbox',
-                            cls: 'buttonContainer inputField w-25',
+                            cls: 'inputField w-25',
                             items: [
                                 {
                                     xtype: 'button',

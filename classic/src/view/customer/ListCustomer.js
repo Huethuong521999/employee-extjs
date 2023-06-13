@@ -98,10 +98,10 @@ Ext.define("Admin.view.customer.ListCustomer", {
       text: "Ngày sinh",
       flex: 1,
       filter: 'date',
-      renderer: Ext.util.Format.dateRenderer("d/m/Y")
+      // renderer: Ext.util.Format.dateRenderer("d/m/Y")
     },
     {
-      dataIndex: "citizenId",
+      dataIndex: "citizenIdentificationNumber",
       text: "Số CCCD",
       flex: 1,
       filter: 'string',
