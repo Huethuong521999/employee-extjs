@@ -52,6 +52,12 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
+                text: 'Big Data Grid',
+                iconCls: 'x-fa fa-paper-plane',
+                viewType: 'bigdatagridview',
+                leaf: true
+            },
+            {
                 text: 'Email',
                 iconCls: 'x-fa fa-paper-plane',
                 rowCls: 'nav-tree-badge nav-tree-badge-hot',
