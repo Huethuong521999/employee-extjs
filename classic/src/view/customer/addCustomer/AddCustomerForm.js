@@ -44,7 +44,7 @@ Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
 
       dockedItems: [{
         xtype: 'toolbar',
-        buttonAlign: 'right',
+        buttonAlign: 'left',
         dock: 'bottom',
         items: [{
           xtype: "button",

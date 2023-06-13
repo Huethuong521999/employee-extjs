@@ -24,7 +24,9 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
 
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
         let form = Ext.getCmp("diplomaCustomer");
-        form.getForm().setValues(record.getData())
+        let data = record.getData();
+        data.issueDate = Ext.Date.format(new Date(data.issueDate), 'd/m/Y');
+        form.getForm().setValues(data)
     },
 
     handleClear: function (grid, rowIndex, colIndex, item, e, record) {

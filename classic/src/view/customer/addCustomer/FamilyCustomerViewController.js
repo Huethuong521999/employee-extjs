@@ -24,7 +24,9 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
 
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
         let form = Ext.getCmp("familyCustomer");
-        form.getForm().setValues(record.getData())
+        let data = record.getData();
+        data.dateOfBirth = Ext.Date.format(new Date(data.dateOfBirth), 'd/m/Y');
+        form.getForm().setValues(data)
     },
 
     handleClear: function (grid, rowIndex, colIndex, item, e, record) {

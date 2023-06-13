@@ -25,10 +25,13 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                         {
                             fieldLabel: "Tên văn bằng",
                             allowBlank: false,
-                            name: "name",
+                            name: "certificateName",
                             cls: "inputField w-40",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
+                            validator: function (value) {
+                                return value && (!(/[~`!@#$%^&*()+=\-[\]\\';,/{}|\\":<>?0-9]/.test(value)) ? true : "Chỉ được nhập chữ");
+                            },
                         },
                         {
                             fieldLabel: "Lĩnh vực",
@@ -42,7 +45,7 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             xtype: 'datefield',
                             fieldLabel: "Ngày cấp",
                             allowBlank: false,
-                            name: "issuanceDate",
+                            name: "issueDate",
                             cls: "inputField w-20",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
