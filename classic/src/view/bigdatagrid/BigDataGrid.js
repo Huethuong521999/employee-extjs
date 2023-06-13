@@ -24,6 +24,7 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
     },
 
     id: 'big-data-grid',
+    xtype: 'big-data-grid',
     title: 'Big Data Grid',
     plugins: {
         rowexpander: {
@@ -73,7 +74,9 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
                         // Get the selected record
                         let rec = grid.getStore().getAt(rowIndex);
                         // Show the edit form
-                        let editForm = Ext.create('Admin.view.user.UserForm');
+                        let editForm = Ext.create(
+                            'Admin.view.bigdatagrid.BigDataUserForm'
+                        );
                         let controller = editForm.getController();
                         controller.loadRecord(editForm, rec);
                         editForm.show();
