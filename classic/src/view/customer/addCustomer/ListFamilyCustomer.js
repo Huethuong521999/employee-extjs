@@ -47,15 +47,15 @@ Ext.define("Admin.view.customer.addCustomer.ListFamilyCustomer", {
       dataIndex: "dateOfBirth",
       text: "Ngày sinh",
       flex: 1,
-      renderer: Ext.util.Format.dateRenderer("d/m/Y")
+      renderer: Ext.util.Format.dateRenderer("d/m/Y"),
     },
     {
-      dataIndex: "citizenId",
+      dataIndex: "citizenIdentificationNumber",
       text: "Số CCCD",
       flex: 1,
     },
     {
-      dataIndex: "phone",
+      dataIndex: "phoneNumber",
       text: "Số điện thoại",
       flex: 1,
     },

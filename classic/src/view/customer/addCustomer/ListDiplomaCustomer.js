@@ -35,7 +35,7 @@ Ext.define("Admin.view.customer.addCustomer.ListDiplomaCustomer", {
       ],
     },
     {
-      dataIndex: "name",
+      dataIndex: "certificateName",
       text: "Họ và Tên",
       flex: 2.5,
     },
@@ -45,7 +45,7 @@ Ext.define("Admin.view.customer.addCustomer.ListDiplomaCustomer", {
       flex: 1,
     },
     {
-      dataIndex: "issuanceDate",
+      dataIndex: "issueDate",
       text: "Ngày cấp",
       flex: 1,
       renderer: Ext.util.Format.dateRenderer("d/m/Y")
