@@ -1,13 +1,10 @@
 Ext.define("Admin.view.employee.EmployeeForm", {
   extend: "Ext.window.Window",
-  layout: {
-    type: "vbox",
-    align: "stretch",
-  },
+
   controller: "employee",
   layout: "fit",
-  width: '90%',
-  height: '90%',
+  width: "60%",
+  height: "60%",
   resizable: false,
   modal: true,
   closable: true,
@@ -16,46 +13,57 @@ Ext.define("Admin.view.employee.EmployeeForm", {
   items: [
     {
       xtype: "form",
-      reference: "userForm",
-      bodyPadding: 10,
       defaults: {
         xtype: "textfield",
         anchor: "100%",
-        labelWidth: 80,
       },
-      
-      buttons: [
-        {
-          text: "Lưu",
-          handler: function (sender) {
-            let form = this.up("window");
-            let controller = form.getController();
-            controller.handleSave(form);
-          },
+      layout: {
+        type: "vbox",
+        align: "stretch",
+      },
+
+      buttons: {
+        xtype: "container",
+        layout: {
+          type: "hbox",
+          pack: "center",
         },
-        {
-          text: "Trình lãnh đạo",
-          handler: function (sender) {
-            let form = this.up("window").down("form");
-            let value = form.getValues();
-            if (form.isValid()) {
-              
-            } else {
-              Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
-            }
-          },
+        defaults: {
+          xtype: "button",
+          margin: '0 10 10 0'
         },
-        {
-          text: "Đóng",
-          handler: function () {
-            this.up("window").close();
+        items: [
+          {
+            text: "Lưu",
+            handler: function (sender) {
+              let form = this.up("window");
+              let controller = form.getController();
+              controller.handleSave(form);
+            },
           },
-        },
-      ],
+          {
+            text: "Trình lãnh đạo",
+            handler: function (sender) {
+              let form = this.up("window").down("form");
+              let value = form.getValues();
+              if (form.isValid()) {
+              } else {
+                Ext.Msg.alert("Cảnh báo", "Chưa nhập đủ thông tin.");
+              }
+            },
+          },
+          {
+            text: "Đóng",
+            handler: function () {
+              this.up("window").close();
+            },
+          },
+        ],
+      },
 
       items: [
         {
-          xtype: 'employeeTabPanel', // Sử dụng TabPanel từ file riêng
+          xtype: 'tabInfoEmpolyee', // Sử dụng TabPanel từ file riêng
         }
       ],
 
@@ -65,8 +73,8 @@ Ext.define("Admin.view.employee.EmployeeForm", {
         },
         resize: function () {
           this.center();
-        }
-      }
+        },
+      },
     },
   ],
 });

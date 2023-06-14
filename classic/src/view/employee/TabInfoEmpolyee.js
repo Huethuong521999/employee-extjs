@@ -1,99 +1,214 @@
-Ext.define('Admin.view.empolyee.TabInfoEmpolyee', {
-    extend: 'Ext.form.Panel',
-    xtype: 'tabInfoEmpolyee',
-    // ...
-    title: 'Thông tin nhân viên',
-    layout: 'form',
-    items: [
+Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
+  extend: "Ext.form.Panel",
+  xtype: "tabInfoEmpolyee",
+  requires: "Admin.store.Province",
+  // ...
+  // title: 'Thông tin nhân viên',
+  layout: "form",
+  items: [
+    {
+      xtype: "fieldcontainer",
+    //   layout: "column",
+        defaultType: "textfield",
+      items: [
         {
-            xtype: 'fieldcontainer',
-            layout: 'column',
-            defaultType: 'textfield',
-            defaults: {
-                labelAlign: 'top',
+          xtype: "container",
+          layout: {
+            type: "hbox",
+          },
+          defaults: {
+            xtype: "textfield",
+          },
+          items: [
+            // {
+            //   xtype: "hiddenfield",
+            //   name: "id",
+            // },
+            {
+              fieldLabel: "Họ và tên",
+              allowBlank: false,
+              name: "hoTen",
+              labelAlign: "top",
+              flex: 3,
+              width: "250px",
             },
-            items: [
-                {
-                    xtype: "hiddenfield",
-                    name: "id",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.first}",
-                    //   },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Giới tính",
+              allowBlank: false,
+              name: "gioiTinh",
+              labelAlign: "top",
+              flex: 1.2,
+              width: "200px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              xtype: "datefield",
+              fieldLabel: "Ngày sinh",
+              allowBlank: false,
+              name: "ngaySinh",
+              labelAlign: "top",
+              flex: 2,
+              width: "250px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Số CCCD",
+              allowBlank: false,
+              name: "soCccd",
+              labelAlign: "top",
+              flex: 2,
+              width: "250px",
+            },
+          ],
+        },
+        {
+          xtype: "container",
+          layout: {
+            type: "hbox",
+            align: "stretch"
+          },
+          defaults: {
+            xtype: "textfield",
+          },
+          items: [
+            {
+              fieldLabel: "Email",
+              allowBlank: false,
+              vtype: "email",
+              name: "email",
+              labelAlign: "top",
+              width: "250px",
+              height: "63px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Số điện thoại",
+              allowBlank: false,
+              name: "soDienThoai",
+              labelAlign: "top",
+              width: "200px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Nghề nghiệp",
+              allowBlank: false,
+              name: "ngheNghiep",
+              labelAlign: "top",
+              width: "250px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Nơi làm việc",
+              allowBlank: false,
+              name: "ctNoiLamViec",
+              labelAlign: "top",
+              width: "250px",
+            },
+          ],
+        },
+        {
+          xtype: "container",
+          layout: {
+            type: "hbox",
+          },
+          defaults: {
+            xtype: "combobox",
+          },
+          items: [
+            {
+              xtype: "textfield",
+              fieldLabel: "Địa chỉ",
+              allowBlank: false,
+              name: "diaChi",
+              labelAlign: "top",
+              width: "200px",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Xã/Phường/Thị trấn",
+              allowBlank: true,
+              name: "maXa",
+              id: "comboboxXa",
+              labelAlign: "top",
+              width: "250px",
+              displayField: "name",
+              valueField: "code",
+              queryMode: "local",
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Quận/Huyện",
+              allowBlank: true,
+              name: "maHuyen",
+              id: "comboboxHuyen",
+              labelAlign: "top",
+              width: "250px",
+              displayField: "name",
+              valueField: "code",
+              queryMode: "local",
+              listeners: {
+                change: function (field) {
+                  const value = field.getSelection().data.id;
+                  const listWards = [];
+                  Ext.Ajax.request({
+                    url: `http://training-api.oceantech.com.vn/cms/api/districts/${value}/wards`,
+                    method: "GET",
+                    success: function (response) {
+                      var res = Ext.decode(response.responseText);
+                      if (res !== null) {
+                        Ext.each(res.data, function (obj) {
+                          listWards.push(obj);
+                        });
+                        let cbbIdXa = Ext.getCmp("comboboxXa");
+                        cbbIdXa.setStore(listWards);
+                        cbbIdXa.clearValue();
+                      }
+                    },
+                    failure: function (response) {},
+                  });
                 },
-                {
-                    fieldLabel: "Họ và tên",
-                    allowBlank: false,
-                    name: "hoTen",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.first}",
-                    //   },
+              },
+            },
+            { xtype: "tbspacer", width: 12 },
+            {
+              fieldLabel: "Tỉnh/Thành phố",
+              allowBlank: true,
+              name: "maTinh",
+              labelAlign: "top",
+              width: "250px",
+              displayField: "name",
+              valueField: "code",
+              queryMode: "local",
+              store: {
+                type: "province",
+              },
+              listeners: {
+                change: function (field) {
+                  const value = field.getSelection().data.id;
+                  const listDistricts = [];
+                  Ext.Ajax.request({
+                    url: `http://training-api.oceantech.com.vn/cms/api/provinces/${value}/districts`,
+                    method: "GET",
+                    success: function (response) {
+                      var res = Ext.decode(response.responseText);
+                      if (res !== null) {
+                        Ext.each(res.data, function (obj) {
+                          listDistricts.push(obj);
+                        });
+                        let cbbIdHuyen = Ext.getCmp("comboboxHuyen");
+                        cbbIdHuyen.setStore(listDistricts);
+                        cbbIdHuyen.clearValue();
+                      }
+                    },
+                    failure: function (response) {},
+                  });
                 },
-                {
-                    fieldLabel: "Giới tính",
-                    allowBlank: false,
-                    name: "gioiTinh",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.last}",
-                    //   },
-                },
-                {
-                    xtype: 'datefield',
-                    fieldLabel: "Ngày sinh",
-                    allowBlank: false,
-                    name: "ngaySinh",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.age}",
-                    //   },
-                },
-                {
-                    fieldLabel: "Số CCCD",
-                    allowBlank: false,
-                    name: "soCccd",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.first}",
-                    //   },
-                },
-                {
-                    fieldLabel: "Email",
-                    allowBlank: false,
-                    //   vtype: "email",
-                    name: "email",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.email}",
-                    //   },
-                },
-                {
-                    fieldLabel: "Số điện thoại",
-                    allowBlank: false,
-                    name: "soDienThoai",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.first}",
-                    //   },
-                },
-                {
-                    fieldLabel: "Địa chỉ",
-                    allowBlank: false,
-                    name: "diaChi",
-                    cls: "inputField",
-
-                    //   bind: {
-                    //     value: "{currentUser.name.first}",
-                    //   },
-                },
-            ]
-        }
-    ]
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
 });
