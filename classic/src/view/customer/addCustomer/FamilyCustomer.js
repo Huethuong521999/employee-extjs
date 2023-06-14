@@ -27,7 +27,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Họ và tên",
                             allowBlank: false,
                             name: "name",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
@@ -39,23 +39,35 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Ngày sinh",
                             allowBlank: false,
                             name: "dateOfBirth",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {
-                            fieldLabel: "Giới tính",
+                            xtype: 'combobox',
+                            fieldLabel: 'Giới tính',
+                            name: 'gender',
+                            store: Ext.create('Ext.data.Store', {
+                                fields: ['value', 'label'],
+                                data: [
+                                    { value: '0', label: 'Nam' },
+                                    { value: '1', label: 'Nữ' },
+                                    { value: '2', label: 'Khác' }
+                                ]
+                            }),
+                            queryMode: 'local',
+                            editable: false,
+                            displayField: 'label',
+                            valueField: 'value',
                             allowBlank: false,
-                            name: "gender",
-                            cls: "inputField w-25",
-                            // msgTarget: 'under',
-                            blankText: 'Trường này là trường bắt buộc',
+                            cls: "inputField w-33",
+                            emptyText: 'Chọn giới tính...'
                         },
                         {
                             fieldLabel: "Số CCCD",
                             allowBlank: false,
                             name: "citizenIdentificationNumber",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
@@ -63,18 +75,34 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             },
                         },
                         {
-                            fieldLabel: "Mối quan hệ",
+                            xtype: 'combobox',
+                            fieldLabel: 'Mối quan hệ',
+                            name: 'relationShip',
+                            store: Ext.create('Ext.data.Store', {
+                                fields: ['value', 'label'],
+                                data: [
+                                    { value: '0', label: 'Ông' },
+                                    { value: '1', label: 'Bà' },
+                                    { value: '2', label: 'Bố' },
+                                    { value: '3', label: 'Mẹ' },
+                                    { value: '4', label: 'Anh' },
+                                    { value: '5', label: 'Chị' },
+                                    { value: '6', label: 'Em' },
+                                ]
+                            }),
+                            queryMode: 'local',
+                            editable: false,
+                            displayField: 'label',
+                            valueField: 'value',
                             allowBlank: false,
-                            name: "relationShip",
-                            cls: "inputField w-25",
-                            // msgTarget: 'under',
-                            blankText: 'Trường này là trường bắt buộc',
+                            cls: "inputField w-33",
+                            emptyText: 'Chọn mối quan hệ...'
                         },
                         {
                             fieldLabel: "Số điện thoại",
                             allowBlank: false,
                             name: "phoneNumber",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
@@ -85,7 +113,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Địa chỉ",
                             allowBlank: false,
                             name: "address",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                         },
@@ -93,7 +121,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Email",
                             allowBlank: false,
                             name: "email",
-                            cls: "inputField w-25",
+                            cls: "inputField w-33",
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
@@ -103,7 +131,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                         {
                             xtype: 'container',
                             layout: 'hbox',
-                            cls: 'inputField w-25',
+                            cls: 'buttonContainer inputField w-33',
                             items: [
                                 {
                                     xtype: 'button',

@@ -2,6 +2,7 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
     extend: 'Ext.form.Panel',
     xtype: 'tabInfoCustomer',
     title: 'Thông tin nhân viên',
+    id: "tabInfoCustomer",
     items: [
         {
             xtype: 'fieldcontainer',
@@ -93,12 +94,24 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
-                    fieldLabel: "Giới tính",
+                    xtype: 'combobox',
+                    fieldLabel: 'Giới tính',
+                    name: 'gender',
+                    store: Ext.create('Ext.data.Store', {
+                        fields: ['value', 'label'],
+                        data: [
+                            { value: '0', label: 'Nam' },
+                            { value: '1', label: 'Nữ' },
+                            { value: '2', label: 'Khác' }
+                        ]
+                    }),
+                    queryMode: 'local',
+                    editable: false,
+                    displayField: 'label',
+                    valueField: 'value',
                     allowBlank: false,
-                    name: "gender",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
-                    blankText: 'Trường này là trường bắt buộc',
+                    emptyText: 'Chọn giới tính...'
                 },
                 {
                     fieldLabel: "Tôn giáo",
@@ -126,12 +139,24 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
-                    fieldLabel: "Team",
+                    xtype: 'combobox',
+                    fieldLabel: 'Team',
+                    name: 'team',
+                    store: Ext.create('Ext.data.Store', {
+                        fields: ['value', 'label'],
+                        data: [
+                            { value: 1, label: 'Backend' },
+                            { value: 2, label: 'Frontend' },
+                            { value: 3, label: 'FullStack' }
+                        ]
+                    }),
+                    queryMode: 'local',
+                    editable: false,
+                    displayField: 'label',
+                    valueField: 'value',
                     allowBlank: false,
-                    name: "team",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
-                    blankText: 'Trường này là trường bắt buộc',
+                    emptyText: 'Chọn team...'
                 },
             ]
         }

@@ -6,8 +6,8 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
     let form = window.down("form");
     let formInfo = window.down("tabInfoCustomer");
     let store = Ext.getCmp("list-customer").getStore();
-    let valuesFormFamily = Ext.getCmp("list-family-customer").getStore().getRange();
-    let valuesFormDiploma = Ext.getCmp("list-diploma-customer").getStore().getRange();
+    let valuesFormFamily = Ext.getCmp("list-family-customer").getStore().getRange() || [];
+    let valuesFormDiploma = Ext.getCmp("list-diploma-customer").getStore().getRange() || [];
 
     let dataFamily = [];
     let dataDiploma = [];
@@ -35,18 +35,23 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
         employeeFamilyDtos: dataFamily,
       }
 
-      if (data?.id) {
+      if (data.id) {
         Ext.Ajax.request({
           url: `https://em-v2.oceantech.com.vn/em/employee/${data.id}`,
           method: 'PUT',
           headers: {
-            'Authorization': 'Bearer ed568912-5af9-44a7-b861-38b85a771ad4',
+            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
           },
           jsonData: data,
           success: function (response) {
-            store.load();
-            form.reset();
-            window.close();
+            let data = Ext.decode(response.responseText);
+            if (data.code === 200) {
+              store.load();
+              form.reset();
+              window.close();
+              return;
+            }
+            Ext.Msg.alert('Lỗi', data.message);
           },
           failure: function (response) {
             Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
@@ -57,13 +62,18 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
           url: 'https://em-v2.oceantech.com.vn/em/employee',
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer ed568912-5af9-44a7-b861-38b85a771ad4',
+            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
           },
           jsonData: data,
           success: function (response) {
-            store.load();
-            form.reset();
-            window.close();
+            let data = Ext.decode(response.responseText);
+            if (data.code === 200) {
+              store.load();
+              form.reset();
+              window.close();
+              return;
+            }
+            Ext.Msg.alert('Lỗi', data.message);
           },
           failure: function (response) {
             Ext.Msg.alert('Lỗi', 'Thêm mới thất bại.');
