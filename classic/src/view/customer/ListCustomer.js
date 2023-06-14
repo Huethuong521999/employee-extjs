@@ -119,4 +119,12 @@ Ext.define("Admin.view.customer.ListCustomer", {
       filter: 'string',
     },
   ],
+
+  // bbar: {
+  //   xtype: 'pagingtoolbar',
+  //   displayInfo: true,
+  //   bind: {
+  //     store: '{customer}'
+  //   }
+  // },
 });
