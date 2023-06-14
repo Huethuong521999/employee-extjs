@@ -31,6 +31,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
     if (formInfo.isValid()) {
       let data = {
         ...values,
+        submitProfileStatus: 1,
         certificatesDto: dataDiploma,
         employeeFamilyDtos: dataFamily,
       }
