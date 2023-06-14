@@ -15,16 +15,36 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
 
   items: [
     {
-      xtype: "form",
-      bodyPadding: 10,
+      xtype: "container",
+      padding: 10,
       layout: {
         type: "vbox",
         align: "stretch",
-        pack: "center", // Center-align items vertically
       },
       defaults: {
         xtype: "grid",
         anchor: "100%",
+      },
+      listeners: {
+        render: function (container) {
+          container.getEl().on("dragover", function (event) {
+            event.stopEvent();
+          });
+
+          container.getEl().on("drop", function (event) {
+            event.stopEvent();
+
+            var files = event.browserEvent.dataTransfer.files;
+
+            if (files.length > 0) {
+              var filefield = Ext.getCmp("AttachData");
+              filefield.fileInputEl.dom.files = files;
+              filefield.inputEl.dom.value = files[0].name;
+
+              container.updateLayout();
+            }
+          });
+        },
       },
       items: [
         {
@@ -66,8 +86,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
                 let arr = selectedRecords.map((record) => record.getData());
                 let grid = Ext.getCmp("list-category-check").getStore().config
                   .data;
-                let file =
-                  this.up("form").down("filefield").fileInputEl.dom.files[0];
+                let file = Ext.getCmp("AttachData").fileInputEl.dom.files[0];
 
                 arr.map((record) => {
                   if (grid.some((item) => item.id === record.id)) {
@@ -84,16 +103,11 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
                 // upload file lên api
                 formData = new FormData();
                 formData.append("file", file);
-                
+
                 Ext.Ajax.request({
                   url: "https://api.escuelajs.co/api/v1/files/upload",
                   rawData: formData,
                   method: "POST",
-                  // headers: { "Content-Type": "multipart/form-data", "Content-Disposition": "form-data" },
-                  // beforeSend: function( xhr, settings ) {
-                  //   xhr.setRequestHeader('X-Requested-With', undefined);
-                  //   xhr.setRequestHeader('Access-Control-Request-Headers', 'content-disposition')
-                  // },
                   headers: {
                     "Content-Type": null,
                   },
@@ -113,6 +127,8 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
               text: "Đóng",
               handler: function () {
                 this.up("window").close();
+                let listRecords = Ext.getCmp("list-category");
+                listRecords.getSelectionModel().deselectAll(); //bỏ tích chọn khi đóng dialog
               },
             },
           ],

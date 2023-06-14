@@ -149,24 +149,29 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               queryMode: "local",
               listeners: {
                 change: function (field) {
-                  const value = field.getSelection().data.id;
-                  const listWards = [];
-                  Ext.Ajax.request({
-                    url: `http://training-api.oceantech.com.vn/cms/api/districts/${value}/wards`,
-                    method: "GET",
-                    success: function (response) {
-                      var res = Ext.decode(response.responseText);
-                      if (res !== null) {
-                        Ext.each(res.data, function (obj) {
-                          listWards.push(obj);
-                        });
-                        let cbbIdXa = Ext.getCmp("comboboxXa");
-                        cbbIdXa.setStore(listWards);
-                        cbbIdXa.clearValue();
-                      }
-                    },
-                    failure: function (response) {},
-                  });
+                  const selection = field.getSelection();
+                  const cbbIdXa = Ext.getCmp("comboboxXa");
+
+                  if (selection) {
+                    const value = selection.data.id;
+  
+                    const listWards = [];
+                    Ext.Ajax.request({
+                      url: `http://training-api.oceantech.com.vn/cms/api/districts/${value}/wards`,
+                      method: "GET",
+                      success: function (response) {
+                        var res = Ext.decode(response.responseText);
+                        if (res !== null) {
+                          Ext.each(res.data, function (obj) {
+                            listWards.push(obj);
+                          });
+                          cbbIdXa.setStore(listWards);
+                        }
+                      },
+                      failure: function (response) {},
+                    });
+                  }
+                  cbbIdXa.clearValue(); //clear xã khi select lại huyện
                 },
               },
             },
@@ -198,7 +203,8 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
                         });
                         let cbbIdHuyen = Ext.getCmp("comboboxHuyen");
                         cbbIdHuyen.setStore(listDistricts);
-                        cbbIdHuyen.clearValue();
+                        cbbIdHuyen.clearValue(); //clear huyện khi select lại tỉnh
+                        let cbbIdXa = Ext.getCmp("comboboxXa").clearValue(); //clear xã khi select lại tỉnh
                       }
                     },
                     failure: function (response) {},
