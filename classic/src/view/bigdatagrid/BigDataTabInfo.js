@@ -52,7 +52,6 @@ Ext.define('Admin.view.user.BigDataTabInfo', {
                     xtype: 'checkbox',
                     fieldLabel: 'Trạng thái',
                     name: 'isVerified',
-                    id: 'isVerified',
                     cls: 'inputField',
                     responsiveConfig: {
                         'width >= 768': {

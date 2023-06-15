@@ -1,7 +1,6 @@
 Ext.define('Admin.view.user.TabMoreInfo', {
     extend: 'Ext.form.Panel',
     xtype: 'tabMoreInfo',
-    // ...
     title: 'Thông tin thêm',
     layout: 'form',
     items: [

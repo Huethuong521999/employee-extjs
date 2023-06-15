@@ -20,11 +20,6 @@ Ext.define('Admin.view.user.User', {
         }
     ],
     listeners: {
-        resize: function () {
-            let a = Ext.getCmp('form-user');
-            if (a) {
-                a.center();
-            }
-        }
+        resize: 'handleCenterForm'
     }
 });
