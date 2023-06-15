@@ -3,6 +3,10 @@ Ext.define('Admin.view.user2.User', {
     padding: '10px',
     xtype: 'user2',
 
+    viewModel: {
+        type: 'user2'
+    },
+
     requires: ['Admin.view.user2.UserList'],
 
     items: [

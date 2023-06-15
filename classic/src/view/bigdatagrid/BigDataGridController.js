@@ -2,6 +2,14 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.bigdatagridcontroller',
 
+    init: function () {
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('bigdatagrid');
+        if (store) {
+            store.loadStore();
+        }
+    },
+
     openAddForm: function () {
         let windowForm = Ext.create('Admin.view.bigdatagrid.BigDataUserForm', {
             record: null
@@ -10,14 +18,22 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
         windowForm.show();
     },
 
-    handleSave: function (window) {
+    handleEdit: function (grid, rowIndex) {
+        let record = grid.getStore().getAt(rowIndex);
+        let form = Ext.create('Admin.view.bigdatagrid.BigDataUserForm');
+        this.loadRecord(form, record);
+        form.show();
+    },
+
+    handleSave: function (thisForm) {
+        let window = thisForm.up('window');
         let form = window.down('form');
         let values = form.getValues();
-        let store = Ext.getCmp('big-data-grid').getStore();
+        let store = Ext.data.StoreManager.lookup('big-data-grid');
+        console.log(store);
         if (form.isValid()) {
             if (form.action === 'edit') {
                 let record = store.getById(values.id);
-                console.log(values);
                 record.set(values);
             } else {
                 values.id = store.getCount() + 1;
@@ -30,22 +46,8 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
         }
     },
 
-    nameSorter: function (rec1, rec2) {
-        console.log('fsgrg');
-        var rec1Name = rec1.get('surname') + rec1.get('forename'),
-            rec2Name = rec2.get('surname') + rec2.get('forename');
-
-        if (rec1Name > rec2Name) {
-            return 1;
-        }
-
-        if (rec1Name < rec2Name) {
-            return -1;
-        }
-
-        return 0;
-    },
-    handleDelete: function (sender, record) {
+    handleDelete: function (grid, rowIndex) {
+        let record = grid.getStore().getAt(rowIndex);
         Ext.Msg.show({
             title: 'Xác nhận',
             msg: 'Bạn có chắc chắn muốn xóa bản ghi này không?',
@@ -57,14 +59,24 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
                 no: 'Hủy'
             },
             multiline: false,
-            fn: function (buttonValue, inputText, showConfig) {
+            fn: function (buttonValue) {
                 if (buttonValue === 'yes') {
-                    let store = Ext.getCmp('big-data-grid').getStore();
+                    let store = Ext.data.StoreManager.lookup('big-data-grid');
                     store.remove(record);
                 }
             },
             icon: Ext.Msg.QUESTION
         });
+    },
+    handleClose: function (thisForm) {
+        thisForm.up('window').close();
+    },
+    rerenderCheckbox: function (value) {
+        return (
+            "<input type='checkbox'" +
+            (value ? "checked='checked'" : '') +
+            ' / >'
+        );
     },
     loadRecord: function (windowForm, record) {
         let form = windowForm.down('form');

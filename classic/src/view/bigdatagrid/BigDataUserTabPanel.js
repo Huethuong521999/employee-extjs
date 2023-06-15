@@ -6,7 +6,6 @@ Ext.define('Admin.view.bigdatagrid.BigDataUserTabPanel', {
 
     items: [
         {
-            id: 'big-data-user-tab-panel',
             xtype: 'tabpanel',
             items: [
                 {

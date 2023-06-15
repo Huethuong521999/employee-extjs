@@ -70,28 +70,12 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
                 {
                     iconCls: 'x-fa fa-edit',
                     tooltip: 'Chỉnh sửa',
-                    handler: function (grid, rowIndex, colIndex) {
-                        // Get the selected record
-                        let rec = grid.getStore().getAt(rowIndex);
-                        // Show the edit form
-                        let editForm = Ext.create(
-                            'Admin.view.bigdatagrid.BigDataUserForm'
-                        );
-                        let controller = editForm.getController();
-                        controller.loadRecord(editForm, rec);
-                        editForm.show();
-                    }
+                    handler: 'handleEdit'
                 },
                 {
                     iconCls: 'fa fa-trash',
                     tooltip: 'Xóa',
-                    handler: function (grid, rowIndex, colIndex) {
-                        let rec = grid.getStore().getAt(rowIndex);
-                        let controller = grid
-                            .up('big-data-grid')
-                            .getController();
-                        controller.handleDelete(this, rec);
-                    }
+                    handler: 'handleDelete'
                 }
             ]
         },
@@ -106,10 +90,7 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
             text: 'Họ và tên',
             align: 'left',
             flex: 1.5,
-            sortable: true,
-            sorter: {
-                sorterFn: 'nameSorter'
-            }
+            sortable: true
         },
         {
             dataIndex: 'isVerified',
@@ -117,13 +98,7 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
             align: 'center',
             width: 100,
             showHeaderCheckbox: true,
-            renderer: function (value) {
-                return (
-                    "<input type='checkbox'" +
-                    (value ? "checked='checked'" : '') +
-                    ' / >'
-                );
-            }
+            renderer: 'rerenderCheckbox'
         },
         {
             text: 'Đánh giá',

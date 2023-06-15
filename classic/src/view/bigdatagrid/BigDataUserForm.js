@@ -12,7 +12,6 @@ Ext.define('Admin.view.bigdatagrid.BigDataUserForm', {
     resizable: false,
     modal: true,
     closable: true,
-    id: 'big-data-form-user',
 
     items: [
         {
@@ -28,17 +27,11 @@ Ext.define('Admin.view.bigdatagrid.BigDataUserForm', {
             buttons: [
                 {
                     text: 'Lưu',
-                    handler: function (sender) {
-                        let form = this.up('window');
-                        let controller = form.getController();
-                        controller.handleSave(form);
-                    }
+                    handler: 'handleSave'
                 },
                 {
                     text: 'Đóng',
-                    handler: function () {
-                        this.up('window').close();
-                    }
+                    handler: 'handleClose'
                 }
             ],
 
