@@ -3,6 +3,14 @@ Ext.define('Admin.view.user.UserController', {
 
     alias: 'controller.user',
 
+    init: function () {
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('user');
+        if (store) {
+            store.loadStore();
+        }
+    },
+
     onOpenUserForm: function () {
         let windowForm = Ext.create('Admin.view.user.UserForm', {
             record: null
@@ -11,7 +19,12 @@ Ext.define('Admin.view.user.UserController', {
         windowForm.show();
     },
 
-    handleSave: function (window) {
+    handleClose: function (thisForm) {
+        thisForm.up('window').close();
+    },
+
+    handleSave: function (thisForm) {
+        let window = thisForm.up('window');
         let form = window.down('form');
         let values = form.getValues();
         let checkbox = Ext.getCmp('moreInfoCheckbox');
@@ -38,7 +51,32 @@ Ext.define('Admin.view.user.UserController', {
         }
     },
 
-    handleDelete: function (sender, record) {
+    handleCheckMoreInfo: function (checkbox) {
+        const tabMoreInfo = Ext.getCmp('user-tab-panel').child('#tabMoreInfo');
+        if (checkbox.checked) {
+            tabMoreInfo.tab.show();
+        } else {
+            tabMoreInfo.tab.hide();
+        }
+    },
+
+    handleCenterForm: function () {
+        let form = Ext.getCmp('form-user');
+        if (form) {
+            form.center();
+        }
+    },
+
+    handleEdit: function (grid, rowIndex, colIndex) {
+        let rec = grid.getStore().getAt(rowIndex);
+        let editForm = Ext.create('Admin.view.user.UserForm');
+        let controller = editForm.getController();
+        controller.loadRecord(editForm, rec);
+        editForm.show();
+    },
+
+    handleDelete: function (grid, rowIndex) {
+        let record = grid.getStore().getAt(rowIndex);
         Ext.Msg.show({
             title: 'Xác nhận',
             msg: 'Bạn có chắc chắn muốn xóa bản ghi này không?',
@@ -50,9 +88,9 @@ Ext.define('Admin.view.user.UserController', {
                 no: 'Hủy'
             },
             multiline: false,
-            fn: function (buttonValue, inputText, showConfig) {
+            fn: function (buttonValue) {
                 if (buttonValue === 'yes') {
-                    let store = Ext.getCmp('list-user').getStore();
+                    let store = Ext.data.StoreManager.lookup('user');
                     store.remove(record);
                 }
             },

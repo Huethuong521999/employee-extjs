@@ -3,6 +3,7 @@ Ext.define('Admin.view.user.TabInfo', {
     xtype: 'tabInfo',
     title: 'Thông tin người dùng',
     layout: 'form',
+    controller: 'user',
 
     items: [
         {
@@ -94,15 +95,7 @@ Ext.define('Admin.view.user.TabInfo', {
                     fieldLabel: 'Thêm thông tin',
                     id: 'moreInfoCheckbox',
                     cls: 'inputField',
-                    handler: function () {
-                        const tabMoreInfo =
-                            Ext.getCmp('user-tab-panel').child('#tabMoreInfo');
-                        if (this.checked) {
-                            tabMoreInfo.tab.show();
-                        } else {
-                            tabMoreInfo.tab.hide();
-                        }
-                    }
+                    handler: 'handleCheckMoreInfo'
                 }
             ]
         }

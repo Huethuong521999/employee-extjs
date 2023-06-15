@@ -28,17 +28,11 @@ Ext.define('Admin.view.user.UserForm', {
             buttons: [
                 {
                     text: 'Lưu',
-                    handler: function (sender) {
-                        let form = this.up('window');
-                        let controller = form.getController();
-                        controller.handleSave(form);
-                    }
+                    handler: 'handleSave'
                 },
                 {
                     text: 'Đóng',
-                    handler: function () {
-                        this.up('window').close();
-                    }
+                    handler: 'handleClose'
                 }
             ],
 
