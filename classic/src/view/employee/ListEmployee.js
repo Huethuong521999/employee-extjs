@@ -4,7 +4,7 @@ Ext.define("Admin.view.employee.ListEmployee", {
   xtype: "list-employee",
 
   viewModel: {
-    type: "employee",
+    type: "employeeviewmodel",
   },
 
   controller: "employee",
