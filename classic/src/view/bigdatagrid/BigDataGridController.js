@@ -30,7 +30,6 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
         let form = window.down('form');
         let values = form.getValues();
         let store = Ext.data.StoreManager.lookup('big-data-grid');
-        console.log(store);
         if (form.isValid()) {
             if (form.action === 'edit') {
                 let record = store.getById(values.id);
