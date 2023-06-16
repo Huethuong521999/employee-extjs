@@ -3,21 +3,21 @@ Ext.define("Admin.view.customer.CustomerController", {
 
   alias: "controller.customer",
 
+  init: function () {
+    let viewModel = this.getViewModel();
+    let customerStore = viewModel.getStore("customer");
+    customerStore.loadStore();
+  },
+
   onOpenCustomerForm: function () {
     let createForm = Ext.create('Admin.view.customer.addCustomer.AddCustomerForm');
-    let formFamily = Ext.getCmp("list-family-customer");
-    let formDiploma = Ext.getCmp("list-diploma-customer");
-    formFamily.setStore([]);
-    formDiploma.setStore([]);
     createForm.show()
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
-    let rec = grid.getStore().getAt(rowIndex);
+    let thisCustomer = this;
     let editForm = Ext.create("Admin.view.customer.addCustomer.AddCustomerForm");
     let form = editForm.down("form");
-    let formFamily = Ext.getCmp("list-family-customer");
-    let formDiploma = Ext.getCmp("list-diploma-customer");
 
     if (record.id) {
       Ext.Ajax.request({
@@ -26,12 +26,14 @@ Ext.define("Admin.view.customer.CustomerController", {
         headers: {
           'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
         },
+        listeners: {
+          exception: function (proxy, response, operation) {
+            customerStore.checkToken(proxy, response, operation);
+          }
+        },
         success: function (response) {
           let data = Ext.decode(response.responseText);
           let employee = data.data;
-
-          // employee.dateOfIssuanceCard = Ext.Date.format(new Date(employee.dateOfIssuanceCard), 'd/m/Y');
-          // employee.dateOfBirth = Ext.Date.format(new Date(employee.dateOfBirth), 'd/m/Y');
 
           if (employee.employeeFamilyDtos && employee.employeeFamilyDtos.length) {
             employee.employeeFamilyDtos.forEach(element => {
@@ -48,8 +50,8 @@ Ext.define("Admin.view.customer.CustomerController", {
           if (employee) {
             editForm.setTitle("Sửa thông tin nhân viên");
             form.action = "edit";
-            formFamily.setStore(employee.employeeFamilyDtos || []);
-            formDiploma.setStore(employee.certificatesDto || []);
+            thisCustomer.fireEvent('DataFamily', employee.employeeFamilyDtos || []);
+            thisCustomer.fireEvent('DataDiploma', employee.certificatesDto || []);
             form.getForm().setValues(employee);
           } else {
             editForm.setTitle("Thêm mới thông tin nhân viên");
@@ -80,7 +82,9 @@ Ext.define("Admin.view.customer.CustomerController", {
     }
   },
 
-  handleDelete: function (sender, record) {
+  handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
+    let viewModel = this.getViewModel();
+    let store = viewModel.getStore('customer');
     Ext.Msg.show({
       title: "Xác nhận",
       msg: "Bạn có chắc chắn muốn xóa bản ghi này không?",
@@ -94,7 +98,6 @@ Ext.define("Admin.view.customer.CustomerController", {
       multiline: false,
       fn: function (buttonValue, inputText, showConfig) {
         if (buttonValue === "yes") {
-          let store = Ext.getCmp("list-customer").getStore();
           Ext.Ajax.request({
             url: `https://em-v2.oceantech.com.vn/em/employee/${record.id}`,
             method: 'DELETE',
@@ -113,4 +116,23 @@ Ext.define("Admin.view.customer.CustomerController", {
       icon: Ext.Msg.QUESTION,
     });
   },
+
+  CheckGender: function (value) {
+    let data = [
+      { value: '0', label: 'Nam' },
+      { value: '1', label: 'Nữ' },
+      { value: '2', label: 'Khác' }
+    ]
+    let gender = data.find(item => item.value === value.toString())
+    return `<span>${gender.label}</span>`
+  },
+
+  formatDate: function (value) {
+    let newDate = new Date(value);
+    if (value) {
+      return Ext.Date.format(newDate, 'd-m-Y')
+    }
+    return ""; 
+  },
+
 });

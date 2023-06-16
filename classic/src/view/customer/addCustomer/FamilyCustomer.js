@@ -3,8 +3,16 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
     xtype: 'tabFamilyCustomer',
     title: 'Quan hệ gia đình',
 
+    requires: [
+        "Admin.view.customer.addCustomer.FamilyCustomerViewController",
+        "Admin.view.customer.addCustomer.FamilyCustomerViewModel",
+    ],
+
     controller: 'familyCustomer',
-    id: "familyCustomer",
+    viewModel: {
+        type: "familyCustomer",
+    },
+    reference: 'familyForm',
 
     items: [
         {

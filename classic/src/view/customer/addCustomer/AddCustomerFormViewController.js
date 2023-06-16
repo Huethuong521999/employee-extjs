@@ -2,12 +2,14 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
   extend: 'Ext.app.ViewController',
   alias: 'controller.AddCustomer',
 
-  handleSave: function (window) {
-    let form = window.down("form");
-    let formInfo = window.down("tabInfoCustomer");
-    let store = Ext.getCmp("list-customer").getStore();
-    let valuesFormFamily = Ext.getCmp("list-family-customer").getStore().getRange() || [];
-    let valuesFormDiploma = Ext.getCmp("list-diploma-customer").getStore().getRange() || [];
+  handleSave: function () {
+    let view = this.getView();
+    let form = view.down("form");
+    let tabPanel = view.down('tabpanel');
+    let formInfo = view.down("tabInfoCustomer");
+    let valuesFormFamily = tabPanel.down('list-family-customer').getStore().getRange() || [];
+    let valuesFormDiploma = tabPanel.down('list-diploma-customer').getStore().getRange() || [];
+    let store = Ext.data.StoreManager.lookup('customerStoreId');
 
     let dataFamily = [];
     let dataDiploma = [];
@@ -49,7 +51,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
             if (data.code === 200) {
               store.load();
               form.reset();
-              window.close();
+              view.close();
               return;
             }
             Ext.Msg.alert('Lỗi', data.message);
@@ -71,7 +73,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
             if (data.code === 200) {
               store.load();
               form.reset();
-              window.close();
+              view.close();
               return;
             }
             Ext.Msg.alert('Lỗi', data.message);
@@ -85,4 +87,8 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
       Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');
     }
   },
+
+  handleClose: function () {
+    let window = this.getView().close();
+  }
 });

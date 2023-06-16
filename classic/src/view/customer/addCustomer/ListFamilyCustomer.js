@@ -5,15 +5,19 @@ Ext.define("Admin.view.customer.addCustomer.ListFamilyCustomer", {
 
   requires: [
     "Admin.view.customer.addCustomer.FamilyCustomerViewController",
+    "Admin.view.customer.addCustomer.FamilyCustomerViewModel",
   ],
 
   controller: 'familyCustomer',
-
+  viewModel: {
+    type: "familyCustomer",
+  },
 
   bind: {
-    store: '{familyRelationsStore}'
+    store: '{employeeFamilyDtos}'
   },
-  id: "list-family-customer",
+
+  reference: "list-family-customer",
   columns: [
     {
       xtype: "actioncolumn",
@@ -42,6 +46,7 @@ Ext.define("Admin.view.customer.addCustomer.ListFamilyCustomer", {
       dataIndex: "gender",
       text: "Giới tính",
       flex: 1,
+      renderer : "CheckGender"
     },
     {
       dataIndex: "dateOfBirth",
@@ -60,4 +65,7 @@ Ext.define("Admin.view.customer.addCustomer.ListFamilyCustomer", {
       flex: 1,
     },
   ],
+  listeners: {
+    handleEdit: 'handleEdit'
+  }
 });

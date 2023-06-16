@@ -50,19 +50,13 @@ Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
           xtype: "button",
           ui: 'gray',
           text: "Đóng",
-          handler: function () {
-            this.up("window").close();
-          },
+          handler: "handleClose" 
         },
         {
           xtype: "button",
           text: "Lưu",
           ui: 'soft-red',
-          handler: function (sender) {
-            let form = this.up("window");
-            let controller = form.getController();
-            controller.handleSave(form);
-          }
+          handler: "handleSave",
         }]
       }],
 
