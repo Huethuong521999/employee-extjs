@@ -6,6 +6,7 @@ Ext.define('Admin.view.user2.User', {
     viewModel: {
         type: 'user2'
     },
+    controller: 'user2',
 
     requires: ['Admin.view.user2.UserList'],
 
@@ -16,24 +17,23 @@ Ext.define('Admin.view.user2.User', {
         {
             margin: '20px 0 0 0',
             xtype: 'combobox',
-            reference: 'states',
-            pageSize: 10,
+            reference: 'name',
             publishes: 'value',
-            fieldLabel: 'Select Employee',
-            displayField: 'firstName',
+            fieldLabel: 'Chọn thành phố',
+            displayField: 'name',
             enableKeyEvents: true,
             typeAhead: true,
             triggerAction: 'all',
             editable: true,
-            listConfig: {
-                minWidth: 500
-            },
             store: {
                 type: 'userlarge'
             },
             minChars: 0,
             queryParam: 'q',
-            queryMode: 'remote'
+            queryMode: 'remote',
+            listeners: {
+                change: 'handleChangeInput'
+            }
         }
     ]
 });
