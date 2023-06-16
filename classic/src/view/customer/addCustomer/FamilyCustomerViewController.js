@@ -3,16 +3,39 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
 
     alias: "controller.familyCustomer",
 
+    init: function () {
+        this.listen({
+            controller: {
+                '*': {
+                    DataFamily: 'setData'
+                }
+            }
+        });
+    },
+
+    setData: function (data) {
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('employeeFamilyDtos');
+
+        if (store) {
+            store.loadData(data);
+        }
+    },
+
     handleSubmitFamily: function (sender, record) {
-        let form = this.getView().getForm();
-        let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
+        let view = this.getView();
+        let form = view.getForm();
+        let viewModel = this.getViewModel();
+        // let store = viewModel.getStore('employeeFamilyDtos');
+        let store = view.up('tabpanel').down('list-family-customer').getStore();
+        let formInfo = view.up('tabpanel').down('tabInfoCustomer').getValues();
+
         let values = {
             ...form.getValues(),
             dateOfBirth: Ext.Date.format(new Date(form.getValues().dateOfBirth), 'Y-m-d'),
             employeeId: formInfo.id ? formInfo.id : null
         };
 
-        let store = Ext.getCmp("list-family-customer").getStore();
         let listData = store.getRange() || [];
         let dataFamily = [];
 
@@ -53,7 +76,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
                 form.reset();
             } else {
                 if (formInfo.id) {
-                    formInfo.id && Ext.Ajax.request({
+                    Ext.Ajax.request({
                         url: `https://em-v2.oceantech.com.vn/em/employee-family?employeeId=${formInfo.id}`,
                         method: 'POST',
                         headers: {
@@ -63,8 +86,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
                         success: function (response) {
                             let data = Ext.decode(response.responseText);
                             if (data.code === 200) {
-                                values.id = store.getCount() + 1;
-                                store.add(values);
+                                store.loadData(data.data);
                                 form.reset();
                                 return;
                             }
@@ -86,10 +108,10 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
     },
 
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
-        let form = Ext.getCmp("familyCustomer");
+        let form = this.getView().up('form').getForm();
         let data = record.getData();
         data.dateOfBirth = Ext.Date.format(new Date(data.dateOfBirth), 'd/m/Y');
-        form.getForm().setValues(data)
+        form.setValues(data);
     },
 
     handleClear: function (grid, rowIndex, colIndex, item, e, record) {
@@ -99,7 +121,8 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
 
     handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
         let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
-        let store = Ext.getCmp("list-family-customer").getStore();
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('employeeFamilyDtos');
         Ext.Msg.show({
             title: "Xác nhận",
             msg: "Bạn có chắc chắn muốn xóa bản ghi này không?",
@@ -135,4 +158,14 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
             icon: Ext.Msg.QUESTION,
         });
     },
+
+    CheckGender: function (value) {
+        let data = [
+            { value: '0', label: 'Nam' },
+            { value: '1', label: 'Nữ' },
+            { value: '2', label: 'Khác' }
+        ]
+        let gender = data.find(item => item.value === value.toString())
+        return `<span>${gender.label}</span>`
+    }
 });

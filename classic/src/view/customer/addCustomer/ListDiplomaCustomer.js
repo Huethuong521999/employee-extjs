@@ -5,15 +5,18 @@ Ext.define("Admin.view.customer.addCustomer.ListDiplomaCustomer", {
 
   requires: [
     "Admin.view.customer.addCustomer.DiplomaCustomerViewController",
+    "Admin.view.customer.addCustomer.DiplomaCustomerViewModel",
   ],
 
   controller: 'diplomaCustomer',
-
-  bind: {
-    store: '{certificatesStore}'
+  viewModel: {
+    type: "diplomaCustomer",
   },
 
-  id: "list-diploma-customer",
+  bind: {
+    store: '{certificatesDto}'
+  },
+  reference: "list-diploma-customer",
 
   columns: [
     {
@@ -56,4 +59,7 @@ Ext.define("Admin.view.customer.addCustomer.ListDiplomaCustomer", {
       flex: 1,
     },
   ],
+  listeners: {
+    handleEdit: 'handleEdit'
+  }
 });

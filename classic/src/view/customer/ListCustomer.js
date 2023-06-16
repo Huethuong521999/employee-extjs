@@ -60,11 +60,7 @@ Ext.define("Admin.view.customer.ListCustomer", {
         {
           iconCls: "fa fa-trash",
           tooltip: "Xóa",
-          handler: function (grid, rowIndex, colIndex) {
-            let rec = grid.getStore().getAt(rowIndex);
-            let controller = grid.up('list-customer').getController();
-            controller.handleDelete(this, rec);
-          },
+          handler: "handleDelete"
         },
       ],
     },
@@ -92,13 +88,14 @@ Ext.define("Admin.view.customer.ListCustomer", {
       text: "Giới tính",
       flex: 1,
       filter: 'string',
+      renderer : "CheckGender"
     },
     {
       dataIndex: "dateOfBirth",
       text: "Ngày sinh",
       flex: 1,
       filter: 'date',
-      // renderer: Ext.util.Format.dateRenderer("d/m/Y")
+      renderer: "formatDate",
     },
     {
       dataIndex: "citizenIdentificationNumber",
@@ -119,12 +116,4 @@ Ext.define("Admin.view.customer.ListCustomer", {
       filter: 'string',
     },
   ],
-
-  // bbar: {
-  //   xtype: 'pagingtoolbar',
-  //   displayInfo: true,
-  //   bind: {
-  //     store: '{customer}'
-  //   }
-  // },
 });

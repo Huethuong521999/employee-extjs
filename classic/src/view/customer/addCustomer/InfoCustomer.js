@@ -3,6 +3,7 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
     xtype: 'tabInfoCustomer',
     title: 'Thông tin nhân viên',
     id: "tabInfoCustomer",
+    reference: "infoCustomer",
     items: [
         {
             xtype: 'fieldcontainer',

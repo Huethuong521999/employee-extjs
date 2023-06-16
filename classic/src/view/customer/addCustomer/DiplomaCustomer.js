@@ -3,8 +3,16 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
     xtype: 'tabDiplomaCustomer',
     title: 'Thông tin văn bằng',
 
+    requires: [
+        "Admin.view.customer.addCustomer.DiplomaCustomerViewController",
+        "Admin.view.customer.addCustomer.DiplomaCustomerViewModel",
+    ],
+
     controller: 'diplomaCustomer',
-    id: "diplomaCustomer",
+    viewModel: {
+        type: "diplomaCustomer",
+    },
+
     items: [
         {
             layout: 'form',
@@ -86,5 +94,6 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
             margin: "20px",
             xtype: "list-diploma-customer",
         }
-    ]
+    ],
+
 });

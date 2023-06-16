@@ -2,17 +2,39 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
     extend: "Ext.app.ViewController",
 
     alias: "controller.diplomaCustomer",
+    init: function () {
+        this.listen({
+            controller: {
+                '*': {
+                    DataDiploma: 'setData'
+                }
+            }
+        });
+    },
+
+    setData: function (data) {
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('certificatesDto');
+
+        if (store) {
+            store.loadData(data);
+        }
+    },
 
     handleSubmitDiploma: function (sender, record) {
-        let form = this.getView().getForm();
+        let view = this.getView();
+        let form = view.getForm();
+        let viewModel = this.getViewModel();
+        // let store = viewModel.getStore('certificatesDto');
         let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
+        let store = view.up('tabpanel').down('list-diploma-customer').getStore();
+        console.log("11111",view.up('tabpanel'))
         let values = {
             ...form.getValues(),
             issueDate: Ext.Date.format(new Date(form.getValues().issueDate), 'Y-m-d'),
             employeeId: formInfo.id ? formInfo.id : null
         };
 
-        let store = Ext.getCmp("list-diploma-customer").getStore();
         let listData = store.getRange() || [];
         let dataDiploma = [];
 
@@ -37,6 +59,8 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
                             if (data.code === 200) {
                                 let record = store.getById(values.id);
                                 record.set(values);
+                                // store.update(record);
+                                // store.reload();
                                 form.reset();
                                 return;
                             }
@@ -53,7 +77,7 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
                 form.reset();
             } else {
                 if (formInfo.id) {
-                    formInfo.id && Ext.Ajax.request({
+                    Ext.Ajax.request({
                         url: `https://em-v2.oceantech.com.vn/em/certificate?employeeId=${formInfo.id}`,
                         method: 'POST',
                         headers: {
@@ -63,8 +87,8 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
                         success: function (response) {
                             let data = Ext.decode(response.responseText);
                             if (data.code === 200) {
-                                values.id = store.getCount() + 1;
-                                store.add(values);
+                                store.setData(data.data);
+                                console.log(store.getRange())
                                 form.reset();
                                 return;
                             }
@@ -86,10 +110,10 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
     },
 
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
-        let form = Ext.getCmp("diplomaCustomer");
+        let form = this.getView().up('form').getForm();
         let data = record.getData();
         data.issueDate = Ext.Date.format(new Date(data.issueDate), 'd/m/Y');
-        form.getForm().setValues(data)
+        form.setValues(data)
     },
 
     handleClear: function (grid, rowIndex, colIndex, item, e, record) {
@@ -98,7 +122,8 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
     },
 
     handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
-        let store = Ext.getCmp("list-diploma-customer").getStore();
+        let viewModel = this.getViewModel();
+        let store = viewModel.getStore('certificatesDto');
         let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
         Ext.Msg.show({
             title: "Xác nhận",
