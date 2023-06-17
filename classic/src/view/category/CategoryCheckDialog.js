@@ -6,10 +6,7 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
   viewModel: {
     type: "categoryuploadViewModel",
   },
-  requires: [
-    "Admin.view.category.CategoryCheckGrid",
-    "Admin.view.category.CategoryUploadFileDialog",
-  ],
+  
   width: "100%",
   height: "100%",
 
@@ -48,9 +45,6 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
           anchor: "100%",
           listeners: {
             change: function (e, oldValue, newValue) {
-              console.log("e", e);
-              console.log("oldValue", oldValue);
-              console.log("newValue", newValue);
               filefield.inputEl.dom.value = "";
             },
           },

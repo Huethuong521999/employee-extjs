@@ -1,25 +1,24 @@
-Ext.define("Admin.view.employee.ListEmployee", {
+Ext.define("Admin.view.employee.EmployeeView", {
   extend: "Ext.tree.Panel",
-
-  xtype: "list-employee",
-
-  viewModel: {
-    type: "employee",
-  },
+  padding: "10px",
+  xtype: "employee",
 
   controller: "employeecontroller",
-
-  id: "list-employee",
+  viewModel: {
+    type: "employeeviewmodel",
+  },
 
   requires: [
     "Ext.grid.plugin.CellEditing",
     "Ext.data.*",
     "Ext.grid.*",
     "Ext.tree.*",
+    // "Admin.view.employee.ListEmployee",
+    "Admin.view.employee.EmployeeController",
   ],
 
   bind: {
-    store: "{employee}",
+    store: "{employeeStore}",
   },
 
   selModel: {
@@ -42,28 +41,6 @@ Ext.define("Admin.view.employee.ListEmployee", {
   rootVisible: false,
   multiSelect: true,
   singleExpand: false,
-
-  // tools: [
-  //   {
-  //     xtype: "button",
-  //     iconCls: "fa fa-plus-circle",
-  //     tooltip: "Add New Record",
-  //     handler: function () {
-  //       let store = this.up("list-employee").getStore();
-
-  //       store.insert(0, {
-  //         hoTen: "",
-  //         gioiTinh: "",
-  //         ngaySinh: "",
-  //         soCccd: "",
-  //         email: "",
-  //         soDienThoai: "",
-  //         diaChi: "",
-  //         active: "",
-  //       });
-  //     },
-  //   },
-  // ],
 
   columns: [
     {
@@ -186,6 +163,26 @@ Ext.define("Admin.view.employee.ListEmployee", {
         trueText: true,
         falseText: false,
       },
+    },
+  ],
+
+  dockedItems: [
+    {
+      dock: "top",
+      layout: "hbox",
+      width: "100%",
+      items: [
+        {
+          xtype: "button",
+          text: "Thêm mới",
+          padding: "10px",
+          margin: "0px 0px 10px 10px",
+          handler: "onOpenEmloyeeForm",
+        },
+        {
+          flex: 1,
+        },
+      ],
     },
   ],
 });

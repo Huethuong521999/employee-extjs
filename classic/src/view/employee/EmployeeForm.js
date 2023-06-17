@@ -1,7 +1,7 @@
 Ext.define("Admin.view.employee.EmployeeForm", {
   extend: "Ext.window.Window",
 
-  controller: "employee",
+  controller: "employeecontroller",
   layout: "fit",
   width: "60%",
   height: "60%",

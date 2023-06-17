@@ -1,9 +1,7 @@
 Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
   extend: "Ext.form.Panel",
   xtype: "tabInfoEmpolyee",
-  requires: "Admin.store.Province",
-  // ...
-  // title: 'Thông tin nhân viên',
+
   layout: "form",
   items: [
     {

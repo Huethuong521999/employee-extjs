@@ -1,4 +1,4 @@
-Ext.define("Admin.view.category.CategoryUploadFileDialog", {
+Ext.define("Admin.view.category.CategoryUploadController", {
   extend: "Ext.app.ViewController",
   alias: "controller.categoryuploadcontroller",
 
