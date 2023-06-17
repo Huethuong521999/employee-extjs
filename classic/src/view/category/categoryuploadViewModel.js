@@ -8,5 +8,7 @@ Ext.define("Admin.view.category.categoryuploadViewModel", {
       type: "categoryUploadStore"
     },
   },
-  data: {},
+  data: {
+    selectedArr: []
+  },
 });

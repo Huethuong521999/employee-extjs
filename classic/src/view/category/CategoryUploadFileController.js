@@ -13,9 +13,10 @@ Ext.define("Admin.view.category.CategoryUploadController", {
   },
 
   loadData: function (data) {
-    let viewModel = this.getViewModel();
-    let categoryUploadStore = viewModel.getStore("categoryUploadStore");
-    categoryUploadStore.loadData(data);
+    let view = this.getView();
+    let viewListCategory = view.up("window").down("categorycheckdialog").down("list-category-check");
+    let listcategory = viewListCategory.getViewModel().getStore("categoryUploadStore")
+    listcategory.loadData(data);
   },
 
   handleAfterrender: function (field) {
@@ -35,7 +36,7 @@ Ext.define("Admin.view.category.CategoryUploadController", {
     fileList = fileList.slice(0, -2);
     field.setRawValue(fileList);
   },
-  
+
   handleSaveUploadFile: function (window) {
     let viewModel = this.getViewModel();
 
@@ -43,45 +44,55 @@ Ext.define("Admin.view.category.CategoryUploadController", {
     let categoryStore = categoryGrid.data.items;
     const listCategory = categoryStore.map((record) => record.getData());
 
-    let categoryUploadStore = viewModel.getStore("categoryUploadStore").data
-      .items;
-    const listcategoryUpdate = categoryUploadStore.map((record) =>
-      record.getData()
-    );
+    const categoryUploadStore = viewModel.get('selectedArr');
 
-    let file = Ext.getCmp("AttachData").fileInputEl.dom.files[0];
 
-    if (!file) {
+    let files = Ext.getCmp("AttachData").fileInputEl.dom.files || [];
+
+    if (files.length <= 0) {
       return Ext.Msg.alert("Cảnh báo", "Vui lòng file!");
     }
 
-    listCategory.map((record) => {
-      if (listcategoryUpdate.some((item) => item.id === record.id)) {
-        record.trangThai = "Đã tải file";
-        record.fileName = `${file.name + " - " + file.size + "kB"}`;
+    let arrFile = [];
+
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        fileName = files[i].name + " - " + files[i].size + "kB";
+        arrFile.push(fileName);
       }
-    });
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      listCategory.forEach((record) => {
+        if (categoryUploadStore.some((item) => item.id === record.id)) {
+          record.trangThai = 'Đã tải file';
+          record.fileName = arrFile.join(", ");
+        }
+      });
 
     categoryGrid.loadData(listCategory);
 
-    formData = new FormData();
-    formData.append("file", file);
+      let formData = new FormData();
+      formData.append('file', file);
 
-    Ext.Ajax.request({
-      url: "https://api.escuelajs.co/api/v1/files/upload",
-      rawData: formData,
-      method: "POST",
-      headers: {
-        "Content-Type": null,
-      },
-      waitMsg: "Uploading your file...",
-      success: function (response) {
-        Ext.Msg.alert("Success", "Upload Successfull!");
-      },
-      failure: function () {
-        Ext.Msg.alert("Failure", "Upload Failed!");
-      },
-    });
+      Ext.Ajax.request({
+        url: 'https://api.escuelajs.co/api/v1/files/upload',
+        rawData: formData,
+        method: 'POST',
+        headers: {
+          'Content-Type': null,
+        },
+        waitMsg: 'Uploading your files...',
+        success: function (response) {
+          Ext.Msg.alert('Success', 'Upload Successful!');
+        },
+        failure: function () {
+          Ext.Msg.alert('Failure', 'Upload Failed!');
+        },
+      });
+    }
 
     window.up("window").close();
   },
