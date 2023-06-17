@@ -13,20 +13,37 @@ Ext.define("Admin.view.category.CategoryUploadController", {
   },
 
   loadData: function (data) {
-    var viewModel = this.getViewModel();
-    var categoryUploadStore = viewModel.getStore("categoryUploadStore");
+    let viewModel = this.getViewModel();
+    let categoryUploadStore = viewModel.getStore("categoryUploadStore");
     categoryUploadStore.loadData(data);
-    // console.log("categoryUploadStore", categoryUploadStore);
   },
 
+  handleAfterrender: function (field) {
+    field.fileInputEl.set({
+      multiple: true
+    });
+  },
+
+  handleChangeMultiple: function (field, value) {
+    let files = field.fileInputEl.dom.files;
+    let fileList = '';
+
+    for (let i = 0; i < files.length; i++) {
+      fileList += files[i].name + ', ';
+    }
+
+    fileList = fileList.slice(0, -2);
+    field.setRawValue(fileList);
+  },
+  
   handleSaveUploadFile: function (window) {
-    var viewModel = this.getViewModel();
+    let viewModel = this.getViewModel();
 
     let categoryGrid = Ext.data.StoreManager.lookup("categoryStore");
     let categoryStore = categoryGrid.data.items;
     const listCategory = categoryStore.map((record) => record.getData());
 
-    var categoryUploadStore = viewModel.getStore("categoryUploadStore").data
+    let categoryUploadStore = viewModel.getStore("categoryUploadStore").data
       .items;
     const listcategoryUpdate = categoryUploadStore.map((record) =>
       record.getData()
@@ -47,7 +64,6 @@ Ext.define("Admin.view.category.CategoryUploadController", {
 
     categoryGrid.loadData(listCategory);
 
-    // upload file lên api
     formData = new FormData();
     formData.append("file", file);
 
@@ -78,16 +94,47 @@ Ext.define("Admin.view.category.CategoryUploadController", {
     container.getEl().on("drop", function (event) {
       event.stopEvent();
 
-      var files = event.browserEvent.dataTransfer.files;
+      let files = event.browserEvent.dataTransfer.files;
+      console.log(files);
 
-      if (files.length > 0) {
-        var filefield = Ext.getCmp("AttachData");
-        filefield.fileInputEl.dom.files = files;
-        filefield.inputEl.dom.value = files[0].name;
+      let fileField = Ext.getCmp("AttachData");
+      let existingFiles = fileField.fileInputEl.dom.files;
+      let updatedFiles = existingFiles ? Array.from(existingFiles) : [];
 
-        container.updateLayout();
+      for (let i = 0; i < files.length; i++) {
+        if (!this.isFileInList(files[i], updatedFiles)) {
+          updatedFiles.push(files[i]);
+        }
       }
-    });
+
+      let fileNames = updatedFiles.map(function (file) {
+        return file.name;
+      }).join(", ");
+
+      let newFileList = this.createFileList(updatedFiles);
+      fileField.fileInputEl.dom.files = newFileList;
+
+      fileField.inputEl.dom.value = fileNames;
+
+      container.updateLayout();
+    }.bind(this));
+  },
+
+  isFileInList: function (file, fileList) {
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i].name === file.name && fileList[i].size === file.size && fileList[i].type === file.type) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  createFileList: function (files) {
+    let dataTransfer = new DataTransfer();
+    for (let i = 0; i < files.length; i++) {
+      dataTransfer.items.add(files[i]);
+    }
+    return dataTransfer.files;
   },
 
   handleClose: function (window) {

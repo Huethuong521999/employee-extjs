@@ -44,10 +44,9 @@ Ext.define("Admin.view.category.CategoryCheckDialog", {
           allowBlank: false,
           anchor: "100%",
           listeners: {
-            change: function (e, oldValue, newValue) {
-              filefield.inputEl.dom.value = "";
-            },
-          },
+            afterrender: "handleAfterrender",
+            change: "handleChangeMultiple",
+          }
         },
         {
           xtype: "container",
