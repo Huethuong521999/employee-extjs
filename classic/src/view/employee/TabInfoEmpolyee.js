@@ -148,12 +148,12 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               listeners: {
                 change: function (field) {
                   const selection = field.getSelection();
-                  const cbbIdXa = Ext.getCmp("comboboxXa");
+                  const value = selection.data.id;
+                  const listWards = [];
+                  const form = this.up('form');
+                  const cbbIdXa = form.down("combobox[name=maXa]");
 
                   if (selection) {
-                    const value = selection.data.id;
-  
-                    const listWards = [];
                     Ext.Ajax.request({
                       url: `http://training-api.oceantech.com.vn/cms/api/districts/${value}/wards`,
                       method: "GET",
@@ -175,6 +175,7 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: 'combobox',
               fieldLabel: "Tỉnh/Thành phố",
               allowBlank: true,
               name: "maTinh",
@@ -190,6 +191,10 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
                 change: function (field) {
                   const value = field.getSelection().data.id;
                   const listDistricts = [];
+                  const form = this.up('form');
+                  let cbbIdHuyen = form.down("combobox[name=maHuyen]");
+                  let cbbIdXa = form.down("combobox[name=maXa]"); 
+
                   Ext.Ajax.request({
                     url: `http://training-api.oceantech.com.vn/cms/api/provinces/${value}/districts`,
                     method: "GET",
@@ -199,10 +204,9 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
                         Ext.each(res.data, function (obj) {
                           listDistricts.push(obj);
                         });
-                        let cbbIdHuyen = Ext.getCmp("comboboxHuyen");
                         cbbIdHuyen.setStore(listDistricts);
                         cbbIdHuyen.clearValue(); //clear huyện khi select lại tỉnh
-                        let cbbIdXa = Ext.getCmp("comboboxXa").clearValue(); //clear xã khi select lại tỉnh
+                        cbbIdXa.clearValue();//clear xã khi select lại tỉnh
                       }
                     },
                     failure: function (response) {},
