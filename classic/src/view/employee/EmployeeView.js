@@ -65,8 +65,8 @@ Ext.define("Admin.view.employee.EmployeeView", {
           iconCls: "fa fa-trash",
           tooltip: "Xóa",
           handler: function (grid, rowIndex, colIndex) {
+            var controller = this.up('employee').getController();
             let rec = grid.getStore().getAt(rowIndex);
-            let controller = grid.up("list-employee").getController();
             controller.handleDelete(this, rec);
           },
         },

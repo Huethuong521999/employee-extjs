@@ -52,7 +52,8 @@ Ext.define("Admin.view.employee.EmployeeController", {
       multiline: false,
       fn: function (buttonValue, inputText, showConfig) {
         if (buttonValue === "yes") {
-          let store = Ext.getCmp("list-employee").getStore();
+          let store = Ext.data.StoreManager.lookup("employeeStore");
+
           store.remove(record);
         }
       },
