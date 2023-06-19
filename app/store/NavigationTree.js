@@ -33,7 +33,7 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
-                text: 'Employee-Tree-CRUD',
+                text: 'Employee-Tree',
                 iconCls: 'x-fa fa-user',
                 viewType: 'employee',
                 leaf: true
