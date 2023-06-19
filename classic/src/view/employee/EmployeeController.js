@@ -22,8 +22,9 @@ Ext.define("Admin.view.employee.EmployeeController", {
     let form = window.down("form");
     let values = form.getValues();
 
+    
     if (form.isValid()) {
-      let store = Ext.getCmp("list-employee").getStore();
+      let store = Ext.data.StoreManager.lookup("employeeStore");
       if (form.action === "edit") {
         let record = store.getById(values.id);
         record.set(values);
