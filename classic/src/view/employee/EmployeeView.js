@@ -13,7 +13,6 @@ Ext.define("Admin.view.employee.EmployeeView", {
     "Ext.data.*",
     "Ext.grid.*",
     "Ext.tree.*",
-    // "Admin.view.employee.ListEmployee",
     "Admin.view.employee.EmployeeController",
   ],
 

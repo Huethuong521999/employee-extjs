@@ -3,12 +3,12 @@ Ext.define("Admin.view.employee.EmployeeController", {
 
   alias: "controller.employeecontroller",
 
-//   init: function () {
-//     // hàm khởi tạo
-//     let viewModel = this.getViewModel();
-//     let categoryStore = viewModel.getStore("employeeStore");
-//     categoryStore.loadStore(); //hàm load store
-//   },
+  // init: function () {
+  //   // hàm khởi tạo
+  //   let viewModel = this.getViewModel();
+  //   let employeeStore = viewModel.getStore("employeeStore");
+  //   employeeStore.loadStore(); //hàm load store
+  // },
 
   onOpenEmloyeeForm: function () {
     let windowForm = Ext.create("Admin.view.employee.EmployeeForm", {
