@@ -6,38 +6,28 @@ Ext.define("Admin.store.Employee", {
   model: "Admin.model.Employee",
 
   pageSize: 20,
+  autoLoad: false,
 
-  autoLoad: true,
+  loadStore: function () {
+    this.setProxy({
+      type: "ajax",
+      url: "~api/employee",
+      actionMethods: {
+        read: "GET",
+      },
+      paramsAsJson: true,
+      noCache: false,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      timeout: 60000,
+      reader: {
+        type: "json",
+        rootProperty: "children",
+      },
+    });
 
-  proxy: {
-    type: "api",
-    url: "~api/employee",
-    reader: {
-      type: "json",
-      rootProperty: "children",
-    },
+    this.load();
   },
-
-  // loadStore: function () {
-  //   this.setProxy({
-  //     type: "ajax",
-  //     url: "~api/employee",
-  //     actionMethods: {
-  //       read: "GET",
-  //     },
-  //     paramsAsJson: true,
-  //     noCache: false,
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     timeout: 60000,
-  //     reader: {
-  //       type: "json",
-  //       rootProperty: "children",
-  //     },
-  //   });
-
-  //   this.load();
-  // },
 });
