@@ -51,7 +51,9 @@ Ext.define("Admin.view.customer.addCustomer.ListDiplomaCustomer", {
       dataIndex: "issueDate",
       text: "Ngày cấp",
       flex: 1,
-      renderer: Ext.util.Format.dateRenderer("d/m/Y")
+      renderer: function(value) {
+        return  Utils.formatDate(value);
+      },
     },
     {
       dataIndex: "content",

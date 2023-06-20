@@ -35,10 +35,9 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "certificateName",
                             cls: "inputField w-40",
-                            // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
-                                return value && (!(/[~`!@#$%^&*()+=\-[\]\\';,/{}|\\":<>?0-9]/.test(value)) ? true : "Chỉ được nhập chữ");
+                                return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
                             },
                         },
                         {
@@ -46,7 +45,6 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "field",
                             cls: "inputField w-40",
-                            // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {
@@ -54,8 +52,9 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             fieldLabel: "Ngày cấp",
                             allowBlank: false,
                             name: "issueDate",
+                            format: 'd-m-Y',
+                            submitFormat: 'Y-m-d',
                             cls: "inputField w-20",
-                            // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {
@@ -63,7 +62,6 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "content",
                             cls: "inputField w-80",
-                            // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {

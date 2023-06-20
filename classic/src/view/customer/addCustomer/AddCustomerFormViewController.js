@@ -90,5 +90,5 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
 
   handleClose: function () {
     let window = this.getView().close();
-  }
+  },
 });

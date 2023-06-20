@@ -26,24 +26,16 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
         let view = this.getView();
         let form = view.getForm();
         let viewModel = this.getViewModel();
-        // let store = viewModel.getStore('employeeFamilyDtos');
-        let store = view.up('tabpanel').down('list-family-customer').getStore();
         let formInfo = view.up('tabpanel').down('tabInfoCustomer').getValues();
+        let store = view.up('tabpanel').down('list-family-customer').getStore();
 
         let values = {
             ...form.getValues(),
-            dateOfBirth: Ext.Date.format(new Date(form.getValues().dateOfBirth), 'Y-m-d'),
             employeeId: formInfo.id ? formInfo.id : null
         };
 
         let listData = store.getRange() || [];
         let dataFamily = [];
-
-        listData.forEach(element => {
-            let itemFamily = element.data;
-            itemFamily.dateOfBirth = Ext.Date.format(new Date(itemFamily.dateOfBirth), 'Y-m-d');
-            dataFamily.push(itemFamily);
-        });
 
         if (form.isValid()) {
             if (values.id) {
@@ -59,7 +51,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
                             let data = Ext.decode(response.responseText);
                             if (data.code === 200) {
                                 let record = store.getById(values.id);
-                                record.set(values);
+                                record.set(data.data);
                                 form.reset();
                                 return;
                             }
@@ -110,7 +102,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
         let form = this.getView().up('form').getForm();
         let data = record.getData();
-        data.dateOfBirth = Ext.Date.format(new Date(data.dateOfBirth), 'd/m/Y');
+        data.dateOfBirth = new Date(data.dateOfBirth);
         form.setValues(data);
     },
 
@@ -120,7 +112,7 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
     },
 
     handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
-        let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
+        let formInfo = this.getView().up('tabpanel').down('tabInfoCustomer').getValues();
         let viewModel = this.getViewModel();
         let store = viewModel.getStore('employeeFamilyDtos');
         Ext.Msg.show({
@@ -167,5 +159,5 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
         ]
         let gender = data.find(item => item.value === value.toString())
         return `<span>${gender.label}</span>`
-    }
+    },
 });

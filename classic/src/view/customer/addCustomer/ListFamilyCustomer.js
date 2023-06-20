@@ -52,7 +52,9 @@ Ext.define("Admin.view.customer.addCustomer.ListFamilyCustomer", {
       dataIndex: "dateOfBirth",
       text: "Ngày sinh",
       flex: 1,
-      renderer: Ext.util.Format.dateRenderer("d/m/Y"),
+      renderer: function(value) {
+        return  Utils.formatDate(value);
+      },
     },
     {
       dataIndex: "citizenIdentificationNumber",

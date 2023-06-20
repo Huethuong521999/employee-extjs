@@ -88,14 +88,18 @@ Ext.define("Admin.view.customer.ListCustomer", {
       text: "Giới tính",
       flex: 1,
       filter: 'string',
-      renderer : "CheckGender"
+      renderer: function (value) {
+        return Utils.checkGender(value);
+      },
     },
     {
       dataIndex: "dateOfBirth",
       text: "Ngày sinh",
       flex: 1,
       filter: 'date',
-      renderer: "formatDate",
+      renderer: function (value) {
+        return Utils.formatDate(value);
+      },
     },
     {
       dataIndex: "citizenIdentificationNumber",

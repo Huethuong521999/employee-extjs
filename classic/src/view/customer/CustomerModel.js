@@ -6,5 +6,5 @@ Ext.define('Admin.view.customer.CustomerModel', {
     customer: {
       type: 'customer'
     },
-  }
+  },
 });

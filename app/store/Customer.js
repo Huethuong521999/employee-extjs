@@ -38,12 +38,17 @@ Ext.define('Admin.store.Customer', {
         })
 
         this.load();
+        // this.load({
+        //     callback: function (records, operation, success) {
+        //         console.log("records", records);
+        //     }   
+        // });
     },
 
     checkToken: function (proxy, response, operation) {
         let customerStore = this;
         if (response.status === 401) {
-            customerStore.login(proxy, response, operation); // Gọi phương thức login từ đối tượng Customer
+            customerStore.login(proxy, response, operation);
         } else if (response.status === 403) {
             console.log('Không có quyền truy cập');
         } else {
