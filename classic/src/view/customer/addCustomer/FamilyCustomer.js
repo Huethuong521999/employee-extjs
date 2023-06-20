@@ -36,10 +36,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             allowBlank: false,
                             name: "name",
                             cls: "inputField w-33",
-                            // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
-                                return value && (!(/[~`!@#$%^&*()+=\-[\]\\';,/{}|\\":<>?0-9]/.test(value)) ? true : "Chỉ được nhập chữ");
+                                return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
                             },
                         },
                         {
@@ -48,7 +47,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             allowBlank: false,
                             name: "dateOfBirth",
                             cls: "inputField w-33",
-                            // msgTarget: 'under',
+                            format: 'd-m-Y',
+                            submitFormat: 'Y-m-d',
                             blankText: 'Trường này là trường bắt buộc',
                         },
                         {
@@ -79,7 +79,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
-                                return value && (/^[0-9]{12}$/.test(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                                return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
                             },
                         },
                         {
@@ -114,7 +114,7 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             // msgTarget: 'under',
                             blankText: 'Trường này là trường bắt buộc',
                             validator: function (value) {
-                                return value && ((/(84|0[3|5|7|8|9])+([0-9]{8})/.test(value)) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+                                return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
                             }
                         },
                         {

@@ -2,7 +2,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
     extend: 'Ext.form.Panel',
     xtype: 'tabInfoCustomer',
     title: 'Thông tin nhân viên',
-    id: "tabInfoCustomer",
     reference: "infoCustomer",
     items: [
         {
@@ -22,10 +21,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "name",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                     validator: function (value) {
-                        return value && (!(/[~`!@#$%^&*()+=\-[\]\\';,/{}|\\":<>?0-9]/.test(value)) ? true : "Chỉ được nhập chữ");
+                        return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
                     },
                 },
                 {
@@ -33,7 +31,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "code",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -41,10 +38,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "phone",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                     validator: function (value) {
-                        return value && ((/(84|0[3|5|7|8|9])+([0-9]{8})/.test(value)) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+                        return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
                     }
                 },
                 {
@@ -52,10 +48,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "citizenIdentificationNumber",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                     validator: function (value) {
-                        return value && (/^[0-9]{12}$/.test(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                        return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
                     },
                 },
                 {
@@ -64,7 +59,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "dateOfIssuanceCard",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -72,7 +66,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "placeOfIssueCard",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -80,10 +73,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "email",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                     validator: function (value) {
-                        return value && ((/^[a-zA-Z0-9_.+-]+@gmail\.com$/.test(value)) ? true : "Email phải có định dang 123@gmail.com");
+                        return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
                     }
                 },
                 {
@@ -91,7 +83,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "address",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -119,7 +110,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "religion",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -127,7 +117,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "ethnic",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
@@ -136,7 +125,6 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "dateOfBirth",
                     cls: "inputField w-33",
-                    // msgTarget: 'under',
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {

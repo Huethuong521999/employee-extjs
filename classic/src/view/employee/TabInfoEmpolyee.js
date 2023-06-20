@@ -6,8 +6,8 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
   items: [
     {
       xtype: "fieldcontainer",
-    //   layout: "column",
-        defaultType: "textfield",
+      //   layout: "column",
+      defaultType: "textfield",
       items: [
         {
           xtype: "container",
@@ -48,6 +48,12 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               labelAlign: "top",
               flex: 2,
               width: "250px",
+              listeners: {
+                change: function (field, newValue, oldValue) {
+                  console.log('Ngày sinh đã thay đổi11111:', newValue);
+                  // Thực hiện xử lý phù hợp với giá trị mới
+                }
+              },
             },
             { xtype: "tbspacer", width: 12 },
             {
@@ -166,7 +172,7 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
                           cbbIdXa.setStore(listWards);
                         }
                       },
-                      failure: function (response) {},
+                      failure: function (response) { },
                     });
                   }
                   cbbIdXa.clearValue(); //clear xã khi select lại huyện
@@ -209,7 +215,7 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
                         cbbIdXa.clearValue();//clear xã khi select lại tỉnh
                       }
                     },
-                    failure: function (response) {},
+                    failure: function (response) { },
                   });
                 },
               },

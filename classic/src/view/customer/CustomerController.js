@@ -11,7 +11,7 @@ Ext.define("Admin.view.customer.CustomerController", {
 
   onOpenCustomerForm: function () {
     let createForm = Ext.create('Admin.view.customer.addCustomer.AddCustomerForm');
-    createForm.show()
+    createForm.show();
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
@@ -35,17 +35,8 @@ Ext.define("Admin.view.customer.CustomerController", {
           let data = Ext.decode(response.responseText);
           let employee = data.data;
 
-          if (employee.employeeFamilyDtos && employee.employeeFamilyDtos.length) {
-            employee.employeeFamilyDtos.forEach(element => {
-              element.dateOfBirth = Date(element.dateOfBirth);
-            });
-          }
-
-          if (employee.certificatesDto && employee.certificatesDto.length) {
-            employee.certificatesDto.forEach(element => {
-              element.issueDate = Date(element.issueDate);
-            });
-          }
+          employee.dateOfBirth = new Date(employee.dateOfBirth)
+          employee.dateOfIssuanceCard = new Date(employee.dateOfIssuanceCard)
 
           if (employee) {
             editForm.setTitle("Sửa thông tin nhân viên");
@@ -116,23 +107,4 @@ Ext.define("Admin.view.customer.CustomerController", {
       icon: Ext.Msg.QUESTION,
     });
   },
-
-  CheckGender: function (value) {
-    let data = [
-      { value: '0', label: 'Nam' },
-      { value: '1', label: 'Nữ' },
-      { value: '2', label: 'Khác' }
-    ]
-    let gender = data.find(item => item.value === value.toString())
-    return `<span>${gender.label}</span>`
-  },
-
-  formatDate: function (value) {
-    let newDate = new Date(value);
-    if (value) {
-      return Ext.Date.format(newDate, 'd-m-Y')
-    }
-    return ""; 
-  },
-
 });

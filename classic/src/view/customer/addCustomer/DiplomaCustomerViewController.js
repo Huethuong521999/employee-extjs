@@ -25,24 +25,16 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
         let view = this.getView();
         let form = view.getForm();
         let viewModel = this.getViewModel();
-        // let store = viewModel.getStore('certificatesDto');
-        let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
+        let formInfo = view.up('tabpanel').down('tabInfoCustomer').getValues();
         let store = view.up('tabpanel').down('list-diploma-customer').getStore();
-        console.log("11111",view.up('tabpanel'))
+
         let values = {
             ...form.getValues(),
-            issueDate: Ext.Date.format(new Date(form.getValues().issueDate), 'Y-m-d'),
             employeeId: formInfo.id ? formInfo.id : null
         };
 
         let listData = store.getRange() || [];
         let dataDiploma = [];
-
-        listData.forEach(element => {
-            let itemDiploma = element.data;
-            itemDiploma.issueDate = Ext.Date.format(new Date(itemDiploma.issueDate), 'Y-m-d');
-            dataDiploma.push(itemDiploma);
-        });
 
         if (form.isValid()) {
             if (values.id) {
@@ -58,9 +50,7 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
                             let data = Ext.decode(response.responseText);
                             if (data.code === 200) {
                                 let record = store.getById(values.id);
-                                record.set(values);
-                                // store.update(record);
-                                // store.reload();
+                                record.set(data.data);
                                 form.reset();
                                 return;
                             }
@@ -112,7 +102,7 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
     handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
         let form = this.getView().up('form').getForm();
         let data = record.getData();
-        data.issueDate = Ext.Date.format(new Date(data.issueDate), 'd/m/Y');
+        data.issueDate = new Date(data.issueDate);
         form.setValues(data)
     },
 
@@ -124,7 +114,7 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
     handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
         let viewModel = this.getViewModel();
         let store = viewModel.getStore('certificatesDto');
-        let formInfo = Ext.getCmp("tabInfoCustomer").getValues();
+        let formInfo = this.getView().up('tabpanel').down('tabInfoCustomer').getValues();
         Ext.Msg.show({
             title: "Xác nhận",
             msg: "Bạn có chắc chắn muốn xóa bản ghi này không?",
@@ -160,4 +150,5 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
             icon: Ext.Msg.QUESTION,
         });
     },
+
 });
