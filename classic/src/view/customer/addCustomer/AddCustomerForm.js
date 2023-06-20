@@ -44,20 +44,23 @@ Ext.define("Admin.view.customer.addCustomer.AddCustomerForm", {
 
       dockedItems: [{
         xtype: 'toolbar',
-        buttonAlign: 'left',
         dock: 'bottom',
-        items: [{
-          xtype: "button",
-          ui: 'gray',
-          text: "Đóng",
-          handler: "handleClose" 
-        },
-        {
-          xtype: "button",
-          text: "Lưu",
-          ui: 'soft-red',
-          handler: "handleSave",
-        }]
+        items: [
+          '->', 
+          {
+            xtype: 'button',
+            ui: 'gray',
+            text: 'Đóng',
+            handler: 'handleClose' 
+          },
+          {
+            xtype: 'button',
+            text: 'Lưu',
+            ui: 'soft-red',
+            handler: 'handleSave'
+          },
+          // '->',
+        ]
       }],
 
       listeners: {
