@@ -39,49 +39,61 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
       }
 
       if (data.id) {
-        Ext.Ajax.request({
-          url: `https://em-v2.oceantech.com.vn/em/employee/${data.id}`,
-          method: 'PUT',
-          headers: {
-            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-          },
-          jsonData: data,
-          success: function (response) {
-            let data = Ext.decode(response.responseText);
-            if (data.code === 200) {
-              store.load();
-              form.reset();
-              view.close();
-              return;
+        (function callApiUpdate() {
+          Ext.Ajax.request({
+            url: `https://em-v2.oceantech.com.vn/em/employee/${data.id}`,
+            method: 'PUT',
+            headers: {
+              'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+            },
+            jsonData: data,
+            success: function (response) {
+              let data = Ext.decode(response.responseText);
+              if (data.code === 200) {
+                store.load();
+                form.reset();
+                view.close();
+                return;
+              }
+              Ext.Msg.alert('Lỗi', data.message);
+            },
+            failure: function (response) {
+              if (response.status === 401) {
+                CheckToken.checkToken(response, callApiUpdate);
+              } else {
+                Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
+              }
             }
-            Ext.Msg.alert('Lỗi', data.message);
-          },
-          failure: function (response) {
-            Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
-          }
-        });
+          });
+        })();
       } else {
-        Ext.Ajax.request({
-          url: 'https://em-v2.oceantech.com.vn/em/employee',
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-          },
-          jsonData: data,
-          success: function (response) {
-            let data = Ext.decode(response.responseText);
-            if (data.code === 200) {
-              store.load();
-              form.reset();
-              view.close();
-              return;
+        (function callApiPost() {
+          Ext.Ajax.request({
+            url: 'https://em-v2.oceantech.com.vn/em/employee',
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+            },
+            jsonData: data,
+            success: function (response) {
+              let data = Ext.decode(response.responseText);
+              if (data.code === 200) {
+                store.load();
+                form.reset();
+                view.close();
+                return;
+              }
+              Ext.Msg.alert('Lỗi', data.message);
+            },
+            failure: function (response) {
+              if (response.status === 401) {
+                CheckToken.checkToken(response, callApiPost);
+              } else {
+                Ext.Msg.alert('Lỗi', 'Thêm mới thất bại.');
+              }
             }
-            Ext.Msg.alert('Lỗi', data.message);
-          },
-          failure: function (response) {
-            Ext.Msg.alert('Lỗi', 'Thêm mới thất bại.');
-          }
-        });
+          });
+        })();
       }
     } else {
       Ext.Msg.alert('Cảnh báo', 'Chưa nhập đủ thông tin.');

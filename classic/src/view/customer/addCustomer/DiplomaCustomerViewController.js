@@ -39,27 +39,33 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
         if (form.isValid()) {
             if (values.id) {
                 if (formInfo.id) {
-                    Ext.Ajax.request({
-                        url: `https://em-v2.oceantech.com.vn/em/certificate/${values.id}`,
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-                        },
-                        jsonData: values,
-                        success: function (response) {
-                            let data = Ext.decode(response.responseText);
-                            if (data.code === 200) {
-                                let record = store.getById(values.id);
-                                record.set(data.data);
-                                form.reset();
-                                return;
+                    (function callApiUpdate() {
+                        Ext.Ajax.request({
+                            url: `https://em-v2.oceantech.com.vn/em/certificate/${values.id}`,
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+                            },
+                            jsonData: values,
+                            success: function (response) {
+                                let data = Ext.decode(response.responseText);
+                                if (data.code === 200) {
+                                    let record = store.getById(values.id);
+                                    record.set(data.data);
+                                    form.reset();
+                                    return;
+                                }
+                                Ext.Msg.alert('Lỗi', data.message);
+                            },
+                            failure: function (response) {
+                                if (response.status === 401) {
+                                    CheckToken.checkToken(response, callApiUpdate);
+                                } else {
+                                    Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
+                                }
                             }
-                            Ext.Msg.alert('Lỗi', data.message);
-                        },
-                        failure: function (response) {
-                            Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
-                        }
-                    });
+                        });
+                    })();
                     return;
                 }
                 let record = store.getById(values.id);
@@ -67,27 +73,33 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
                 form.reset();
             } else {
                 if (formInfo.id) {
-                    Ext.Ajax.request({
-                        url: `https://em-v2.oceantech.com.vn/em/certificate?employeeId=${formInfo.id}`,
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-                        },
-                        jsonData: [values],
-                        success: function (response) {
-                            let data = Ext.decode(response.responseText);
-                            if (data.code === 200) {
-                                store.setData(data.data);
-                                console.log(store.getRange())
-                                form.reset();
-                                return;
+                    (function callApiPost() {
+                        Ext.Ajax.request({
+                            url: `https://em-v2.oceantech.com.vn/em/certificate?employeeId=${formInfo.id}`,
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+                            },
+                            jsonData: [values],
+                            success: function (response) {
+                                let data = Ext.decode(response.responseText);
+                                if (data.code === 200) {
+                                    store.setData(data.data);
+                                    console.log(store.getRange())
+                                    form.reset();
+                                    return;
+                                }
+                                Ext.Msg.alert('Lỗi', data.message);
+                            },
+                            failure: function (response) {
+                                if (response.status === 401) {
+                                    CheckToken.checkToken(response, callApiPost);
+                                } else {
+                                    Ext.Msg.alert('Lỗi', 'Thêm thất bại.');
+                                }
                             }
-                            Ext.Msg.alert('Lỗi', data.message);
-                        },
-                        failure: function (response) {
-                            Ext.Msg.alert('Lỗi', 'Thêm thất bại.');
-                        }
-                    });
+                        });
+                    })();
                     return;
                 }
                 values.id = store.getCount() + 1;
@@ -129,19 +141,25 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
             fn: function (buttonValue, inputText, showConfig) {
                 if (buttonValue === "yes") {
                     if (formInfo.id) {
-                        Ext.Ajax.request({
-                            url: `https://em-v2.oceantech.com.vn/em/certificate/${record.id}`,
-                            method: 'DELETE',
-                            headers: {
-                                'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-                            },
-                            success: function (response) {
-                                store.remove(record);
-                            },
-                            failure: function (response) {
-                                Ext.Msg.alert('Lỗi', 'Cập nhật thất bại.');
-                            }
-                        });
+                        (function callApiDelete() {
+                            Ext.Ajax.request({
+                                url: `https://em-v2.oceantech.com.vn/em/certificate/${record.id}`,
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+                                },
+                                success: function (response) {
+                                    store.remove(record);
+                                },
+                                failure: function (response) {
+                                    if (response.status === 401) {
+                                        CheckToken.checkToken(response, callApiDelete);
+                                    } else {
+                                        Ext.Msg.alert('Lỗi', 'Xóa thất bại.');
+                                    }
+                                }
+                            });
+                        })();
                         return;
                     }
                     store.remove(record);
