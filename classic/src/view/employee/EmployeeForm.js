@@ -1,14 +1,14 @@
 Ext.define("Admin.view.employee.EmployeeForm", {
   extend: "Ext.window.Window",
 
-  controller: "employeecontroller",
+  controller: "employeeformcontroller",
   layout: "fit",
   width: "60%",
   height: "60%",
   resizable: false,
   modal: true,
   closable: true,
-  id: "form-employee",
+  // id: "form-employee",
 
   items: [
     {

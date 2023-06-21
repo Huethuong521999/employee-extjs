@@ -10,6 +10,20 @@ Ext.define("Admin.view.employee.EmployeeController", {
     employeeStore.loadStore(); //hàm load store
   },
 
+  loadRecord: function (windowForm, record) {
+    let form = windowForm.down("form");
+
+    if (record) {
+      windowForm.setTitle("Sửa thông tin nhân viên");
+      form.action = "edit";
+      form.getForm().setValues(record.getData());
+    } else {
+      windowForm.setTitle("Thêm mới thông tin nhân viên");
+      form.action = "add";
+      form.reset();
+    }
+  },
+
   onOpenEmloyeeForm: function () {
     let windowForm = Ext.create("Admin.view.employee.EmployeeForm", {
       record: null,
@@ -18,25 +32,11 @@ Ext.define("Admin.view.employee.EmployeeController", {
     windowForm.show();
   },
 
-  handleSave: function (window) {
-    let form = window.down("form");
-    let values = form.getValues();
-
-    
-    if (form.isValid()) {
-      let store = Ext.data.StoreManager.lookup("employeeStore");
-      if (form.action === "edit") {
-        let record = store.getById(values.id);
-        record.set(values);
-      } else {
-        values.id = store.getCount() + 1;
-        store.add(values);
-      }
-      form.reset();
-      window.close();
-    } else {
-      Ext.Msg.alert("Cảnh báo", "Chưa nhập đủ thông tin.");
-    }
+  handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
+    console.log("record", record);
+    let editForm = Ext.create("Admin.view.employee.EmployeeForm");
+    this.loadRecord(editForm, record);
+    editForm.show();
   },
 
   handleDelete: function (sender, record) {
@@ -60,19 +60,5 @@ Ext.define("Admin.view.employee.EmployeeController", {
       },
       icon: Ext.Msg.QUESTION,
     });
-  },
-
-  loadRecord: function (windowForm, record) {
-    let form = windowForm.down("form");
-
-    if (record) {
-      windowForm.setTitle("Sửa thông tin nhân viên");
-      form.action = "edit";
-      form.getForm().setValues(record.getData());
-    } else {
-      windowForm.setTitle("Thêm mới thông tin nhân viên");
-      form.action = "add";
-      form.reset();
-    }
   },
 });
