@@ -19,17 +19,12 @@ Ext.define("Admin.view.customer.CustomerController", {
     let editForm = Ext.create("Admin.view.customer.addCustomer.AddCustomerForm");
     let form = editForm.down("form");
 
-    if (record.id) {
+    (function getByIdEmployee() {
       Ext.Ajax.request({
         url: `https://em-v2.oceantech.com.vn/em/employee/${record.id}`,
         method: 'GET',
         headers: {
-          'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-        },
-        listeners: {
-          exception: function (proxy, response, operation) {
-            customerStore.checkToken(proxy, response, operation);
-          }
+          'Authorization': 'Bearer ' + Ext.util.Cookies.get('token'),
         },
         success: function (response) {
           let data = Ext.decode(response.responseText);
@@ -52,12 +47,14 @@ Ext.define("Admin.view.customer.CustomerController", {
           editForm.show();
         },
         failure: function (response) {
-          Ext.Msg.alert('Lỗi', 'Lấy dữ liệu thất bại.');
+          if (response.status === 401) {
+            CheckToken.checkToken(response, getByIdEmployee);
+          } else {
+            Ext.Msg.alert('Lỗi', 'Lấy dữ liệu thất bại.');
+          }
         }
       });
-    } else {
-      Ext.Msg.alert('Lỗi', 'Lấy dữ liệu thất bại.');
-    }
+    })();
   },
 
   loadRecord: function (windowForm, record) {
@@ -89,19 +86,25 @@ Ext.define("Admin.view.customer.CustomerController", {
       multiline: false,
       fn: function (buttonValue, inputText, showConfig) {
         if (buttonValue === "yes") {
-          Ext.Ajax.request({
-            url: `https://em-v2.oceantech.com.vn/em/employee/${record.id}`,
-            method: 'DELETE',
-            headers: {
-              'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
-            },
-            success: function (response) {
-              store.load();
-            },
-            failure: function (response) {
-              Ext.Msg.alert('Lỗi', 'Xóa thất bại.');
-            }
-          });
+          (function callApiDelete() {
+            Ext.Ajax.request({
+              url: `https://em-v2.oceantech.com.vn/em/employee/${record.id}`,
+              method: 'DELETE',
+              headers: {
+                'Authorization': 'Bearer' + Ext.util.Cookies.get('token'),
+              },
+              success: function (response) {
+                store.load();
+              },
+              failure: function (response) {
+                if (response.status === 401) {
+                  CheckToken.checkToken(response, callApiDelete);
+                } else {
+                  Ext.Msg.alert('Lỗi', 'Xóa thất bại.');
+                }
+              }
+            });
+          })();
         }
       },
       icon: Ext.Msg.QUESTION,
