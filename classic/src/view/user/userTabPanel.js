@@ -1,8 +1,10 @@
 Ext.define('Admin.view.user.UserTabPanel', {
     extend: 'Ext.form.Panel',
-    xtype: 'userTabPanel',
-
+    xtype: 'userTabPanelView',
     width: '100%',
+    viewModel: {
+        type: 'user'
+    },
 
     items: [
         {

@@ -20,10 +20,7 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridView', {
         },
         {
             xtype: 'bigdatagrid',
-            flex: 1,
-            bind: {
-                store: '{bigdatagrid}'
-            }
+            flex: 1
         }
     ]
 });

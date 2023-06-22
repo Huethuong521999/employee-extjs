@@ -8,5 +8,8 @@ Ext.define('Admin.view.user.UserViewModel', {
         user: {
             type: 'user'
         }
+    },
+    data: {
+        userData: {}
     }
 });

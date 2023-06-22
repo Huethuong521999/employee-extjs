@@ -11,28 +11,28 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
     },
 
     openAddForm: function () {
-        let windowForm = Ext.create('Admin.view.bigdatagrid.BigDataUserForm', {
-            record: null
-        });
-        this.loadRecord(windowForm, null);
-        windowForm.show();
+        this.showPopup({});
     },
 
-    handleEdit: function (grid, rowIndex) {
-        let record = grid.getStore().getAt(rowIndex);
-        let form = Ext.create('Admin.view.bigdatagrid.BigDataUserForm');
-        this.loadRecord(form, record);
-        form.show();
+    handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
+        this.showPopup(record.getData());
     },
 
-    handleSave: function (thisForm) {
-        let window = thisForm.up('window');
+    getStore: function (name) {
+        let store = this.getViewModel().getStore(name);
+        return store;
+    },
+
+    handleSave: function (saveButton) {
+        let window = saveButton.up('window');
         let form = window.down('form');
         let values = form.getValues();
-        let store = Ext.data.StoreManager.lookup('big-data-grid');
+        let selectedRecord = form.getViewModel().getData().userData;
+        let store = this.getStore('bigdatagrid');
         if (form.isValid()) {
-            if (form.action === 'edit') {
-                let record = store.getById(values.id);
+            if (selectedRecord.id) {
+                let record = store.getById(selectedRecord.id);
+                values.id = selectedRecord.id;
                 record.set(values);
             } else {
                 values.id = store.getCount() + 1;
@@ -57,10 +57,11 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
                 yes: 'Đồng ý',
                 no: 'Hủy'
             },
+            scope: this,
             multiline: false,
             fn: function (buttonValue) {
                 if (buttonValue === 'yes') {
-                    let store = Ext.data.StoreManager.lookup('big-data-grid');
+                    let store = this.getStore('bigdatagrid');
                     store.remove(record);
                 }
             },
@@ -77,16 +78,46 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridController', {
             ' / >'
         );
     },
-    loadRecord: function (windowForm, record) {
-        let form = windowForm.down('form');
-        if (record) {
-            windowForm.setTitle('Sửa thông tin người dùng');
-            form.action = 'edit';
-            form.getForm().setValues(record.getData());
-        } else {
-            windowForm.setTitle('Thêm mới thông tin người dùng');
-            form.action = 'add';
-            form.reset();
-        }
+    showPopup: function (recordUser) {
+        var popup = Ext.create('Ext.window.Window', {
+            responsiveConfig: {
+                'width >= 992': {
+                    width: '50%'
+                },
+                'width < 768 ': {
+                    width: '90%'
+                }
+            },
+            title: recordUser.id
+                ? 'Cập nhật người dùng'
+                : 'Thêm mới người dùng',
+            resizable: false,
+            modal: true,
+            closable: true,
+
+            items: [
+                {
+                    xtype: 'BigDataUserTabPanelView',
+                    viewModel: {
+                        data: {
+                            userData: recordUser || {}
+                        }
+                    }
+                }
+            ],
+
+            buttons: [
+                {
+                    text: 'Lưu',
+                    handler: this.handleSave,
+                    scope: this
+                },
+                {
+                    text: 'Đóng',
+                    handler: this.handleClose
+                }
+            ]
+        });
+        popup.show();
     }
 });

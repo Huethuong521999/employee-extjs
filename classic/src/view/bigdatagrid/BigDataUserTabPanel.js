@@ -1,8 +1,12 @@
 Ext.define('Admin.view.bigdatagrid.BigDataUserTabPanel', {
     extend: 'Ext.form.Panel',
-    xtype: 'BigDataUserTabPanel',
+    xtype: 'BigDataUserTabPanelView',
 
     width: '100%',
+
+    viewModel: {
+        type: 'bigdatagridviewmodel'
+    },
 
     items: [
         {

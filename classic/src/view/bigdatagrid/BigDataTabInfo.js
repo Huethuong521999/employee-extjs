@@ -31,7 +31,8 @@ Ext.define('Admin.view.user.BigDataTabInfo', {
                         'width < 768 ': {
                             width: '100%'
                         }
-                    }
+                    },
+                    bind: '{userData.name}'
                 },
                 {
                     xtype: 'datefield',
@@ -46,7 +47,8 @@ Ext.define('Admin.view.user.BigDataTabInfo', {
                         'width < 768 ': {
                             width: '100%'
                         }
-                    }
+                    },
+                    bind: '{userData.dateOfBirth}'
                 },
                 {
                     xtype: 'checkbox',
@@ -60,7 +62,8 @@ Ext.define('Admin.view.user.BigDataTabInfo', {
                         'width < 768 ': {
                             width: '100%'
                         }
-                    }
+                    },
+                    bind: '{userData.isVerified}'
                 }
             ]
         }

@@ -12,26 +12,28 @@ Ext.define('Admin.view.user.UserController', {
     },
 
     onOpenUserForm: function () {
-        let windowForm = Ext.create('Admin.view.user.UserForm', {
-            record: null
-        });
-        this.loadRecord(windowForm, null);
-        windowForm.show();
+        this.showPopup({});
     },
 
     handleClose: function (thisForm) {
         thisForm.up('window').close();
     },
 
-    handleSave: function (thisForm) {
-        let window = thisForm.up('window');
+    getStore: function (name) {
+        let store = this.getViewModel().getStore(name);
+        return store;
+    },
+
+    handleSave: function (saveButton) {
+        let window = saveButton.up('window');
         let form = window.down('form');
         let values = form.getValues();
         let checkbox = Ext.getCmp('moreInfoCheckbox');
+        let selectedRecord = form.getViewModel().getData().userData;
         if (form.isValid()) {
-            let store = Ext.getCmp('list-user').getStore();
-            if (form.action === 'edit') {
-                let record = store.getById(values.id);
+            let store = this.getStore('user');
+            if (selectedRecord.id) {
+                let record = store.getById(selectedRecord.id);
                 record.set(values);
             } else {
                 values.id = store.getCount() + 1;
@@ -67,12 +69,8 @@ Ext.define('Admin.view.user.UserController', {
         }
     },
 
-    handleEdit: function (grid, rowIndex, colIndex) {
-        let rec = grid.getStore().getAt(rowIndex);
-        let editForm = Ext.create('Admin.view.user.UserForm');
-        let controller = editForm.getController();
-        controller.loadRecord(editForm, rec);
-        editForm.show();
+    handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
+        this.showPopup(record.getData());
     },
 
     handleDelete: function (grid, rowIndex) {
@@ -87,10 +85,11 @@ Ext.define('Admin.view.user.UserController', {
                 yes: 'Đồng ý',
                 no: 'Hủy'
             },
+            scope: this,
             multiline: false,
             fn: function (buttonValue) {
                 if (buttonValue === 'yes') {
-                    let store = Ext.data.StoreManager.lookup('user');
+                    let store = this.getStore('user');
                     store.remove(record);
                 }
             },
@@ -98,16 +97,47 @@ Ext.define('Admin.view.user.UserController', {
         });
     },
 
-    loadRecord: function (windowForm, record) {
-        let form = windowForm.down('form');
-        if (record) {
-            windowForm.setTitle('Sửa thông tin người dùng');
-            form.action = 'edit';
-            form.getForm().setValues(record.getData());
-        } else {
-            windowForm.setTitle('Thêm mới thông tin người dùng');
-            form.action = 'add';
-            form.reset();
-        }
+    showPopup: function (recordUser) {
+        var popup = Ext.create('Ext.window.Window', {
+            responsiveConfig: {
+                'width >= 992': {
+                    width: '50%'
+                },
+                'width < 768 ': {
+                    width: '90%'
+                }
+            },
+            resizable: false,
+            modal: true,
+            closable: true,
+            closableToolText: 'Đóng cửa sổ',
+            closeAction: 'destroy',
+            layout: 'fit',
+            title: recordUser.id
+                ? 'Cập nhật người dùng'
+                : 'Thêm mới người dùng',
+            items: [
+                {
+                    xtype: 'userTabPanelView',
+                    viewModel: {
+                        data: {
+                            userData: recordUser || {}
+                        }
+                    }
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Lưu',
+                    scope: this,
+                    handler: this.handleSave
+                },
+                {
+                    text: 'Đóng',
+                    handler: this.handleClose
+                }
+            ]
+        });
+        popup.show();
     }
 });
