@@ -23,21 +23,29 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
             //   name: "id",
             // },
             {
+              xtype: "textfield",
               fieldLabel: "Họ và tên",
               allowBlank: false,
               name: "hoTen",
               labelAlign: "top",
               flex: 3,
               width: "250px",
+              bind: {
+                value: "{employeeValue.hoTen}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: "textfield",
               fieldLabel: "Giới tính",
               allowBlank: false,
               name: "gioiTinh",
               labelAlign: "top",
               flex: 1.2,
               width: "200px",
+              bind: {
+                value: "{employeeValue.gioiTinh}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
@@ -48,6 +56,9 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               labelAlign: "top",
               flex: 2,
               width: "250px",
+              bind: {
+                value: "{employeeValue.ngaySinh}"
+              },
               listeners: {
                 change: function (field, newValue, oldValue) {
                   console.log('Ngày sinh đã thay đổi11111:', newValue);
@@ -57,12 +68,16 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: "textfield",
               fieldLabel: "Số CCCD",
               allowBlank: false,
               name: "soCccd",
               labelAlign: "top",
               flex: 2,
               width: "250px",
+              bind: {
+                value: "{employeeValue.soCccd}"
+              }
             },
           ],
         },
@@ -84,30 +99,45 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               labelAlign: "top",
               width: "250px",
               height: "63px",
+              bind: {
+                value: "{employeeValue.email}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: "textfield",
               fieldLabel: "Số điện thoại",
               allowBlank: false,
               name: "soDienThoai",
               labelAlign: "top",
               width: "200px",
+              bind: {
+                value: "{employeeValue.ngheNghiep}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: "textfield",
               fieldLabel: "Nghề nghiệp",
               allowBlank: false,
               name: "ngheNghiep",
               labelAlign: "top",
               width: "250px",
+              bind: {
+                value: "{employeeValue.ngheNghiep}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
+              xtype: "textfield",
               fieldLabel: "Nơi làm việc",
               allowBlank: false,
               name: "ctNoiLamViec",
               labelAlign: "top",
               width: "250px",
+              bind: {
+                value: "{employeeValue.ctNoiLamViec}"
+              }
             },
           ],
         },
@@ -127,6 +157,9 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               name: "diaChi",
               labelAlign: "top",
               width: "200px",
+              bind: {
+                value: "{employeeValue.diaChi}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {
@@ -138,6 +171,9 @@ Ext.define("Admin.view.empolyee.TabInfoEmpolyee", {
               displayField: "name",
               valueField: "code",
               queryMode: "local",
+              bind: {
+                value: "{employeeValue.maXa}"
+              }
             },
             { xtype: "tbspacer", width: 12 },
             {

@@ -12,11 +12,12 @@ Ext.define("Admin.view.employee.EmployeeController", {
 
   loadRecord: function (windowForm, record) {
     let form = windowForm.down("form");
-
+    var viewModel = this.getViewModel();
+    console.log("viewModel", viewModel);
     if (record) {
       windowForm.setTitle("Sửa thông tin nhân viên");
       form.action = "edit";
-      form.getForm().setValues(record.getData());
+      viewModel.set("employeeValue", record.getData());
     } else {
       windowForm.setTitle("Thêm mới thông tin nhân viên");
       form.action = "add";
@@ -25,21 +26,16 @@ Ext.define("Admin.view.employee.EmployeeController", {
   },
 
   onOpenEmloyeeForm: function () {
-    let windowForm = Ext.create("Admin.view.employee.EmployeeForm", {
-      record: null,
-    });
-    this.loadRecord(windowForm, null);
-    windowForm.show();
+    this.showPopup({});
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
-    console.log("record", record);
-    let editForm = Ext.create("Admin.view.employee.EmployeeForm");
-    this.loadRecord(editForm, record);
-    editForm.show();
+    this.showPopup(record.getData());
   },
 
-  handleDelete: function (sender, record) {
+  handleDelete: function (grid, rowIndex, colIndex, item, e, record) {
+    let store = this.getViewModel().getStore("employeeStore");
+
     Ext.Msg.show({
       title: "Xác nhận",
       msg: "Bạn có chắc chắn muốn xóa bản ghi này không?",
@@ -53,12 +49,41 @@ Ext.define("Admin.view.employee.EmployeeController", {
       multiline: false,
       fn: function (buttonValue, inputText, showConfig) {
         if (buttonValue === "yes") {
-          let store = Ext.data.StoreManager.lookup("employeeStore");
-
           store.remove(record);
         }
       },
       icon: Ext.Msg.QUESTION,
     });
   },
+  showPopup: function (recordEmployee) {
+    var popup = Ext.create("Ext.window.Window", {
+      height: 360,
+      align: "center",
+      width: 600,
+      closable: true,
+      closableToolText: "Đóng cửa sổ",
+      resizable: true,
+      modal: true,
+      title: recordEmployee ?  "Cập nhật" : "Thêm mới",
+      closeAction: 'destroy',
+      // bodyStyle : 'background-color :transparent',
+      layout:'fit',
+      bodyStyle: 'padding:10px',
+      items: [
+          {
+              xtype: "EmployeeFormView",
+              viewModel: {
+                  data: {
+                    employeeValue: recordEmployee || {}
+                  }
+              }
+          }
+      ]
+  });
+  popup.show();
+  popup.down('EmployeeFormView').getController().on("Save", function (record) {
+      //khi lưu xong ở pop thì đây là hàm xử lý ở dưới
+      console.log("record", record);
+  });
+  }
 });

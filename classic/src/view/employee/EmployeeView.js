@@ -52,25 +52,11 @@ Ext.define("Admin.view.employee.EmployeeView", {
           iconCls: "x-fa fa-edit",
           tooltip: "Chỉnh sửa",
           handler: "handleEdit",
-          // handler: function (grid, rowIndex, colIndex) {
-          //   debugger
-          //   let controller = this.getController();
-          //   // Get the selected record
-          //   let rec = grid.getStore().getAt(rowIndex);
-          //   // Show the edit form
-          //   let editForm = Ext.create("Admin.view.employee.EmployeeForm");
-          //   controller.loadRecord(editForm, rec);
-          //   editForm.show();
-          // },
         },
         {
           iconCls: "fa fa-trash",
           tooltip: "Xóa",
-          handler: function (grid, rowIndex, colIndex) {
-            var controller = this.up('employee').getController();
-            let rec = grid.getStore().getAt(rowIndex);
-            controller.handleDelete(this, rec);
-          },
+          handler: "handleDelete"
         },
       ],
     },

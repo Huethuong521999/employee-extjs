@@ -11,5 +11,21 @@ Ext.define("Admin.view.employee.EmplooyeeViewModel", {
         type: "province",
     }
   },
-  data: {},
+  
+  data: {
+    employeeValue: {
+      hoTen: "",
+      gioiTinh: "",
+      ngaySinh: "",
+      soCccd: "",
+      email: "",
+      soDienThoai: "",
+      ngheNghiep: "",
+      ctNoiLamViec: "",
+      diaChi: "",
+      maXa: "",
+      maHuyen: "",
+      maTinh: "",
+    }
+  },
 });
