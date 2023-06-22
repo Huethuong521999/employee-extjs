@@ -3,39 +3,40 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
   alias: 'controller.AddCustomer',
 
   handleSave: function () {
+    let me = this;
     let view = this.getView();
+    let viewModel = this.getViewModel();
     let form = view.down("form");
-    let tabPanel = view.down('tabpanel');
     let formInfo = view.down("tabInfoCustomer");
-    let valuesFormFamily = tabPanel.down('list-family-customer').getStore().getRange() || [];
-    let valuesFormDiploma = tabPanel.down('list-diploma-customer').getStore().getRange() || [];
     let store = Ext.data.StoreManager.lookup('customerStoreId');
+    infoEmpolyee = viewModel.get("info");
+    storeCertificates = viewModel.getStore("certificatesDto").getRange() || [];
+    storeEmployeeFamily = viewModel.getStore("employeeFamilyDtos").getRange() || [];
 
-    let dataFamily = [];
-    let dataDiploma = [];
+    let dataCertificates = [];
+    let dataEmployeeFamily = [];
 
-    valuesFormFamily.forEach(item => {
+    storeEmployeeFamily.forEach(item => {
       let itemFamily = item.data;
-      itemFamily.dateOfBirth = Ext.Date.format(new Date(itemFamily.dateOfBirth), 'Y-m-d');
-      dataFamily.push(itemFamily);
+      itemFamily.dateOfBirth = Utils.formatDateDto(itemFamily.dateOfBirth)
+      dataEmployeeFamily.push(itemFamily);
     });
 
-    valuesFormDiploma.forEach(item => {
-      let itemDiploma = item.data;
-      itemDiploma.issueDate = Ext.Date.format(new Date(itemDiploma.issueDate), 'Y-m-d');
-      dataDiploma.push(itemDiploma)
+    storeCertificates.forEach(item => {
+      let itemCertificates = item.data;
+      itemCertificates.issueDate = Utils.formatDateDto(itemCertificates.issueDate)
+      dataCertificates.push(itemCertificates)
     });
 
-    let values = formInfo.getValues();
-    values.dateOfBirth = Ext.Date.format(new Date(values.dateOfBirth), 'Y-m-d');
-    values.dateOfIssuanceCard = Ext.Date.format(new Date(values.dateOfIssuanceCard), 'Y-m-d');
+    infoEmpolyee.dateOfBirth = Utils.formatDateDto(infoEmpolyee.dateOfBirth);
+    infoEmpolyee.dateOfIssuanceCard = Utils.formatDateDto(infoEmpolyee.dateOfIssuanceCard);
 
     if (formInfo.isValid()) {
       let data = {
-        ...values,
+        ...infoEmpolyee,
         submitProfileStatus: 1,
-        certificatesDto: dataDiploma,
-        employeeFamilyDtos: dataFamily,
+        certificatesDto: dataCertificates,
+        employeeFamilyDtos: dataEmployeeFamily,
       }
 
       if (data.id) {
@@ -52,7 +53,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
               if (data.code === 200) {
                 store.load();
                 form.reset();
-                view.close();
+                me.handleClose();
                 return;
               }
               Ext.Msg.alert('Lỗi', data.message);
@@ -80,7 +81,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
               if (data.code === 200) {
                 store.load();
                 form.reset();
-                view.close();
+                me.handleClose();
                 return;
               }
               Ext.Msg.alert('Lỗi', data.message);
@@ -101,6 +102,18 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
   },
 
   handleClose: function () {
-    let window = this.getView().close();
+    this.getView().up("window").close();
   },
+  validatorName: function (value) {
+    return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+  },
+  validatorPhone: function (value) {
+    return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+  },
+  validatorCCDC: function (value) {
+    return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+  },
+  validatorEmail: function (value) {
+    return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
+  }
 });

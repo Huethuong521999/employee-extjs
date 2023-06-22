@@ -2,6 +2,7 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
     extend: 'Ext.form.Panel',
     xtype: 'tabInfoCustomer',
     title: 'Thông tin nhân viên',
+    controller: "AddCustomer",
     reference: "infoCustomer",
     items: [
         {
@@ -22,42 +23,51 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     name: "name",
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: function (value) {
-                        return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+                    bind: {
+                        value: "{info.name}"
                     },
+                    validator: "validatorName"
                 },
                 {
                     fieldLabel: "Mã nhân viên",
                     allowBlank: false,
                     name: "code",
                     cls: "inputField w-33",
+                    bind: {
+                        value: "{info.code}"
+                    },
                     blankText: 'Trường này là trường bắt buộc',
                 },
                 {
                     fieldLabel: "Số điện thoại",
                     allowBlank: false,
                     name: "phone",
+                    bind: {
+                        value: "{info.phone}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: function (value) {
-                        return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
-                    }
+                    validator: "validatorPhone",
                 },
                 {
                     fieldLabel: "Số CCCD",
                     allowBlank: false,
                     name: "citizenIdentificationNumber",
+                    bind: {
+                        value: "{info.citizenIdentificationNumber}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: function (value) {
-                        return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
-                    },
+                    validator: "validatorCCDC",
                 },
                 {
                     xtype: 'datefield',
                     fieldLabel: "Ngày cấp",
                     allowBlank: false,
                     name: "dateOfIssuanceCard",
+                    bind: {
+                        value: "{info.dateOfIssuanceCard}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -65,6 +75,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: "Nơi cấp",
                     allowBlank: false,
                     name: "placeOfIssueCard",
+                    bind: {
+                        value: "{info.placeOfIssueCard}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -72,16 +85,20 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: "Email",
                     allowBlank: false,
                     name: "email",
+                    bind: {
+                        value: "{info.email}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: function (value) {
-                        return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
-                    }
+                    validator: "validatorEmail",
                 },
                 {
                     fieldLabel: "Địa chỉ",
                     allowBlank: false,
                     name: "address",
+                    bind: {
+                        value: "{info.address}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -89,6 +106,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     xtype: 'combobox',
                     fieldLabel: 'Giới tính',
                     name: 'gender',
+                    bind: {
+                        value: "{info.gender}"
+                    },
                     store: Ext.create('Ext.data.Store', {
                         fields: ['value', 'label'],
                         data: [
@@ -109,6 +129,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: "Tôn giáo",
                     allowBlank: false,
                     name: "religion",
+                    bind: {
+                        value: "{info.religion}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -116,6 +139,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: "Dân tộc",
                     allowBlank: false,
                     name: "ethnic",
+                    bind: {
+                        value: "{info.ethnic}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -124,6 +150,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: "Ngày sinh",
                     allowBlank: false,
                     name: "dateOfBirth",
+                    bind: {
+                        value: "{info.dateOfBirth}"
+                    },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -131,6 +160,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     xtype: 'combobox',
                     fieldLabel: 'Team',
                     name: 'team',
+                    bind: {
+                        value: "{info.team}"
+                    },
                     store: Ext.create('Ext.data.Store', {
                         fields: ['value', 'label'],
                         data: [
