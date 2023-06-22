@@ -22,6 +22,9 @@ Ext.define('Admin.view.bigdata.BigDataGrid', {
         type: 'checkboxmodel',
         checkOnly: true
     },
+    bind: {
+        store: '{bigdatagrid}'
+    },
 
     id: 'big-data-grid',
     xtype: 'big-data-grid',

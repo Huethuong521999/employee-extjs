@@ -7,5 +7,8 @@ Ext.define('Admin.view.bigdatagrid.BigDataGridViewModel', {
             type: 'bigdatagrid',
             autoLoad: true
         }
+    },
+    data: {
+        userData: {}
     }
 });

@@ -25,6 +25,9 @@ Ext.define('Admin.view.user.TabInfo', {
                     allowBlank: false,
                     name: 'name',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.name}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
@@ -39,6 +42,9 @@ Ext.define('Admin.view.user.TabInfo', {
                     allowBlank: false,
                     name: 'username',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.username}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
@@ -53,6 +59,9 @@ Ext.define('Admin.view.user.TabInfo', {
                     allowBlank: false,
                     name: 'email',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.email}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
@@ -67,6 +76,9 @@ Ext.define('Admin.view.user.TabInfo', {
                     allowBlank: false,
                     name: 'phone',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.phone}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
@@ -81,6 +93,9 @@ Ext.define('Admin.view.user.TabInfo', {
                     allowBlank: false,
                     name: 'website',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.website}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'

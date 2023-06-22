@@ -17,6 +17,9 @@ Ext.define('Admin.view.user.TabMoreInfo', {
                     allowBlank: false,
                     name: 'company',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.company.name}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
@@ -31,6 +34,9 @@ Ext.define('Admin.view.user.TabMoreInfo', {
                     allowBlank: false,
                     name: 'address',
                     cls: 'inputField',
+                    bind: {
+                        value: '{userData.address.street}'
+                    },
                     responsiveConfig: {
                         'width >= 768': {
                             width: '50%'
