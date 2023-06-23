@@ -3,7 +3,8 @@ Ext.define('CheckToken', {
         checkToken: function (response, callback) {
             let customerStore = this;
             if (response.status === 401) {
-                customerStore.login(callback);
+                // customerStore.login(callback);
+                Ext.util.History.add('#loginScreen'); //401 quay về trang login
             } else if (response.status === 403) {
                 console.log('Không có quyền truy cập');
             } else {
