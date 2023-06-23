@@ -1,4 +1,4 @@
-Ext.define('Admin.model.customer.DiplomaCustomer', {
+Ext.define('Admin.model.customer.Certificates', {
     extend: 'Ext.data.Model',
 
     fields: [
@@ -6,7 +6,7 @@ Ext.define('Admin.model.customer.DiplomaCustomer', {
         { name: 'certificateName', type: 'string' },
         { name: 'field', type: 'string' },
         { name: 'content', type: 'string' },
-        { name: 'issueDate', type: 'date' },
+        { name: 'issueDate', type: 'number' },
     ],
 
     belongsTo: 'Customer'

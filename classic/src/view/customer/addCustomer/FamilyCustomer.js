@@ -1,60 +1,108 @@
 Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.grid.Panel',
     xtype: 'tabFamilyCustomer',
     title: 'Quan hệ gia đình',
-
-    requires: [
-        "Admin.view.customer.addCustomer.FamilyCustomerViewController",
-        "Admin.view.customer.addCustomer.FamilyCustomerViewModel",
-    ],
-
     controller: 'familyCustomer',
-    viewModel: {
-        type: "familyCustomer",
+    width: '100%',
+    bind: {
+        store: '{employeeFamilyDtos}'
     },
-    reference: 'familyForm',
-
-    items: [
+    columns: [
         {
-            layout: 'form',
-            id: "formFamaily",
+            xtype: "actioncolumn",
+            text: "Thao tác",
+            width: 80,
+            align: "center",
             items: [
                 {
-                    xtype: 'fieldcontainer',
-                    layout: 'column',
+                    iconCls: "x-fa fa-edit",
+                    tooltip: "Chỉnh sửa",
+                    handler: "handleEdit"
+                },
+                {
+                    iconCls: "fa fa-trash",
+                    tooltip: "Xóa",
+                    handler: "handleDelete",
+                },
+            ],
+        },
+        {
+            dataIndex: "name",
+            text: "Họ và Tên",
+            flex: 2.5,
+        },
+        {
+            dataIndex: "gender",
+            text: "Giới tính",
+            flex: 1,
+            renderer: "CheckGender"
+        },
+        {
+            dataIndex: "dateOfBirth",
+            text: "Ngày sinh",
+            flex: 1,
+            renderer: "formatDate",
+        },
+        {
+            dataIndex: "citizenIdentificationNumber",
+            text: "Số CCCD",
+            flex: 1,
+        },
+        {
+            dataIndex: "phoneNumber",
+            text: "Số điện thoại",
+            flex: 1,
+        },
+    ],
+
+    dockedItems: [
+        {
+            layout: 'vbox',
+            dock: 'top',
+            width: "100%",
+            margin: "0 0 20px 0",
+            items: [
+                {
+                    layout: "hbox",
+                    width: "100%",
                     defaultType: 'textfield',
                     defaults: {
                         labelAlign: 'top',
                     },
                     items: [
                         {
-                            xtype: "hiddenfield",
-                            name: "id",
-                        },
-                        {
                             fieldLabel: "Họ và tên",
-                            allowBlank: false,
                             name: "name",
-                            cls: "inputField w-33",
-                            blankText: 'Trường này là trường bắt buộc',
-                            validator: function (value) {
-                                return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+                            bind: {
+                                value: "{itemFamilyRelations.name}"
                             },
+                            flex: 1,
+                            allowBlank: false,
+                            blankText: 'Trường này là trường bắt buộc',
+                            validator: "validatorName",
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             xtype: 'datefield',
                             fieldLabel: "Ngày sinh",
-                            allowBlank: false,
                             name: "dateOfBirth",
-                            cls: "inputField w-33",
+                            bind: {
+                                value: "{itemFamilyRelations.dateOfBirth}"
+                            },
+                            flex: 1,
+                            allowBlank: false,
                             format: 'd-m-Y',
                             submitFormat: 'Y-m-d',
                             blankText: 'Trường này là trường bắt buộc',
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             xtype: 'combobox',
                             fieldLabel: 'Giới tính',
                             name: 'gender',
+                            bind: {
+                                value: "{itemFamilyRelations.gender}"
+                            },
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['value', 'label'],
                                 data: [
@@ -68,24 +116,38 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             displayField: 'label',
                             valueField: 'value',
                             allowBlank: false,
-                            cls: "inputField w-33",
+                            flex: 1,
                             emptyText: 'Chọn giới tính...'
                         },
+                    ]
+                },
+                {
+                    layout: "hbox",
+                    width: "100%",
+                    defaultType: 'textfield',
+                    defaults: {
+                        labelAlign: 'top',
+                    },
+                    items: [
                         {
                             fieldLabel: "Số CCCD",
-                            allowBlank: false,
                             name: "citizenIdentificationNumber",
-                            cls: "inputField w-33",
-                            // msgTarget: 'under',
-                            blankText: 'Trường này là trường bắt buộc',
-                            validator: function (value) {
-                                return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                            bind: {
+                                value: "{itemFamilyRelations.citizenIdentificationNumber}"
                             },
+                            flex: 1,
+                            allowBlank: false,
+                            blankText: 'Trường này là trường bắt buộc',
+                            validator: "validatorCCDC",
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             xtype: 'combobox',
                             fieldLabel: 'Mối quan hệ',
                             name: 'relationShip',
+                            bind: {
+                                value: "{itemFamilyRelations.relationShip}"
+                            },
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['value', 'label'],
                                 data: [
@@ -103,67 +165,73 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             displayField: 'label',
                             valueField: 'value',
                             allowBlank: false,
-                            cls: "inputField w-33",
+                            flex: 1,
                             emptyText: 'Chọn mối quan hệ...'
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             fieldLabel: "Số điện thoại",
                             allowBlank: false,
                             name: "phoneNumber",
-                            cls: "inputField w-33",
-                            // msgTarget: 'under',
+                            bind: {
+                                value: "{itemFamilyRelations.phoneNumber}"
+                            },
+                            flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: function (value) {
-                                return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
-                            }
+                            validator: "validatorPhone",
                         },
+                    ]
+                },
+                {
+                    layout: "hbox",
+                    width: "100%",
+                    defaultType: 'textfield',
+                    defaults: {
+                        labelAlign: 'top',
+                    },
+                    items: [
                         {
                             fieldLabel: "Địa chỉ",
-                            allowBlank: false,
                             name: "address",
-                            cls: "inputField w-33",
-                            // msgTarget: 'under',
+                            bind: {
+                                value: "{itemFamilyRelations.address}"
+                            },
+                            flex: 1,
+                            allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             fieldLabel: "Email",
-                            allowBlank: false,
                             name: "email",
-                            cls: "inputField w-33",
-                            // msgTarget: 'under',
+                            bind: {
+                                value: "{itemFamilyRelations.email}"
+                            },
+                            flex: 1,
+                            allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: function (value) {
-                                return value && ((/^[a-zA-Z0-9_.+-]+@gmail\.com$/.test(value)) ? true : "Email phải có định dang 123@gmail.com");
-                            }
+                            validator: "validatorEmail",
+                        },
+                        { xtype: "tbspacer", width: 12 },
+                        {
+                            xtype: 'button',
+                            ui: 'gray',
+                            cls: "buttonContainer mr-10",
+                            text: 'Hủy',
+                            width: 100,
+                            handler: 'handleClear'
                         },
                         {
-                            xtype: 'container',
-                            layout: 'hbox',
-                            cls: 'buttonContainer inputField w-33',
-                            items: [
-                                {
-                                    xtype: 'button',
-                                    ui: 'gray',
-                                    margin: "0 10px 0 0",
-                                    text: 'Hủy',
-                                    handler: 'handleClear'
-                                },
-                                {
-                                    xtype: 'button',
-                                    ui: 'soft-red',
-                                    text: 'Lưu',
-                                    handler: 'handleSubmitFamily'
-                                }
-                            ]
+                            xtype: 'button',
+                            ui: 'soft-red',
+                            text: 'Lưu',
+                            cls: "buttonContainer",
+                            width: 100,
+                            handler: 'handleSubmitFamily'
                         }
-                    ],
-                },
+                    ]
+                }
             ],
         },
-        {
-            margin: "20px",
-            xtype: "list-family-customer"
-        }
-
     ]
 });

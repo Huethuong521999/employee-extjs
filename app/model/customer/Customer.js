@@ -17,7 +17,7 @@ Ext.define("Admin.model.customer.Customer", {
     { type: "string", name: "religion" },
   ],
   hasMany: [
-    { model: 'DiplomaCustomer', name: 'certificatesDto' },
-    { model: 'FamilyCustomer', name: 'employeeFamilyDtos' }
+    { model: 'Certificates', name: 'certificatesDto' },
+    { model: 'EmployeeFamily', name: 'employeeFamilyDtos' }
   ]
 });

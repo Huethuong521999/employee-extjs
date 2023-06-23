@@ -1,52 +1,91 @@
 Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
-    extend: 'Ext.form.Panel',
+    extend: "Ext.grid.Panel",
     xtype: 'tabDiplomaCustomer',
     title: 'Thông tin văn bằng',
-
-    requires: [
-        "Admin.view.customer.addCustomer.DiplomaCustomerViewController",
-        "Admin.view.customer.addCustomer.DiplomaCustomerViewModel",
-    ],
-
     controller: 'diplomaCustomer',
-    viewModel: {
-        type: "diplomaCustomer",
+    width: '100%',
+    bind: {
+        store: '{certificatesDto}'
     },
-
-    items: [
+    columns: [
         {
-            layout: 'form',
-            id: "formDiploma",
+            xtype: "actioncolumn",
+            text: "Thao tác",
+            width: 80,
+            align: "center",
             items: [
                 {
-                    xtype: 'fieldcontainer',
-                    layout: 'column',
+                    iconCls: "x-fa fa-edit",
+                    tooltip: "Chỉnh sửa",
+                    handler: "handleEdit"
+                },
+                {
+                    iconCls: "fa fa-trash",
+                    tooltip: "Xóa",
+                    handler: "handleDelete",
+                },
+            ],
+        },
+        {
+            dataIndex: "certificateName",
+            text: "Họ và Tên",
+            flex: 2.5,
+        },
+        {
+            dataIndex: "field",
+            text: "Lĩnh vực",
+            flex: 1,
+        },
+        {
+            dataIndex: "issueDate",
+            text: "Ngày cấp",
+            flex: 1,
+            renderer: "formatDate",
+        },
+        {
+            dataIndex: "content",
+            text: "Nội dung",
+            flex: 1,
+        },
+    ],
+    dockedItems: [
+        {
+            layout: 'vbox',
+            dock: 'top',
+            width: "100%",
+            margin: "0 0 20px 0",
+            items: [
+                {
+                    layout: "hbox",
+                    width: "100%",
                     defaultType: 'textfield',
                     defaults: {
                         labelAlign: 'top',
                     },
                     items: [
                         {
-                            xtype: "hiddenfield",
-                            name: "id",
-                        },
-                        {
                             fieldLabel: "Tên văn bằng",
                             allowBlank: false,
                             name: "certificateName",
-                            cls: "inputField w-40",
+                            flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: function (value) {
-                                return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
-                            },
+                            validator: "validatorName",
+                            bind: {
+                                value: "{itemCertificates.certificateName}"
+                            }
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             fieldLabel: "Lĩnh vực",
                             allowBlank: false,
                             name: "field",
-                            cls: "inputField w-40",
+                            flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
+                            bind: {
+                                value: "{itemCertificates.field}"
+                            }
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
                             xtype: 'datefield',
                             fieldLabel: "Ngày cấp",
@@ -54,44 +93,51 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             name: "issueDate",
                             format: 'd-m-Y',
                             submitFormat: 'Y-m-d',
-                            cls: "inputField w-20",
+                            flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
+                            bind: {
+                                value: "{itemCertificates.issueDate}"
+                            }
                         },
+                    ]
+                },
+                {
+                    layout: "hbox",
+                    width: "100%",
+                    items: [
                         {
                             fieldLabel: "Nội dung",
+                            xtype: 'textfield',
                             allowBlank: false,
                             name: "content",
-                            cls: "inputField w-80",
+                            bind: {
+                                value: "{itemCertificates.content}"
+                            },
+                            labelAlign: 'top',
+                            flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
                         },
+                        { xtype: "tbspacer", width: 12 },
                         {
-                            xtype: 'container',
-                            layout: 'hbox',
-                            cls: 'buttonContainer inputField w-20',
-                            items: [
-                                {
-                                    xtype: 'button',
-                                    ui: 'gray',
-                                    margin: "0 10px 0 0",
-                                    text: 'Hủy',
-                                    handler: 'handleClear'
-                                },
-                                {
-                                    xtype: 'button',
-                                    ui: 'soft-red',
-                                    text: 'Lưu',
-                                    handler: 'handleSubmitDiploma'
-                                }
-                            ]
+                            xtype: 'button',
+                            ui: 'gray',
+                            cls: "buttonContainer mr-10",
+                            text: 'Hủy',
+                            width: 100,
+                            handler: 'handleClear'
+                        },
+                        {
+                            xtype: 'button',
+                            ui: 'soft-red',
+                            text: 'Lưu',
+                            cls: "buttonContainer",
+                            width: 100,
+                            handler: 'handleSubmitDiploma'
                         }
-                    ],
-                },
+                    ]
+                }
             ],
         },
-        {
-            margin: "20px",
-            xtype: "list-diploma-customer",
-        }
     ],
 
 });

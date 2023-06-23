@@ -1,6 +1,5 @@
 Ext.define("Admin.view.customer.CustomerController", {
   extend: "Ext.app.ViewController",
-
   alias: "controller.customer",
 
   init: function () {
@@ -10,8 +9,7 @@ Ext.define("Admin.view.customer.CustomerController", {
   },
 
   onOpenCustomerForm: function () {
-    let createForm = Ext.create('Admin.view.customer.addCustomer.AddCustomerForm');
-    createForm.show();
+    this.showPopup(null);
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
@@ -34,17 +32,9 @@ Ext.define("Admin.view.customer.CustomerController", {
           employee.dateOfIssuanceCard = new Date(employee.dateOfIssuanceCard)
 
           if (employee) {
-            editForm.setTitle("Sửa thông tin nhân viên");
-            form.action = "edit";
-            thisCustomer.fireEvent('DataFamily', employee.employeeFamilyDtos || []);
-            thisCustomer.fireEvent('DataDiploma', employee.certificatesDto || []);
-            form.getForm().setValues(employee);
-          } else {
-            editForm.setTitle("Thêm mới thông tin nhân viên");
-            form.action = "add";
-            form.reset();
+            thisCustomer.showPopup(employee)
+            thisCustomer.fireEvent('employeeId',(employee && employee.id) || null);
           }
-          editForm.show();
         },
         failure: function (response) {
           if (response.status === 401) {
@@ -55,6 +45,34 @@ Ext.define("Admin.view.customer.CustomerController", {
         }
       });
     })();
+  },
+
+  showPopup: function (recordEmployee) {
+    let dialog = Ext.create("Ext.window.Window", {
+      layout: "fit",
+      width: '90%',
+      height: '90%',
+      align: "center",
+      closable: true,
+      closableToolText: "Đóng cửa sổ",
+      resizable: true,
+      modal: true,
+      title: recordEmployee ? "Cập nhật nhân viên" : "Thêm mới nhân viên",
+      closeAction: 'destroy',
+      layout: 'fit',
+      bodyStyle: 'padding:10px',
+      items: [
+        {
+          xtype: "addCustomerForm",
+          viewModel: {
+            data: {
+              info: recordEmployee,
+            },
+          },
+        },
+      ],
+    });
+    dialog.show();
   },
 
   loadRecord: function (windowForm, record) {

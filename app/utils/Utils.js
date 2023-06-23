@@ -15,7 +15,7 @@ Ext.define('Utils', {
         regexChecKPhone: function (value) {
             return (/(84|0[3|5|7|8|9])+([0-9]{8})/.test(value))
         },
-        regexChecKCCDC: function (value) {
+        regexCheckCCDC: function (value) {
             return (/^[0-9]{12}$/.test(value))
         },
         regexCheckEmail: function (value) {
@@ -44,5 +44,19 @@ Ext.define('Utils', {
             let status = data.find(item => item.value === value.toString())
             return `<span>${status.label}</span>`
         },
+        formatDateDto: function (value) {
+            let newDate = new Date(value);
+            if (value) {
+                return Ext.Date.format(newDate, 'Y-m-d');
+            }
+            return '';
+        },
+        formatDateTime: function (value) {
+            let newDate = new Date(value);
+            if (value) {
+                return newDate.getTime();
+            }
+            return '';
+        }
     }
 });
