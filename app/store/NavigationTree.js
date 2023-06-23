@@ -178,6 +178,7 @@ Ext.define('Admin.store.NavigationTree', {
                         text: 'Login',
                         iconCls: 'x-fa fa-check',
                         viewType: 'login',
+                        routeId: 'loginScreen',
                         leaf: true
                     },
                     {

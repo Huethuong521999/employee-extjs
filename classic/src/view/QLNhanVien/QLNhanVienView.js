@@ -41,14 +41,14 @@ Ext.define("Admin.view.QLNhanVien.QlNhanVienView", {
       {
         dataIndex: "code",
         text: "Mã nhân viên",
-        flex: 1.5,
+        flex: 1.4,
         editor: "textfield",
         filter: "string",
       },
       {
         dataIndex: "name",
         text: "Tên nhân viên",
-        flex: 2.5,
+        flex: 2.3,
         editor: "textfield",
         filter: "string",
       },
@@ -63,7 +63,7 @@ Ext.define("Admin.view.QLNhanVien.QlNhanVienView", {
       {
         dataIndex: "dateOfBirth",
         text: "Ngày sinh",
-        flex: 1.5,
+        flex: 1.2,
         renderer: function (value) {
           return Utils.formatDate(value)
         },
@@ -76,10 +76,11 @@ Ext.define("Admin.view.QLNhanVien.QlNhanVienView", {
       {
         dataIndex: "address",
         text: "Địa chỉ",
-        flex: 2,
+        flex: 2.2,
       },
       {
         text: "Trạng thái",
+        flex: 2.5,
         dataIndex: "submitProfileStatus",
         renderer: function (value) {
           return Utils.checkStatus(value)

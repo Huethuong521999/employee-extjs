@@ -18,7 +18,7 @@ Ext.define("Admin.store.QuanLyNhanVien", {
           // pageIndex: 1,
           pageSize: 20,
           keyword: '',
-          listStatus: 2
+          listStatus: '3,6'
         },
         pageParam: 'pageIndex',
         startParam: false,

@@ -95,7 +95,7 @@ Ext.define('Admin.view.authentication.Login', {
                     text: 'Login',
                     formBind: true,
                     listeners: {
-                        click: 'onLoginButton'
+                        click: 'handleLogin'
                     }
                 },
                 {
