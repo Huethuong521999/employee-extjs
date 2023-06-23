@@ -109,13 +109,13 @@ Ext.define("Admin.view.employee.EmployeeView", {
     {
       dataIndex: "email",
       text: "Email",
-      flex: 2,
+      flex: 2.5,
       editor: "textfield",
     },
     {
       dataIndex: "soDienThoai",
       text: "Số điện thoại",
-      flex: 1,
+      flex: 1.5,
       editor: "textfield",
     },
     {

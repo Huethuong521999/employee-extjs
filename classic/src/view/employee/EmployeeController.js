@@ -10,23 +10,8 @@ Ext.define("Admin.view.employee.EmployeeController", {
     employeeStore.loadStore(); //hàm load store
   },
 
-  loadRecord: function (windowForm, record) {
-    let form = windowForm.down("form");
-    var viewModel = this.getViewModel();
-    console.log("viewModel", viewModel);
-    if (record) {
-      windowForm.setTitle("Sửa thông tin nhân viên");
-      form.action = "edit";
-      viewModel.set("employeeValue", record.getData());
-    } else {
-      windowForm.setTitle("Thêm mới thông tin nhân viên");
-      form.action = "add";
-      form.reset();
-    }
-  },
-
   onOpenEmloyeeForm: function () {
-    this.showPopup({});
+    this.showPopup(null);
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
@@ -55,35 +40,36 @@ Ext.define("Admin.view.employee.EmployeeController", {
       icon: Ext.Msg.QUESTION,
     });
   },
+  
   showPopup: function (recordEmployee) {
     var popup = Ext.create("Ext.window.Window", {
-      height: 360,
+      height: 400,
       align: "center",
-      width: 600,
+      width: 750,
       closable: true,
       closableToolText: "Đóng cửa sổ",
       resizable: true,
       modal: true,
-      title: recordEmployee ?  "Cập nhật" : "Thêm mới",
-      closeAction: 'destroy',
+      title: recordEmployee ? "Cập nhật nhân viên" : "Thêm mới nhân viên",
+      closeAction: "destroy",
       // bodyStyle : 'background-color :transparent',
-      layout:'fit',
-      bodyStyle: 'padding:10px',
+      layout: "fit",
+      bodyStyle: "padding:10px",
       items: [
-          {
-              xtype: "EmployeeFormView",
-              viewModel: {
-                  data: {
-                    employeeValue: recordEmployee || {}
-                  }
-              }
-          }
-      ]
-  });
-  popup.show();
-  popup.down('EmployeeFormView').getController().on("Save", function (record) {
-      //khi lưu xong ở pop thì đây là hàm xử lý ở dưới
-      console.log("record", record);
-  });
-  }
+        {
+          xtype: "EmployeeFormView",
+          viewModel: {
+            data: {
+              employeeValue: recordEmployee || {},
+            },
+          },
+        },
+      ],
+    });
+    popup.show();
+    popup.down("EmployeeFormView").getController().on("handleSave", function (record) {
+        //khi lưu xong ở pop thì đây là hàm xử lý ở dưới
+        console.log("record", record);
+      });
+  },
 });
