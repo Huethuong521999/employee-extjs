@@ -15,7 +15,7 @@ Ext.define('Admin.view.pending.PendingView', {
 
     items: [
         {
-            xtype: 'list-employee'
+            xtype: 'list-pending-employee'
         }
     ]
 });

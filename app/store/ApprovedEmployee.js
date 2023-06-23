@@ -1,10 +1,10 @@
-Ext.define('Admin.store.PendingEmployee', {
+Ext.define('Admin.store.ApprovedEmployee', {
     extend: 'Ext.data.Store',
 
-    alias: 'store.pendingEmployee',
-    storeId: 'pendingEmployee',
+    alias: 'store.approvedEmployee',
+    storeId: 'approvedEmployee',
 
-    model: 'Admin.model.PendingEmployee',
+    model: 'Admin.model.ApprovedEmployee',
 
     pageSize: 10,
 
@@ -21,7 +21,7 @@ Ext.define('Admin.store.PendingEmployee', {
                 limitParam: false,
                 extraParams: {
                     pageSize: 10,
-                    listStatus: '2,6'
+                    listStatus: '3,7'
                 },
 
                 headers: {
