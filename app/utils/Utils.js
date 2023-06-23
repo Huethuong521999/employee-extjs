@@ -27,6 +27,22 @@ Ext.define('Utils', {
                 return Ext.Date.format(newDate, 'd-m-Y');
             }
             return '';
-        }
+        },
+        checkStatus: function (value) {
+            let data = [
+                { value: '1', label: 'Lưu mới' },
+                { value: '2', label: 'Chờ duyệt' },
+                { value: '3', label: 'Đã duyệt' },
+                { value: '4', label: 'Yêu cầu bổ sung' },
+                { value: '5', label: 'Từ chối' },
+                { value: '6', label: 'Chờ duyệt KTHS' },
+                { value: '7', label: 'Đã duyệt KTHS' },
+                { value: '8', label: 'YCBS KTHS' },
+                { value: '9', label: 'Từ chối KTHS' },
+                { value: '0', label: 'Đã nộp lưu' },
+            ]
+            let status = data.find(item => item.value === value.toString())
+            return `<span>${status.label}</span>`
+        },
     }
 });
