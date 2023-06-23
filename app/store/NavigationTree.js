@@ -103,15 +103,13 @@ Ext.define('Admin.store.NavigationTree', {
                             {
                                 text: 'Quản lý NV',
                                 iconCls: 'x-fab fa-leanpub',
-                                expanded: false,
-                                selectable: false,
+                                viewType: 'qlnhanvien',
                                 leaf: true
                             },
                             {
                                 text: 'Kết thúc NV',
                                 iconCls: 'x-fab fa-leanpub',
-                                expanded: false,
-                                selectable: false,
+                                viewType: 'ktnhanvien',
                                 leaf: true
                             }
                         ]
