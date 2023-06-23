@@ -1,21 +1,21 @@
-Ext.define('Admin.view.pending.ListEmployee', {
+Ext.define('Admin.view.approved.ListEmployee', {
     extend: 'Ext.grid.Panel',
 
-    xtype: 'list-pending-employee',
+    xtype: 'list-approved-employee',
 
     requires: [
-        'Admin.view.pending.PendingViewModel',
-        'Admin.view.pending.PendingController'
+        'Admin.view.approved.ApprovedViewModel',
+        'Admin.view.approved.ApprovedController'
     ],
 
     viewModel: {
-        type: 'pending'
+        type: 'approved'
     },
 
-    controller: 'pending',
+    controller: 'approved',
 
     bind: {
-        store: '{pendingEmployee}'
+        store: '{approvedEmployee}'
     },
 
     viewConfig: {
@@ -121,7 +121,7 @@ Ext.define('Admin.view.pending.ListEmployee', {
         {
             dataIndex: 'submitProfileStatus',
             text: 'Trạng thái',
-            minWidth: 150,
+            minWidth: 200,
             flex: 1,
             filter: 'string',
             renderer: function (value) {
@@ -133,12 +133,12 @@ Ext.define('Admin.view.pending.ListEmployee', {
         {
             xtype: 'pagingtoolbar',
             bind: {
-                store: '{pendingEmployee}'
+                store: '{approvedEmployee}'
             },
             displayMsg:
                 'Đang hiển thị từ {0} đến {1} trên tổng số {2} &nbsp;bản ghi ',
             displayInfo: true,
-            emptyMsg: 'Không có bản ghi nào&nbsp;'
+            emptyMsg: 'No records to display&nbsp;'
         }
     ]
 });

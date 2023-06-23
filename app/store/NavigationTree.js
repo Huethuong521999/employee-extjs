@@ -74,7 +74,6 @@ Ext.define('Admin.store.NavigationTree', {
                                 iconCls: 'x-fab fa-leanpub',
                                 expanded: false,
                                 viewType: 'pending',
-                                selectable: false,
                                 leaf: true
                             },
                             {
@@ -82,7 +81,6 @@ Ext.define('Admin.store.NavigationTree', {
                                 iconCls: 'x-fab fa-leanpub',
                                 expanded: false,
                                 viewType: 'approved',
-                                selectable: false,
                                 leaf: true
                             }
                         ]

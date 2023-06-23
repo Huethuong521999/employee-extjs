@@ -7,7 +7,6 @@ Ext.define('Admin.view.pending.PendingController', {
         let viewModel = this.getViewModel();
         let pendingEmployeeStore = viewModel.getStore('pendingEmployee');
         pendingEmployeeStore.loadStore();
-        console.log(pendingEmployeeStore);
     },
 
     handleEdit: function () {},
