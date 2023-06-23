@@ -73,6 +73,7 @@ Ext.define('Admin.store.NavigationTree', {
                                 text: 'Chờ duyệt',
                                 iconCls: 'x-fab fa-leanpub',
                                 expanded: false,
+                                viewType: 'pending',
                                 selectable: false,
                                 leaf: true
                             },
@@ -80,6 +81,7 @@ Ext.define('Admin.store.NavigationTree', {
                                 text: 'Đã duyệt',
                                 iconCls: 'x-fab fa-leanpub',
                                 expanded: false,
+                                viewType: 'approved',
                                 selectable: false,
                                 leaf: true
                             }
@@ -111,7 +113,7 @@ Ext.define('Admin.store.NavigationTree', {
                                 expanded: false,
                                 selectable: false,
                                 leaf: true
-                            },
+                            }
                         ]
                     }
                 ]
