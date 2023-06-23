@@ -81,7 +81,6 @@ Ext.define("Admin.view.employee.EmployeeForm", {
           vtype: "email",
           name: "email",
           labelAlign: "top",
-          height: "63px",
           flex: 3,
           xtype: "textfield",
           bind: {
@@ -126,6 +125,7 @@ Ext.define("Admin.view.employee.EmployeeForm", {
         },
       ]
     },
+    //dòng 3
     {
       layout : 'hbox',
       width : '100%',
@@ -202,7 +202,7 @@ Ext.define("Admin.view.employee.EmployeeForm", {
       },
       defaults: {
         xtype: "button",
-        margin: '0 10 10 0'
+        margin: '0 10 0 0'
       },
       items : [
         {

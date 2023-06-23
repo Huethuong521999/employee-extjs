@@ -58,6 +58,65 @@ Ext.define('Admin.store.NavigationTree', {
                 leaf: true
             },
             {
+                text: 'Quản lý nhân viên',
+                iconCls: 'x-fab fa-leanpub',
+                expanded: false,
+                selectable: false,
+                children: [
+                    {
+                        text: 'Lãnh đạo',
+                        iconCls: 'x-fab fa-leanpub',
+                        expanded: false,
+                        selectable: false,
+                        children: [
+                            {
+                                text: 'Chờ duyệt',
+                                iconCls: 'x-fab fa-leanpub',
+                                expanded: false,
+                                selectable: false,
+                                leaf: true
+                            },
+                            {
+                                text: 'Đã duyệt',
+                                iconCls: 'x-fab fa-leanpub',
+                                expanded: false,
+                                selectable: false,
+                                leaf: true
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Quản lý',
+                        iconCls: 'x-fab fa-leanpub',
+                        expanded: false,
+                        selectable: false,
+                        children: [
+                            {
+                                text: 'Tạo mới NV',
+                                iconCls: 'x-fab fa-leanpub',
+                                expanded: false,
+                                selectable: false,
+                                leaf: true
+                            },
+                            {
+                                text: 'Quản lý NV',
+                                iconCls: 'x-fab fa-leanpub',
+                                expanded: false,
+                                selectable: false,
+                                leaf: true
+                            },
+                            {
+                                text: 'Kết thúc NV',
+                                iconCls: 'x-fab fa-leanpub',
+                                expanded: false,
+                                selectable: false,
+                                leaf: true
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
                 text: 'Email',
                 iconCls: 'x-fa fa-paper-plane',
                 rowCls: 'nav-tree-badge nav-tree-badge-hot',

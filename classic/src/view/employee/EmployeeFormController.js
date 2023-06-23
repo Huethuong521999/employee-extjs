@@ -2,29 +2,30 @@ Ext.define("Admin.view.employee.EmployeeFormController", {
   extend: "Ext.app.ViewController",
 
   alias: "controller.employeeformcontroller",
-  init : function () {
+
+  init: function () {
     let viewModel = this.getViewModel();
-    
   },
 
   handleSave: function (window) {
-    // let form = window.down("form");
-    // let values = form.getValues();
+    debugger
+    let form = window.up("window").down("form");
+    let values = form.getValues();
 
-    // if (form.isValid()) {
-    //   let store = Ext.data.StoreManager.lookup("employeeStore");
-    //   if (form.action === "edit") {
-    //     let record = store.getById(values.id);
-    //     record.set(values);
-    //   } else {
-    //     values.id = store.getCount() + 1;
-    //     store.add(values);
-    //   }
-    //   form.reset();
-    //   window.close();
-    // } else {
-    //   Ext.Msg.alert("Cảnh báo", "Chưa nhập đủ thông tin.");
-    // }
+    if (form.isValid()) {
+      let store = Ext.data.StoreManager.lookup("employeeStore");
+      if (form.action === "edit") {
+        let record = store.getById(values.id);
+        record.set(values);
+      } else {
+        values.id = store.getCount() + 1;
+        store.add(values);
+      }
+      form.reset();
+      window.up("window").close();
+    } else {
+      Ext.Msg.alert("Cảnh báo", "Chưa nhập đủ thông tin.");
+    }
   },
 
   handleSelectProvince: function (field, newValue, oldValue, eOpts) {
