@@ -175,10 +175,30 @@ Ext.define("Admin.view.customer.addCustomer.DiplomaCustomerViewController", {
             icon: Ext.Msg.QUESTION,
         });
     },
+
     formatDate: function (value) {
         return Utils.formatDate(value);
     },
+
     validatorName: function (value) {
         return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+    },
+
+    isIconEdit: function (v, meta, rec) {
+        let isView = this.getViewModel().get("isView");
+        if (isView) {
+            return 'x-hidden';
+        } else {
+            return 'x-fa fa-edit';
+        }
+    },
+
+    isIconDelete: function (v, meta, rec) {
+        let isView = this.getViewModel().get("isView");
+        if (isView) {
+            return 'x-hidden';
+        } else {
+            return 'fa fa-trash';
+        }
     },
 });

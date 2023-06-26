@@ -9,13 +9,12 @@ Ext.define("Admin.view.customer.CustomerController", {
   },
 
   onOpenCustomerForm: function () {
-    this.showPopup(null);
+    let popup = this.popup(null);
+    popup.show();
   },
 
   handleEdit: function (grid, rowIndex, colIndex, item, e, record) {
     let thisCustomer = this;
-    let editForm = Ext.create("Admin.view.customer.addCustomer.AddCustomerForm");
-    let form = editForm.down("form");
 
     (function getByIdEmployee() {
       Ext.Ajax.request({
@@ -32,8 +31,10 @@ Ext.define("Admin.view.customer.CustomerController", {
           employee.dateOfIssuanceCard = new Date(employee.dateOfIssuanceCard)
 
           if (employee) {
-            thisCustomer.showPopup(employee)
-            thisCustomer.fireEvent('employeeId',(employee && employee.id) || null);
+            let popup = thisCustomer.popup(employee);
+            popup.down('addCustomerForm').getViewModel().set("isRegister", false)
+            thisCustomer.fireEvent('employeeId', (employee && employee.id) || null);
+            popup.show();
           }
         },
         failure: function (response) {
@@ -47,8 +48,8 @@ Ext.define("Admin.view.customer.CustomerController", {
     })();
   },
 
-  showPopup: function (recordEmployee) {
-    let dialog = Ext.create("Ext.window.Window", {
+  popup: function (recordEmployee) {
+    return Ext.create("Ext.window.Window", {
       layout: "fit",
       width: '90%',
       height: '90%',
@@ -72,7 +73,6 @@ Ext.define("Admin.view.customer.CustomerController", {
         },
       ],
     });
-    dialog.show();
   },
 
   loadRecord: function (windowForm, record) {
@@ -128,4 +128,67 @@ Ext.define("Admin.view.customer.CustomerController", {
       icon: Ext.Msg.QUESTION,
     });
   },
+
+  showIconEdit: function (v, meta, rec) {
+    if (
+      rec.get('submitProfileStatus') === 1 ||
+      rec.get('submitProfileStatus') === 4 ||
+      rec.get('submitProfileStatus') === 5
+    ) {
+      return 'x-fa fa-edit';
+    } else {
+      return 'x-hidden';
+    }
+  },
+
+  showIconView: function (v, meta, rec) {
+    if (rec.get('submitProfileStatus') === 2) {
+      return 'x-fa fa-eye';
+    } else {
+      return 'x-hidden';
+    }
+  },
+
+  showIconDelete: function (v, meta, rec) {
+    if (rec.get('submitProfileStatus') === 1) {
+      return 'fa fa-trash';
+    } else {
+      return 'x-hidden';
+    }
+  },
+
+  handleView: function (grid, rowIndex, colIndex, item, e, record) {
+    let thisCustomer = this;
+    (function getByIdEmployee() {
+      Ext.Ajax.request({
+        url: `https://em-v2.oceantech.com.vn/em/employee/${record.id}`,
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + Ext.util.Cookies.get('token'),
+        },
+        success: function (response) {
+          let data = Ext.decode(response.responseText);
+          let employee = data.data;
+
+          employee.dateOfBirth = new Date(employee.dateOfBirth)
+          employee.dateOfIssuanceCard = new Date(employee.dateOfIssuanceCard)
+
+          if (employee) {
+            let popup = thisCustomer.popup(employee);
+            popup.down('addCustomerForm').getViewModel().set("isView", true)
+
+            thisCustomer.fireEvent('employeeId', (employee && employee.id) || null);
+            popup.show();
+          }
+        },
+        failure: function (response) {
+          if (response.status === 401) {
+            CheckToken.checkToken(response, getByIdEmployee);
+          } else {
+            Ext.Msg.alert('Lỗi', 'Lấy dữ liệu thất bại.');
+          }
+        }
+      });
+    })();
+  }
 });

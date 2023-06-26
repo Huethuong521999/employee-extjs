@@ -17,12 +17,14 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                 {
                     iconCls: "x-fa fa-edit",
                     tooltip: "Chỉnh sửa",
-                    handler: "handleEdit"
+                    handler: "handleEdit",
+                    getClass: "isIconEdit"
                 },
                 {
                     iconCls: "fa fa-trash",
                     tooltip: "Xóa",
                     handler: "handleDelete",
+                    getClass: "isIconDelete"
                 },
             ],
         },
@@ -74,7 +76,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Họ và tên",
                             name: "name",
                             bind: {
-                                value: "{itemFamilyRelations.name}"
+                                value: "{itemFamilyRelations.name}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             allowBlank: false,
@@ -87,7 +90,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Ngày sinh",
                             name: "dateOfBirth",
                             bind: {
-                                value: "{itemFamilyRelations.dateOfBirth}"
+                                value: "{itemFamilyRelations.dateOfBirth}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             allowBlank: false,
@@ -101,7 +105,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: 'Giới tính',
                             name: 'gender',
                             bind: {
-                                value: "{itemFamilyRelations.gender}"
+                                value: "{itemFamilyRelations.gender}",
+                                readOnly: "{isView}"
                             },
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['value', 'label'],
@@ -133,7 +138,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Số CCCD",
                             name: "citizenIdentificationNumber",
                             bind: {
-                                value: "{itemFamilyRelations.citizenIdentificationNumber}"
+                                value: "{itemFamilyRelations.citizenIdentificationNumber}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             allowBlank: false,
@@ -146,7 +152,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: 'Mối quan hệ',
                             name: 'relationShip',
                             bind: {
-                                value: "{itemFamilyRelations.relationShip}"
+                                value: "{itemFamilyRelations.relationShip}",
+                                readOnly: "{isView}"
                             },
                             store: Ext.create('Ext.data.Store', {
                                 fields: ['value', 'label'],
@@ -174,7 +181,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             allowBlank: false,
                             name: "phoneNumber",
                             bind: {
-                                value: "{itemFamilyRelations.phoneNumber}"
+                                value: "{itemFamilyRelations.phoneNumber}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
@@ -194,7 +202,8 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Địa chỉ",
                             name: "address",
                             bind: {
-                                value: "{itemFamilyRelations.address}"
+                                value: "{itemFamilyRelations.address}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             allowBlank: false,
@@ -205,21 +214,31 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             fieldLabel: "Email",
                             name: "email",
                             bind: {
-                                value: "{itemFamilyRelations.email}"
+                                value: "{itemFamilyRelations.email}",
+                                readOnly: "{isView}"
                             },
                             flex: 1,
                             allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
                             validator: "validatorEmail",
                         },
-                        { xtype: "tbspacer", width: 12 },
+                        {
+                            xtype: "tbspacer",
+                            width: 12,
+                            bind: {
+                                hidden: '{isView}'
+                            }
+                        },
                         {
                             xtype: 'button',
                             ui: 'gray',
                             cls: "buttonContainer mr-10",
                             text: 'Hủy',
                             width: 100,
-                            handler: 'handleClear'
+                            handler: 'handleClear',
+                            bind: {
+                                hidden: '{isView}'
+                            }
                         },
                         {
                             xtype: 'button',
@@ -227,7 +246,10 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             text: 'Lưu',
                             cls: "buttonContainer",
                             width: 100,
-                            handler: 'handleSubmitFamily'
+                            handler: 'handleSubmitFamily',
+                            bind: {
+                                hidden: '{isView}'
+                            }
                         }
                     ]
                 }

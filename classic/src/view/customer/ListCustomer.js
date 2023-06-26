@@ -55,14 +55,23 @@ Ext.define("Admin.view.customer.ListCustomer", {
         {
           iconCls: "x-fa fa-edit",
           tooltip: "Chỉnh sửa",
-          handler: "handleEdit"
+          handler: "handleEdit",
+          getClass: "showIconEdit"
+        },
+        {
+          iconCls: "x-fa fa-eye",
+          tooltip: "Xem",
+          handler: "handleView",
+          getClass: "showIconView",
         },
         {
           iconCls: "fa fa-trash",
           tooltip: "Xóa",
-          handler: "handleDelete"
+          handler: "handleDelete",
+          getClass: "showIconDelete"
         },
       ],
+
     },
     {
       xtype: "rownumberer",
@@ -118,6 +127,15 @@ Ext.define("Admin.view.customer.ListCustomer", {
       text: "Số điện thoại",
       flex: 1,
       filter: 'string',
+    },
+    {
+      dataIndex: "submitProfileStatus",
+      text: "Trạng thái",
+      flex: 1,
+      filter: 'string',
+      renderer: function (value) {
+        return Utils.checkStatus(value);
+      },
     },
   ],
 });

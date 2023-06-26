@@ -24,9 +24,10 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
                     bind: {
-                        value: "{info.name}"
+                        value: "{info.name}",
+                        readOnly: "{isView}"
                     },
-                    validator: "validatorName"
+                    validator: "validatorName",
                 },
                 {
                     fieldLabel: "Mã nhân viên",
@@ -34,7 +35,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     name: "code",
                     cls: "inputField w-33",
                     bind: {
-                        value: "{info.code}"
+                        value: "{info.code}",
+                        readOnly: "{isView}"
                     },
                     blankText: 'Trường này là trường bắt buộc',
                 },
@@ -43,7 +45,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "phone",
                     bind: {
-                        value: "{info.phone}"
+                        value: "{info.phone}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -54,7 +57,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "citizenIdentificationNumber",
                     bind: {
-                        value: "{info.citizenIdentificationNumber}"
+                        value: "{info.citizenIdentificationNumber}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -66,7 +70,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "dateOfIssuanceCard",
                     bind: {
-                        value: "{info.dateOfIssuanceCard}"
+                        value: "{info.dateOfIssuanceCard}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -76,7 +81,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "placeOfIssueCard",
                     bind: {
-                        value: "{info.placeOfIssueCard}"
+                        value: "{info.placeOfIssueCard}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -86,7 +92,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "email",
                     bind: {
-                        value: "{info.email}"
+                        value: "{info.email}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -97,7 +104,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "address",
                     bind: {
-                        value: "{info.address}"
+                        value: "{info.address}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -107,7 +115,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: 'Giới tính',
                     name: 'gender',
                     bind: {
-                        value: "{info.gender}"
+                        value: "{info.gender}",
+                        readOnly: "{isView}"
                     },
                     store: Ext.create('Ext.data.Store', {
                         fields: ['value', 'label'],
@@ -130,7 +139,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "religion",
                     bind: {
-                        value: "{info.religion}"
+                        value: "{info.religion}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -140,7 +150,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "ethnic",
                     bind: {
-                        value: "{info.ethnic}"
+                        value: "{info.ethnic}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -151,7 +162,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     allowBlank: false,
                     name: "dateOfBirth",
                     bind: {
-                        value: "{info.dateOfBirth}"
+                        value: "{info.dateOfBirth}",
+                        readOnly: "{isView}"
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
@@ -161,7 +173,8 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     fieldLabel: 'Team',
                     name: 'team',
                     bind: {
-                        value: "{info.team}"
+                        value: "{info.team}",
+                        readOnly: "{isView}"
                     },
                     store: Ext.create('Ext.data.Store', {
                         fields: ['value', 'label'],

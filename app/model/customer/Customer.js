@@ -15,6 +15,7 @@ Ext.define("Admin.model.customer.Customer", {
     { type: "string", name: "address" },
     { type: "string", name: "ethnic" },
     { type: "string", name: "religion" },
+    { type: "number", name: "submitProfileStatus" },
   ],
   hasMany: [
     { model: 'Certificates', name: 'certificatesDto' },

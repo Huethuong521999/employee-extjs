@@ -53,7 +53,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
               if (data.code === 200) {
                 store.load();
                 form.reset();
-                me.handleClose();
+                me.getViewModel().set("isRegister", false);
                 return;
               }
               Ext.Msg.alert('Lỗi', data.message);
@@ -79,9 +79,9 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
             success: function (response) {
               let data = Ext.decode(response.responseText);
               if (data.code === 200) {
+                me.getViewModel().set("isDisabled", false)
                 store.load();
                 form.reset();
-                me.handleClose();
                 return;
               }
               Ext.Msg.alert('Lỗi', data.message);
@@ -101,18 +101,59 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
     }
   },
 
+  handleChangeTab: function (tabPanel, newTab, oldTab) {
+    this.updateButtonStates();
+  },
+
+  showNext: function () {
+    let view = this.getView();
+    const activeTabIndex = view.items.indexOf(view.getActiveTab());
+    if (activeTabIndex <= view.items.getCount() - 1) {
+      view.setActiveTab(activeTabIndex + 1);
+      this.updateButtonStates();
+    }
+  },
+
+  showPrevious: function () {
+    let view = this.getView();
+    const activeTabIndex = view.items.indexOf(view.getActiveTab());
+    if (activeTabIndex >= 0) {
+      view.setActiveTab(activeTabIndex - 1);
+      this.updateButtonStates();
+    }
+  },
+
+  updateButtonStates: function () {
+    let view = this.getView();
+    let viewModel = this.getViewModel();
+    const activeTabIndex = view.items.indexOf(view.getActiveTab());
+    const previousButton = view.down('#card-prev');
+    const nextButton = view.down('#card-next');
+    if (previousButton) {
+      viewModel.set("isPrevious", (activeTabIndex === 0));
+    }
+
+    if (nextButton) {
+      viewModel.set("isNext", (activeTabIndex === view.items.getCount() - 1));
+    }
+  },
+
   handleClose: function () {
     this.getView().up("window").close();
   },
+
   validatorName: function (value) {
     return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
   },
+
   validatorPhone: function (value) {
     return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
   },
+
   validatorCCDC: function (value) {
     return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
   },
+
   validatorEmail: function (value) {
     return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
   }

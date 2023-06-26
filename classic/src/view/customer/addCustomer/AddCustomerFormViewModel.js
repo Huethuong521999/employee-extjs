@@ -46,6 +46,10 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewModel', {
       address: "",
       ethnic: "",
       religion: "",
-    }
+    },
+    isView: false,
+    isRegister: true,
+    isPrevious: true,
+    isNext: false,
   },
 });

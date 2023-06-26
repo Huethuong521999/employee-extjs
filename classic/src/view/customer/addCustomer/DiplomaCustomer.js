@@ -17,12 +17,14 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                 {
                     iconCls: "x-fa fa-edit",
                     tooltip: "Chỉnh sửa",
-                    handler: "handleEdit"
+                    handler: "handleEdit",
+                    getClass: "isIconEdit"
                 },
                 {
                     iconCls: "fa fa-trash",
                     tooltip: "Xóa",
                     handler: "handleDelete",
+                    getClass: "isIconDelete"
                 },
             ],
         },
@@ -71,7 +73,8 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             blankText: 'Trường này là trường bắt buộc',
                             validator: "validatorName",
                             bind: {
-                                value: "{itemCertificates.certificateName}"
+                                value: "{itemCertificates.certificateName}",
+                                readOnly: "{isView}"
                             }
                         },
                         { xtype: "tbspacer", width: 12 },
@@ -82,7 +85,8 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
                             bind: {
-                                value: "{itemCertificates.field}"
+                                value: "{itemCertificates.field}",
+                                readOnly: "{isView}"
                             }
                         },
                         { xtype: "tbspacer", width: 12 },
@@ -96,7 +100,8 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
                             bind: {
-                                value: "{itemCertificates.issueDate}"
+                                value: "{itemCertificates.issueDate}",
+                                readOnly: "{isView}"
                             }
                         },
                     ]
@@ -111,7 +116,8 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             allowBlank: false,
                             name: "content",
                             bind: {
-                                value: "{itemCertificates.content}"
+                                value: "{itemCertificates.content}",
+                                readOnly: "{isView}"
                             },
                             labelAlign: 'top',
                             flex: 1,
@@ -124,7 +130,10 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             cls: "buttonContainer mr-10",
                             text: 'Hủy',
                             width: 100,
-                            handler: 'handleClear'
+                            handler: 'handleClear',
+                            bind: {
+                                hidden: '{isView}'
+                            }
                         },
                         {
                             xtype: 'button',
@@ -132,7 +141,10 @@ Ext.define('Admin.view.customer.addCustomer.DiplomaCustomer', {
                             text: 'Lưu',
                             cls: "buttonContainer",
                             width: 100,
-                            handler: 'handleSubmitDiploma'
+                            handler: 'handleSubmitDiploma',
+                            bind: {
+                                hidden: '{isView}'
+                            }
                         }
                     ]
                 }
