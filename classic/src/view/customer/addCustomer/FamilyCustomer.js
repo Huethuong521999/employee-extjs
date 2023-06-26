@@ -82,7 +82,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             flex: 1,
                             allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: "validatorName",
+                            validator: function (value) {
+                                return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+                            },
                         },
                         { xtype: "tbspacer", width: 12 },
                         {
@@ -144,7 +146,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             flex: 1,
                             allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: "validatorCCDC",
+                            validator: function (value) {
+                                return value && (Utils.regexCheckCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                            },
                         },
                         { xtype: "tbspacer", width: 12 },
                         {
@@ -186,7 +190,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             },
                             flex: 1,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: "validatorPhone",
+                            validator: function (value) {
+                                return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+                            },
                         },
                     ]
                 },
@@ -220,7 +226,9 @@ Ext.define('Admin.view.customer.addCustomer.FamilyCustomer', {
                             flex: 1,
                             allowBlank: false,
                             blankText: 'Trường này là trường bắt buộc',
-                            validator: "validatorEmail",
+                            validator: function (value) {
+                                return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
+                            },
                         },
                         {
                             xtype: "tbspacer",

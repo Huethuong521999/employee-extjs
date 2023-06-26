@@ -27,7 +27,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                         value: "{info.name}",
                         readOnly: "{isView}"
                     },
-                    validator: "validatorName",
+                    validator: function (value) {
+                        return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+                    },
                 },
                 {
                     fieldLabel: "Mã nhân viên",
@@ -50,7 +52,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: "validatorPhone",
+                    validator: function (value) {
+                        return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+                    },
                 },
                 {
                     fieldLabel: "Số CCCD",
@@ -62,7 +66,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: "validatorCCDC",
+                    validator: function (value) {
+                        return value && (Utils.regexCheckCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+                    },
                 },
                 {
                     xtype: 'datefield',
@@ -97,7 +103,9 @@ Ext.define('Admin.view.customer.addCustomer.InfoCustomer', {
                     },
                     cls: "inputField w-33",
                     blankText: 'Trường này là trường bắt buộc',
-                    validator: "validatorEmail",
+                    validator: function (value) {
+                        return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
+                    },
                 },
                 {
                     fieldLabel: "Địa chỉ",

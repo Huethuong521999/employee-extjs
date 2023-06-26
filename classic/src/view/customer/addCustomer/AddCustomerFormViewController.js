@@ -79,7 +79,7 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
             success: function (response) {
               let data = Ext.decode(response.responseText);
               if (data.code === 200) {
-                me.getViewModel().set("isDisabled", false)
+                me.getViewModel().set("isRegister", false)
                 store.load();
                 form.reset();
                 return;
@@ -141,20 +141,4 @@ Ext.define('Admin.view.customer.addCustomer.AddCustomerFormViewController', {
   handleClose: function () {
     this.getView().up("window").close();
   },
-
-  validatorName: function (value) {
-    return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
-  },
-
-  validatorPhone: function (value) {
-    return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
-  },
-
-  validatorCCDC: function (value) {
-    return value && (Utils.regexChecKCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
-  },
-
-  validatorEmail: function (value) {
-    return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
-  }
 });

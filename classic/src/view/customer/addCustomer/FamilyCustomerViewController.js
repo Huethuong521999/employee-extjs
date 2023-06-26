@@ -196,21 +196,21 @@ Ext.define("Admin.view.customer.addCustomer.FamilyCustomerViewController", {
         return Utils.formatDate(value);
     },
 
-    validatorName: function (value) {
-        return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
-    },
+    // validatorName: function (value) {
+    //     return value && (!Utils.regexCheckString(value) ? true : "Chỉ được nhập chữ");
+    // },
 
-    validatorPhone: function (value) {
-        return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
-    },
+    // validatorPhone: function (value) {
+    //     return value && (Utils.regexChecKPhone(value) ? true : "Số điện không đúng định dạng số điện thoại việt nam");
+    // },
 
-    validatorCCDC: function (value) {
-        return value && (Utils.regexCheckCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
-    },
+    // validatorCCDC: function (value) {
+    //     return value && (Utils.regexCheckCCDC(value) ? true : "Chỉ được nhập số và có độ dài 12 số");
+    // },
 
-    validatorEmail: function (value) {
-        return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
-    },
+    // validatorEmail: function (value) {
+    //     return value && (Utils.regexCheckEmail(value) ? true : "Email phải có định dang 123@gmail.com");
+    // },
 
     isIconEdit: function (v, meta, rec) {
         let isView = this.getViewModel().get("isView");
