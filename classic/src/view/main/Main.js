@@ -91,6 +91,14 @@ Ext.define('Admin.view.main.Main', {
                     tooltip: 'See your profile'
                 },
                 {
+                    iconCls:'x-fa fa-sign-out-alt',
+                    ui: 'header',
+                    // href: '#loginScreen',
+                    hrefTarget: '_self',
+                    tooltip: 'Đăng xuất',
+                    handler: "onClearCookies"
+                },
+                {
                     xtype: 'tbtext',
                     text: 'Goff Smith',
                     cls: 'top-user-name'
