@@ -174,5 +174,11 @@ Ext.define('Admin.view.main.MainController', {
 
     onEmailRouteChange: function () {
         this.setCurrentView('email');
+    },
+
+    onClearCookies: function () {
+        Ext.util.History.add('#loginScreen');
+        Ext.util.Cookies.clear('token');
+        window.location.reload();
     }
 });

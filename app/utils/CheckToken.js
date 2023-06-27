@@ -5,6 +5,7 @@ Ext.define('CheckToken', {
             if (response.status === 401) {
                 // customerStore.login(callback);
                 Ext.util.History.add('#loginScreen'); //401 quay về trang login
+                window.location.reload();
             } else if (response.status === 403) {
                 console.log('Không có quyền truy cập');
             } else {

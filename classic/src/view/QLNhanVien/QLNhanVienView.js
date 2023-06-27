@@ -91,8 +91,9 @@ Ext.define("Admin.view.QLNhanVien.QlNhanVienView", {
     bbar: [{
       xtype: 'pagingtoolbar',
       displayInfo: true,
+      bind: {
+        store: "{nhanVienStore}",
+      },
     }],
-
-    dockedItems: [],
   });
   
